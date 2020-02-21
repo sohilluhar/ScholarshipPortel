@@ -445,3 +445,61 @@ def saveuserfamilyinfo(req):
         return render(req, 'redirecthome.html',
                       {"swicon": "success", "swtitle": "Done", "swmsg": "Family Info Saved Successfully.",
                        "path": "profile-education"})
+
+
+def saveusereducation(req):
+    collegename = req.POST['collegename']
+    collegeaddress = req.POST['collegeaddress']
+
+    coursename = req.POST['coursename']
+    coursefees = req.POST['coursefees']
+
+    course1name = req.POST['course1name']
+    course1year = req.POST['course1year']
+    course1board = req.POST['course1board']
+    course1per = req.POST['course1per']
+
+    course2name = req.POST['course2name']
+    course2year = req.POST['course2year']
+    course2board = req.POST['course2board']
+    course2per = req.POST['course2per']
+
+    course3name = req.POST['course3name']
+    course3year = req.POST['course3year']
+    course3board = req.POST['course3board']
+    course3per = req.POST['course3per']
+
+    achievement = req.POST['achievement']
+
+    fill = req.POST['fill']
+    save_draft = req.POST['saveasdraft']
+
+    db = connect_firebase()
+
+    olddata = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+    olddata = dict(olddata)
+    print(olddata)
+    data = {
+        "collegename": collegename, "collegeaddress": collegeaddress, "coursename": coursename,
+        "coursefees": coursefees,
+        "course1name": course1name, "course1board": course1board, "course1year": course1year, "course1per": course1per,
+        "course2name": course2name, "course2board": course2board, "course2year": course2year, "course2per": course2per,
+        "course3name": course3name, "course3board": course3board, "course3year": course3year, "course3per": course3per,
+        "achievement": achievement
+    }
+
+    data.update(olddata)
+    print(data)
+    db.child("UserProfile").child(Common.currentUser.val().get("phone")).set(
+        data
+    )
+
+    db.child("users").child(Common.currentUser.val().get("phone")).child("profilefill").set(fill)
+    if save_draft == "1":
+        return render(req, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Education Details Saved Successfully.",
+                       "path": ""})
+    if save_draft == "0":
+        return render(req, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Education Details Saved Successfully.",
+                       "path": "profile-education"})

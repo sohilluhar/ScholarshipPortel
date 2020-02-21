@@ -52,7 +52,7 @@ urlpatterns = [
     path('profile-familyDetails', views.profile_familyDetails),
     path('saveuserfamilyinfo', views.saveuserfamilyinfo),
     path('profile-education', views.profile_education),
-    # path('saveusereducation', views.saveusereducation),
+    path('saveusereducation', views.saveusereducation),
 
     path('', views.home)
 ]
