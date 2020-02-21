@@ -1,0 +1,484 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+</head>
+<body class="hold-transition skin-blue sidebar-collapse">
+{#{% include "user_nav_header.html" %}#}
+
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h1></h1>
+
+
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 offset-2">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Education Details</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             aria-valuenow="{{ currentuser.profilefill }}" aria-valuemin="0"
+                                             aria-valuemax="100" style="width: {{ currentuser.profilefill }}%">
+                                            <span>{{ currentuser.profilefill }}% Complete</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <form role="form" id="user-education" onsubmit="return validate(this)"
+                                  action="/saveusereducation" method="post">
+                                {% csrf_token %}
+                                <div class="card-body">
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Education Info</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="collegename">College Name</label>
+                                                        <input type="text" name="collegename" class="form-control"
+                                                               id="collegename" value="{{ userprofile.collegename }}"
+                                                               placeholder="Enter college name"
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label>College Address</label>
+                                                        <textarea class="form-control" rows="2"
+                                                                  name="collegeaddress" id="collegeaddress"
+                                                                  placeholder="Enter college address"
+
+                                                        >{{ userprofile.collegeaddress }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="coursename">Current Course Name</label>
+                                                        <input type="text" name="coursename" class="form-control"
+                                                               id="coursename" value="{{ userprofile.coursename }}"
+                                                               placeholder="Enter course name eg: BSc-IT"
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="coursename">Total Fees</label>
+                                                        <input type="number" name="coursefees" class="form-control"
+                                                               id="coursefees" value="{{ userprofile.coursefees }}"
+                                                               placeholder="Enter  total annual fees of current year"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Past Education</h5>
+
+                                            <p class="text-muted mt-1">Enter SSC,HSC/Diploma,last year education
+                                                details </p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="course1name">Course</label>
+                                                        <input type="text" name="course1name" class="form-control"
+
+                                                               value="{{ userprofile.course1name }}" id="course1name"
+                                                               placeholder="Enter course name ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="course1year">Year of Study</label>
+                                                        <input type="number" name="course1year" class="form-control"
+
+                                                               value="{{ userprofile.course1year }}" id="course1year"
+                                                               placeholder="Enter year">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="course1board">Board/University</label>
+                                                        <input type="text" name="course1board" class="form-control"
+
+                                                               value="{{ userprofile.course1board }}" id="course1board"
+                                                               placeholder="Enter university or board name ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="course1per">Percentage</label>
+                                                        <input type="text" name="course1per" class="form-control"
+
+                                                               value="{{ userprofile.course1per }}" id="course1per"
+                                                               placeholder="Enter percentage ">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <input type="text" name="course2name" class="form-control"
+
+                                                               value="{{ userprofile.course2name }}" id="course2name"
+                                                               placeholder="Enter course name ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <input type="number" name="course2year" class="form-control"
+
+                                                               value="{{ userprofile.course2year }}" id="course2year"
+                                                               placeholder="Enter year">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+
+                                                        <input type="text" name="course2board" class="form-control"
+
+                                                               value="{{ userprofile.course2board }}" id="course2board"
+                                                               placeholder="Enter university or board name ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <input type="text" name="course2per" class="form-control"
+
+                                                               value="{{ userprofile.course2per }}" id="course2per"
+                                                               placeholder="Enter percentage ">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <input type="text" name="course3name" class="form-control"
+
+                                                               value="{{ userprofile.course3name }}" id="course3name"
+                                                               placeholder="Enter course name ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <input type="number" name="course3year" class="form-control"
+
+                                                               value="{{ userprofile.course3year }}" id="course3year"
+                                                               placeholder="Enter year">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <input type="text" name="course3board" class="form-control"
+
+                                                               value="{{ userprofile.course3board }}" id="course3board"
+                                                               placeholder="Enter university or board name ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <input type="text" name="course3per" class="form-control"
+
+                                                               value="{{ userprofile.course3per }}" id="course3per"
+                                                               placeholder="Enter percentage ">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Achievements</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" rows="4"
+                                                                  name="achievement" id="achievement"
+                                                                  placeholder="Enter achievements if any"
+
+                                                        >{{ userprofile.achievement }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+
+                                    <input type="text" name="saveasdraft" class="form-control" id="saveasdraft"
+                                           hidden value="0">
+                                    <input type="text" name="fill" class="form-control" id="fill"
+                                           hidden value="20">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="changeval()">Save as
+                                        Draft
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" onclick="changeval2()">Next
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <div class="col-md-6">
+
+                    </div>
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+<script>
+
+
+    function changeval() {
+        document.getElementById("saveasdraft").value = "1"
+    }
+
+    function changeval2() {
+        document.getElementById("saveasdraft").value = "0"
+        document.getElementById("fill").value = "75"
+    }
+
+    function validate(form) {
+        var saveasdraft = form.saveasdraft.value;
+        if (saveasdraft.match("1")) {
+            return true;
+        }
+
+        var collegename = form.collegename.value;
+        var collegeaddress = form.collegeaddress.value;
+
+
+        var coursename = form.coursename.value;
+        var coursefees = form.coursefees.value;
+
+        var course1name = form.course1name.value;
+        var course1year = form.course1year.value;
+        var course1board = form.course1board.value;
+        var course1per = form.course1per.value;
+        var course2name = form.course2name.value;
+        var course2year = form.course2year.value;
+        var course2board = form.course2board.value;
+        var course2per = form.course2per.value;
+        var course3name = form.course3name.value;
+        var course3year = form.course3year.value;
+        var course3board = form.course3board.value;
+        var course3per = form.course3per.value;
+        var year = /^\d{4}$/;
+        var per = /^\d{1,2}\.\d{1,2}$|^\d{1,3}$/;
+        var letters = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+        if (!collegename.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid College Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (collegeaddress.length < 20) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Address',
+                text: 'Enter correct college address',
+            });
+            return false;
+        }
+        if (!coursename.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!course1name.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 1 Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!(course1year.match(year))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Course 1 Year',
+                text: 'Enter correct year',
+            });
+            return false;
+        }
+        if (!course1board.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 1 Board',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (!course1per.match(per)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 1 Percentage',
+                text: 'Enter valid percentage upto two decimals Eg:90.80',
+            });
+            return false;
+        }
+
+        if (!course2name.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 2 Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!(course2year.match(year))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Course 2 Year',
+                text: 'Enter correct year',
+            });
+            return false;
+        }
+        if (!course2board.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 2 Board',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (!course2per.match(per)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 2 Percentage',
+                text: 'Enter valid percentage upto two decimals Eg:90.80',
+            });
+            return false;
+        }
+        if (!course3name.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 3 Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!(course3year.match(year))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Course 3 Year',
+                text: 'Enter correct year',
+            });
+            return false;
+        }
+        if (!course3board.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 3 Board',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (!course3per.match(per)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 3 Percentage',
+                text: 'Enter valid percentage upto two decimals Eg:90.80',
+            });
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

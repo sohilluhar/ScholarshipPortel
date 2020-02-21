@@ -1,0 +1,144 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    {% include "html_head.html" %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "trustsidebar.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Add Scholarship</h1>
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 col-lg-8 col-sm-12 offset-md-2 offset-lg-2">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Scholarship Details</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <form role="form" method="POST" id="addscholarhiptofire" action="/addscholarhiptofire"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="card-body">
+
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"><span class="text-danger">*</span> Scholarship
+                                            Name:</label>
+                                        <input type="text" name="sname" id="sname" class="form-control"
+                                               placeholder="Eg: Minority Scholarship" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"><span class="text-danger">*</span> Scholarship
+                                            Amount:</label>
+                                        <input type="number" name="samt" id="samt" class="form-control"
+                                               placeholder="Eg: 15000" min="0" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"><span class="text-danger">*</span>
+                                            Course Name:</label>
+                                        <input type="text" name="scoursename" id="scoursename" class="form-control"
+                                               placeholder="Eg: Engineering,Medical,HSC" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><span class="text-danger">*</span> Scholarship Category:</label>
+                                        <select class="form-control" name="scat" id="scat" required>
+                                            <option value="">Select Scholarship Category</option>
+                                            <option value="Graduation">Graduation</option>
+                                            <option value="College">College</option>
+                                            <option value="School">School</option>
+                                            <option value="Others">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><span class="text-danger">*</span> Eligibility Criteria:</label>
+                                        <textarea class="form-control" rows="3"
+                                                  id="seligibility" name="seligibility"
+                                                  placeholder="Enter eligibility Criteria "
+                                                  required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"><span class="text-danger">*</span>
+                                            Dead Line :</label>
+                                        <input type="text" name="sdeadline" id="sdeadline" class="form-control" required
+                                        >
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Add
+                                        Scholarship
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+<script>
+    var today = moment();
+    document.getElementById("sdeadline").value = today.format('DD-MMMM-YYYY');
+    $(function () {
+        $('input[name="sdeadline"]').daterangepicker({
+            singleDatePicker: true,
+            autoUpdateInput: false,
+            startDate: today,
+        });
+        $('#sdeadline').on('apply.daterangepicker', function (ev, picker) {
+            document.getElementById("sdeadline").value = picker.startDate.format('DD-MMMM-YYYY');
+        });
+    });
+
+
+</script>
+</body>
+</html>

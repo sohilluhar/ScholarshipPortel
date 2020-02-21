@@ -1,0 +1,51 @@
+{% load static %}
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!--link rel="stylesheet" href="static/css/style.css"-->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Contact Us | BookBuddy </title>
+</head>
+<body>
+  <div class="container-fluid section1">
+  <div class="container">
+	<div class="row">
+	<div class="col-sm-6 colText">
+    <h1>Don't be a stranger</h1>
+    <h2>Just say hello.</h2>
+    <p>Bootstrap employs a handful of important global styles and settings
+       that you’ll need to be aware of when using it,all of which are almost
+       exclusively geared towards the normalization of cross browser styles.
+       Let’s dive in.</p>
+    <p>Need help?</p>
+    <h6>bookbuddyweb@gmail.com</h6>
+    <br>
+    <p>Feel like taking</p>
+    <h6>7738413265</h6>
+	</div><!-- col 1-->
+	<div class="col-sm-6">
+    <form action="/sendmsg/" method="post">
+      {% csrf_token %}
+    <h2 style="color:#535c68; text-align:left;">Contact us</h2>
+    <input type="text" class="form-style" name="name" placeholder="Name" required><br>
+    <input type="text" class="form-style" name="email" placeholder="Email address" required><br>
+    <textarea  name="msg" class="form-style" rows="3"   placeholder="Messege" required></textarea><br>
+    <input type="submit" class="submit" value="Send">
+    </form>
+	</div><!-- col 2-->
+</div><!-- row-->
+</div><!-- end container-->
+</div><!-- end container-fliud-->
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>

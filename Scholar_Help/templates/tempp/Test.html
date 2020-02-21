@@ -1,0 +1,16 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DashBoard</title>
+</head>
+<body>
+<form method="post" action="/user/testbook/">
+{% csrf_token %}
+{%for key,values in  books.items %}
+<a name="test"> <li>{{values.name}}</li></a>
+{%endfor%}
+<input type="submit" value="Log In">
+</form>
+</body>
+</html>

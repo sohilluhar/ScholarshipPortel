@@ -1,0 +1,127 @@
+.view-book-detail-page {
+	background: white;
+
+	.book-section {
+		background: white;
+		padding: 10rem 0;
+		font-family: Karla-Regular;
+		letter-spacing: -0.5px;
+		border-bottom: solid 1px #e5e5e5;
+
+		.book-details-left {
+			padding: 3rem;
+			// border: solid 1px grey;
+			// border-radius: 4px;
+			img {
+				width: 19rem;
+				height: 26rem;
+				display: inline-block;
+			}
+		}
+		.book-details-right {
+			border-right: solid 1px #e5e5e5;
+			padding-right: 2rem;
+			h1 {
+				font-family: PlayfairDisplay-Bold;
+				font-size: 4rem;
+				text-transform: capitalize;
+			}
+			h6 {
+				font-family: Karla-Regular;
+				font-size: 1.8rem;
+			}
+			p {
+				font-family: Karla-Bold;
+				font-size: 4rem;
+				span {
+					font-family: Karla-Regular;
+					font-size: 4rem;
+				}
+			}
+			.hightlights-wrapper {
+				h5 {
+					font-family: Karla-Bold;
+					margin-bottom: 1.5rem;
+				}
+				table {
+					width: 100%;
+					td {
+						padding-bottom: 1rem;
+						// padding-left: 0;
+					}
+				}
+			}
+		}
+
+		.contact-details-wrapper {
+			padding-top: 2rem;
+			height: 35rem;
+			position: relative;
+			h3 {
+				font-family: Karla-Bold;
+				font-size: 3rem;
+				margin-bottom: 2.5rem;
+				margin-top: 0rem;
+			}
+			.contact-wrapper {
+				// margin-top: 5rem;
+				p {
+					font-size: 1.5rem;
+					margin-bottom: 0;
+				}
+				h6 {
+					font-family: Karla-Bold;
+					font-size: 2.4rem;
+					margin-top: 0.5rem;
+					margin-bottom: 2rem;
+				}
+				a {
+					font-family: Karla-Bold;
+					display: inline-block;
+					background-color: #6c61f6;
+					color: white;
+					padding: 1rem;
+					border-radius: 4px;
+					width: 100%;
+					text-align: center;
+					box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+
+					&:hover {
+						box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.12);
+					}
+				}
+			}
+
+			.note-wrapper {
+				background-color: aliceblue;
+				padding: 2rem;
+				border-radius: 4px;
+				margin-top: 0.5rem;
+				position: absolute;
+				bottom: 10;
+				h6 {
+					font-family: Karla-Bold;
+					font-size: 1.8rem;
+					margin-top: 0;
+				}
+				p {
+					font-family: Karla-Regular;
+					margin-bottom: 1rem;
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+			}
+		}
+	}
+
+	.top-books-section {
+		margin-top: 0;
+		.section-title {
+			text-align: center;
+		}
+		.books-wrapper {
+			padding: 4rem !important;
+		}
+	}
+}

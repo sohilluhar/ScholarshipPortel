@@ -1,0 +1,343 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+</head>
+<body class="hold-transition skin-blue sidebar-collapse">
+{#{% include "user_nav_header.html" %}#}
+
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h1></h1>
+
+
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 offset-2">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Family Details</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             aria-valuenow="{{ currentuser.profilefill }}" aria-valuemin="0"
+                                             aria-valuemax="100" style="width: {{ currentuser.profilefill }}%">
+                                            <span>{{ currentuser.profilefill }}% Complete</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <form role="form" id="user-personaldetails" onsubmit="return validate(this)"
+                                  action="/saveuserfamilyinfo" method="post">
+                                {% csrf_token %}
+                                <div class="card-body">
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Address Info</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="form-group">
+                                                        <label>Address</label>
+                                                        <textarea class="form-control" rows="3"
+                                                                  name="address" id="address"
+                                                                  placeholder="Enter address"
+
+                                                        >{{ userprofile.address }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="pincode">Pin Code</label>
+                                                        <input type="number" name="pincode" class="form-control"
+                                                               id="pincode" value="{{ userprofile.pincode }}"
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Family Info</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="fatheralive">Is Father Alive?</label>
+                                                        <select class="form-control" name="fatheralive"
+                                                                id="fatheralive">
+                                                            <option value="">Select</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="fathername">Father Name</label>
+                                                        <input type="text" name="fathername" class="form-control"
+
+                                                               value="{{ userprofile.fathername }}" id="fathername"
+                                                               placeholder="Enter father's name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="father_occupation">Fathers Occupation</label>
+                                                        <input type="text" name="father_occupation" class="form-control"
+                                                               id="father_occupation"
+
+                                                               value="{{ userprofile.fatheroccupation }}"
+                                                               placeholder="Enter father's occupation">
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="father_income">Fathers Monthly Income</label>
+                                                        <input type="number" name="father_income" class="form-control"
+                                                               value="{{ userprofile.fatherincome }}"
+                                                               id="father_income"
+                                                               placeholder="Enter father's monthly income">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="motheralive">Is Mother Alive?</label>
+                                                        <select class="form-control" name="motheralive"
+                                                                id="motheralive">
+                                                            <option value="">Select</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="mothername">Mother Name</label>
+                                                        <input type="text" name="mothername" class="form-control"
+
+                                                               value="{{ userprofile.mothername }}"
+                                                               id="mothername" placeholder="Enter mother's name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="mother_occupation">Mothers Occupation</label>
+                                                        <input type="text" name="mother_occupation" class="form-control"
+                                                               id="mother_occupation"
+
+                                                               value="{{ userprofile.motheroccupation }}"
+                                                               placeholder="Enter mother's occupation">
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label for="mother_income">Mothers Monthly Income</label>
+                                                        <input type="number" name="mother_income" class="form-control"
+                                                               id="mother_income"
+
+                                                               value="{{ userprofile.motherincome }}"
+                                                               placeholder="Enter mother's monthly income">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+
+                                    <input type="text" name="saveasdraft" class="form-control" id="saveasdraft"
+                                           hidden value="0">
+                                    <input type="text" name="fill" class="form-control" id="fill"
+                                           hidden value="20">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="changeval()">Save as
+                                        Draft
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" onclick="changeval2()">Next
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <div class="col-md-6">
+
+                    </div>
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+<script>
+
+    document.getElementById("fatheralive").value = "{{userprofile.fatheralive}}";
+    document.getElementById("motheralive").value = "{{userprofile.motheralive}}";
+
+
+    function changeval() {
+        document.getElementById("saveasdraft").value = "1"
+    }
+
+    function changeval2() {
+        document.getElementById("saveasdraft").value = "0"
+        document.getElementById("fill").value = "50"
+    }
+
+    function validate(form) {
+        var saveasdraft = form.saveasdraft.value;
+        if (saveasdraft.match("1")) {
+            return true;
+        }
+
+        var address = form.address.value;
+        var pincode = form.pincode.value;
+
+        var fatheralive = form.fatheralive;
+        var motehralive = form.motheralive;
+
+        var father_name = form.fathername.value;
+        var father_occupation = form.father_occupation.value;
+        var father_income = form.father_income.value;
+
+        var mother_name = form.mothername.value;
+        var mother_occupation = form.mother_occupation.value;
+        var mother_income = form.mother_income.value;
+
+
+        if (address.length < 20) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Address',
+                text: 'Enter correct address',
+            });
+            return false;
+        }
+        var pin = /^\d{6}$/;
+        if (!(pincode.match(pin))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Pincode',
+                text: 'Enter correct 6 digit pincode',
+            });
+            return false;
+        }
+
+        if (fatheralive.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: 'Father Alive not selected',
+                text: 'Please select Yes or No',
+            });
+            return false;
+        }
+
+        var letters = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+        if (!father_name.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Father Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!father_occupation.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Father Occupation',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+
+        if (motehralive.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: 'Mother Alive not selected',
+                text: 'Please select Yes or No',
+            });
+            return false;
+        }
+
+        if (!mother_name.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Mother Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!mother_occupation.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Mother Occupation',
+                text: 'Enter characters only',
+            });
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

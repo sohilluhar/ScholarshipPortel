@@ -1,0 +1,124 @@
+{% load static %}
+{% block content %}
+
+<html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>All Books</title>
+        <link href="{% static './css/bootstrap.min.css/' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static './css/styles.css/' %}" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <!-- NAVBAR -->
+        <nav>
+            <div class="container">
+                <div class="row">
+                    <div class="brand">
+                        <a href="/user/viewbook">Second Store</a>
+                    </div>
+                    <div class="search">
+                        <form>
+                            <div class="input-wrapper">
+                                <input type="text" placeholder="Search books">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="pull-right action-links">
+                        <li><a class="sell-btn" href="/user/addbook">SELL</a></li>
+                        {%if islog%}
+                        <li><a class="login-btn" href="/user/logout">LOGOUT</a></li>
+                        {%else%}
+                        <li><a class="login-btn" href="#">LOGIN</a></li>
+                        {%endif%}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- FEATURED 3 BOOKS -->
+        <div class="all-books featured-books">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="title">Latest Books</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    {%for key,values in threebooks.items %}
+                    <!--to get all books type allbooks-->
+                    {% csrf_token %}
+                    <div class="col-sm-4">
+                        <div class="book-card-wrapper">
+                            <a href="/user/book/{{key}}">
+                                <div class="book-card">
+                                    <div class="col-A">
+                                        <img class="b-image" src="{{values.bookimg}}" alt="">
+                                    </div>
+                                    <div class="col-B">
+                                        <h3 class="b-name">{{values.name}}</h3>
+                                        <h4 class="b-username"> <span>By:&nbsp;</span> {{values.username}}</h4>
+                                        <h2 class="b-price"><span>Price:&nbsp;</span>{{values.price}} </h2>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!--book-card-wrapper-->
+                    </div>
+                    <!--COL-SM-4-->
+                    {%endfor%}
+                </div>
+                <!--ROW-->
+            </div>
+            <!--CONTAINER-->
+        </div>
+
+        <!--ALL BOOKS-->
+        <div class="all-books">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="title">Browse</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    {%for key,values in allbooks.items %}
+                    <!--to get all books type allbooks-->
+                    {% csrf_token %}
+                    <div class="col-sm-4">
+                        <div class="book-card-wrapper">
+                            <a href="/user/book/{{key}}">
+                                <div class="book-card">
+                                    <div class="col-A">
+                                        <img class="b-image" src="{{values.bookimg}}" alt="">
+                                    </div>
+                                    <div class="col-B">
+                                        <h3 class="b-name">{{values.name}}</h3>
+                                        <h4 class="b-username"> <span>By:&nbsp;</span> {{values.username}}</h4>
+                                        <h2 class="b-price"><span>Price:&nbsp;</span>{{values.price}} </h2>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!--book-card-wrapper-->
+                    </div>
+                    <!--COL-SM-4-->
+                    {%endfor%}
+                </div>
+                <!--ROW-->
+            </div>
+            <!--CONTAINER-->
+        </div>
+
+
+        <p>Login To View Details</p>
+        <a href="/user/login"><button type="button" name="button" class="buttons">Go to Dashboard</button></a>
+
+        <!-- SCRIPTS -->
+        <script src="{% static './script/jquery3.min.js/' %}"></script>
+        <script src="{% static './script/bootstrap.min.js/' %}"></script>
+    </body>
+
+</html>
+{% endblock %}

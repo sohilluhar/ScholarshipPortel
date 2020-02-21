@@ -1,0 +1,599 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+</head>
+<body class="hold-transition skin-blue sidebar-collapse">
+{#{% include "user_nav_header.html" %}#}
+
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h1></h1>
+
+
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 offset-2">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Personal Details</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             aria-valuenow="{{ currentuser.profilefill }}" aria-valuemin="0"
+                                             aria-valuemax="100" style="width: {{ currentuser.profilefill }}%">
+                                            <span>{{ currentuser.profilefill }}% Complete</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <form role="form" id="user-personaldetails" onsubmit="return validate(this)"
+                                  action="/saveuserpersonalinfo" method="post">
+                                {% csrf_token %}
+                                <div class="card-body">
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Personal Info</h5>
+                                        </div>
+                                        <div class="card-body">
+
+
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="sname">Surname</label>
+                                                        <input type="text" name="sname" class="form-control" id="sname"
+                                                               placeholder="Enter Surname "
+                                                               value="{{ userprofile.sname }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="fname">First Name</label>
+                                                        <input type="text" name="fname" class="form-control" id="fname"
+                                                               placeholder="Enter First Name"
+                                                               value="{{ userprofile.fname }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="lname">Last Name</label>
+                                                        <input type="text" name="lname" class="form-control" id="lname"
+                                                               placeholder="Enter Last Name"
+                                                               value="{{ userprofile.lname }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="dob">DOB</label>
+                                                        <input type="text" name="dob" class="form-control" id="dob"
+                                                               placeholder="Select DOB" value="{{ userprofile.dob }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="age">Age</label>
+                                                        <input type="text" name="age" class="form-control" id="age"
+                                                               value="{{ userprofile.age }}"
+                                                               disabled>
+                                                        <input type="text" name="age1" class="form-control" id="age1"
+                                                               value="{{ userprofile.age }}"
+                                                               hidden>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label>Gender</label>
+                                                        <select class="form-control" name="gender" id="gender"
+                                                        >
+                                                            <option value="">Select</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Contact Info</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input type="text" name="email" class="form-control" id="email"
+                                                               disabled
+                                                               value="{{ currentuser.mail }}">
+                                                        <input type="text" name="email" class="form-control" id="email"
+                                                               hidden
+                                                               value="{{ currentuser.mail }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="phone">Phone Number</label>
+                                                        <input type="text" name="phone" class="form-control" id="phone"
+                                                               disabled value="{{ currentuser.phone }}">
+                                                        <input type="text" name="phone" class="form-control" id="phone"
+                                                               hidden value="{{ currentuser.phone }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="parent_phone">Parent Phone Number</label>
+                                                        <input type="text" name="parent_phone" class="form-control"
+                                                               id="parent_phone"
+                                                               placeholder="Enter Parent Phone Number"
+                                                               value="{{ userprofile.parent_phone }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Other Info</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label>Religion</label>
+                                                        <select class="form-control" name="religious" id="religious"
+                                                        >
+                                                            <option value="">Select</option>
+                                                            <option value="Muslim">Muslim</option>
+                                                            <option value="Hindu">Hindu</option>
+                                                            <option value="Parsi">Parsi</option>
+                                                            <option value="Jain">Jain</option>
+                                                            <option value="Sikh">Sikh</option>
+                                                            <option value="Christian">Christian</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="cast">Caste Category</label>
+                                                    <select class="form-control" name="cast" id="cast"
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option value="General">General</option>
+                                                        <option value="OBC">OBC</option>
+                                                        <option value="SC">SC</option>
+                                                        <option value="ST">ST</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="anual_income">Family Annual Income</label>
+                                                        <input type="number" name="anual_income" class="form-control"
+                                                               id="anual_income"
+                                                               placeholder="Enter Family Annual Income" min="0"
+                                                               value="{{ userprofile.annual_income }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Bank Info</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="account_number">Account Number</label>
+                                                        <input type="number" name="account_number" class="form-control"
+                                                               id="account_number" placeholder="Enter Account Number"
+                                                               value="{{ userprofile.account_number }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label>Bank Name</label>
+                                                        <select class="form-control" name="bank_name" id="bank_name"
+                                                        >
+                                                            <option value="">Select</option>
+
+                                                            <option value="Allahabad Bank">Allahabad Bank</option>
+                                                            <option value="Andhra Bank">Andhra Bank</option>
+                                                            <option value="Axis Bank">Axis Bank</option>
+                                                            <option value="Bank of Bahrain and Kuwait">Bank of Bahrain
+                                                                and
+                                                                Kuwait
+                                                            </option>
+                                                            <option value="Bank of Baroda - Corporate Banking">Bank of
+                                                                Baroda - Corporate Banking
+                                                            </option>
+                                                            <option value="Bank of Baroda - Retail Banking">Bank of
+                                                                Baroda -
+                                                                Retail Banking
+                                                            </option>
+                                                            <option value="Bank of India">Bank of India</option>
+                                                            <option value="Bank of Maharashtra">Bank of Maharashtra
+                                                            </option>
+                                                            <option value="Canara Bank">Canara Bank</option>
+                                                            <option value="Central Bank of India">Central Bank of India
+                                                            </option>
+                                                            <option value="City Union Bank">City Union Bank</option>
+                                                            <option value="Corporation Bank">Corporation Bank</option>
+                                                            <option value="Deutsche Bank">Deutsche Bank</option>
+                                                            <option value="Development Credit Bank">Development Credit
+                                                                Bank
+                                                            </option>
+                                                            <option value="Dhanlaxmi Bank">Dhanlaxmi Bank</option>
+                                                            <option value="Federal Bank">Federal Bank</option>
+                                                            <option value="ICICI Bank">ICICI Bank</option>
+                                                            <option value="IDBI Bank">IDBI Bank</option>
+                                                            <option value="Indian Bank">Indian Bank</option>
+                                                            <option value="Indian Overseas Bank">Indian Overseas Bank
+                                                            </option>
+                                                            <option value="IndusInd Bank">IndusInd Bank</option>
+                                                            <option value="ING Vysya Bank">ING Vysya Bank</option>
+                                                            <option value="Jammu and Kashmir Bank">Jammu and Kashmir
+                                                                Bank
+                                                            </option>
+                                                            <option value="Karnataka Bank Ltd">Karnataka Bank Ltd
+                                                            </option>
+                                                            <option value="Karur Vysya Bank">Karur Vysya Bank</option>
+                                                            <option value="Kotak Bank">Kotak Bank</option>
+                                                            <option value="Laxmi Vilas Bank">Laxmi Vilas Bank</option>
+                                                            <option value="Oriental Bank of Commerce">Oriental Bank of
+                                                                Commerce
+                                                            </option>
+                                                            <option value="Punjab National Bank - Corporate Banking">
+                                                                Punjab
+                                                                National Bank - Corporate Banking
+                                                            </option>
+                                                            <option value="Punjab National Bank - Retail Banking">Punjab
+                                                                National Bank - Retail Banking
+                                                            </option>
+                                                            <option value="Punjab & Sind Bank">Punjab & Sind Bank
+                                                            </option>
+                                                            <option value="Shamrao Vitthal Co-operative Bank">Shamrao
+                                                                Vitthal Co-operative Bank
+                                                            </option>
+                                                            <option value="South Indian Bank">South Indian Bank</option>
+                                                            <option value="State Bank of Bikaner & Jaipur">State Bank of
+                                                                Bikaner & Jaipur
+                                                            </option>
+                                                            <option value="State Bank of Hyderabad">State Bank of
+                                                                Hyderabad
+                                                            </option>
+                                                            <option value="State Bank of India">State Bank of India
+                                                            </option>
+                                                            <option value="State Bank of Mysore">State Bank of Mysore
+                                                            </option>
+                                                            <option value="State Bank of Patiala">State Bank of Patiala
+                                                            </option>
+                                                            <option value="State Bank of Travancore">State Bank of
+                                                                Travancore
+                                                            </option>
+                                                            <option value="Syndicate Bank">Syndicate Bank</option>
+                                                            <option value="Tamilnad Mercantile Bank Ltd.">Tamilnad
+                                                                Mercantile Bank Ltd.
+                                                            </option>
+                                                            <option value="UCO Bank">UCO Bank</option>
+                                                            <option value="Union Bank of India">Union Bank of India
+                                                            </option>
+                                                            <option value="United Bank of India">United Bank of India
+                                                            </option>
+                                                            <option value="Vijaya Bank">Vijaya Bank</option>
+                                                            <option value="Yes Bank Ltd">Yes Bank Ltd</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="ifsc_code">IFSC Code</label>
+                                                        <input type="text" name="ifsc_code" class="form-control"
+                                                               id="ifsc_code" placeholder="IFSC Code"
+                                                               value="{{ userprofile.ifsc_code }}">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+
+                                    <input type="text" name="saveasdraft" class="form-control" id="saveasdraft"
+                                           hidden value="0">
+                                    <input type="text" name="fill" class="form-control" id="fill"
+                                           hidden value="0">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="changeval()">Save as
+                                        Draft
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" onclick="changeval2()">Next
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <div class="col-md-6">
+
+                    </div>
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+<script>
+
+    document.getElementById("gender").value = "{{userprofile.gender}}";
+    document.getElementById("religious").value = "{{userprofile.religious}}";
+    document.getElementById("cast").value = "{{userprofile.cast}}";
+    document.getElementById("bank_name").value = "{{userprofile.bank_name}}";
+
+    var today = moment();
+    {#document.getElementById("dob").value = today.format('DD-MMMM-YYYY');#}
+    $(function () {
+        $('input[name="dob"]').daterangepicker({
+            singleDatePicker: true,
+            autoUpdateInput: false,
+            startDate: '01/01/2005',
+            maxDate: today,
+            maxYear: 5,
+            showDropdowns: true,
+        });
+        $('#dob').on('apply.daterangepicker', function (ev, picker) {
+            document.getElementById("dob").value = picker.startDate.format('DD/MM/YYYY');
+            var dob = picker.startDate.format('YYYY');
+            var today = new Date().getFullYear();
+            var age = today - dob;
+            document.getElementById("age").value = age;
+            document.getElementById("age1").value = age;
+
+
+        });
+    });
+
+    function changeval() {
+        document.getElementById("saveasdraft").value = "1"
+    }
+
+    function changeval2() {
+        document.getElementById("saveasdraft").value = "0"
+        document.getElementById("fill").value = "25"
+    }
+
+    function validate(form) {
+        var saveasdraft = form.saveasdraft.value;
+        if (saveasdraft.match("1")) {
+            return true;
+        }
+
+        var sname = form.sname.value;
+        var fname = form.fname.value;
+        var lname = form.lname.value;
+
+        var dob = form.dob;
+        var gender = form.gender;
+
+        var pphone = form.parent_phone.value;
+        var religious = form.religious;
+        var cast = form.cast;
+        var annual_income = form.anual_income.value;
+
+        var account_num = form.account_number.value;
+        var bank_name = form.bank_name;
+        var ifsc_code = form.ifsc_code.value;
+
+
+        {#console.log(phone.length);#}
+        var letters = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+        if (!sname.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Surname',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!fname.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid First Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!lname.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Last Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (dob.value === "") {
+            Swal.fire({
+                icon: "error",
+                title: 'DOB not entered',
+                text: 'Please enter DOB',
+            });
+            return false;
+        }
+
+        if (gender.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: 'Gender not selected',
+                text: 'Please select gender',
+            });
+            return false;
+        }
+
+        {##}
+        {##}
+        var phoneno = /^\d{10}$/;
+        if (!(pphone.match(phoneno))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Parent Phone Number',
+                text: 'Enter valid 10 digit phone number',
+            });
+            return false;
+        }
+
+
+        if (religious.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: 'Religious  not selected',
+                text: 'Please select religious',
+            });
+            return false;
+        }
+
+
+        if (cast.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: 'Cast not selected',
+                text: 'Please select cast',
+            });
+            return false;
+        }
+
+        var income = /^\d{5}$/;
+        if (annual_income.length < 5) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Annual Income',
+                text: 'Enter valid annual income',
+            });
+            return false;
+        }
+
+
+        if (account_num.length > 18 || account_num.length < 9) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Account Number',
+                text: 'Enter valid account number',
+            });
+            return false;
+        }
+
+
+        if (bank_name.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: 'Bank not selected',
+                text: 'Please select bank name',
+            });
+            return false;
+        }
+
+
+        var ifsc = /^[A-Za-z]{4}[a-zA-Z0-9]{7}$/;
+        if (!(ifsc_code.match(ifsc))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid IFSC Code',
+                text: 'Enter valid IFSC code',
+            });
+            return false;
+        }
+            {##}
+            {#var decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;#}
+            {#if (!password1.match(decimal)) {#}
+            {#    Swal.fire({#}
+            {#        icon : "error",#}
+            {#        title: 'Invalid Password',#}
+            {#        text: 'Password length should be 8 to 15 and must contain at least one small letter,one capital letter,one digit and one special character!',#}
+            {#    });#}
+            {##}
+            {#    return false;#}
+
+            {#// If Not same return False.#}
+            {#if (password1 != password2) {#}
+            {#    Swal.fire({#}
+            {#        icon : "error",#}
+            {#        title: 'Password Mismatch',#}
+            {#        text: 'Password and Confirm password did not match!',#}
+            {#    });#}
+            {#    return false;#}
+
+
+        // If same return True.
+        else {
+            {#alert("Password Match: Welcome to GeeksforGeeks!")#}
+
+            return true;
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

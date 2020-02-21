@@ -1,0 +1,62 @@
+{% load static %}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Register</title>
+    <link href="{% static './css/bootstrap.min.css/' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static './css/styles.css/' %}" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<section class="signup-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="image-wrapper">
+                   <img class="img-responsive" src="{% static './image/teardown.png/' %}" alt="">
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="content-wrapper label-input">
+                    <h2 class="page-title">Register</h2>
+                    <form method="post" action="/user/useradd/">
+                    {% csrf_token %}
+
+                        <div class="name-wrapper field-wrapper">
+                            <input type="text" name="name" placeholder="Name">
+                        </div>
+
+                         <div class="phone-wrapper field-wrapper">
+                            <input type="text" name="phone" placeholder="Phone">
+                        </div>
+
+                        <div class="email-wrapper field-wrapper">
+                            <input type="text" name="email" placeholder="Email address">
+                        </div>
+
+                        <div class="pass-wrapper field-wrapper">
+                            <input type="password" name="pass" placeholder="Password">
+                        </div>
+
+                         <div class="confirm-pass-wrapper field-wrapper">
+                             <input type="password" name="passc" placeholder="Confirm Password">
+                        </div>
+
+
+                        <input class="form-submit-btn" type="submit" value="Register">
+
+                        <hr>
+
+                        <a class="form-link create-ac-btn" href="/login">Already Registered? Login Here </a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>

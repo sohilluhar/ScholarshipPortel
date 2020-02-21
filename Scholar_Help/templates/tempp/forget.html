@@ -1,0 +1,141 @@
+{% load static %}
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Forget</title>
+
+        <link href="{% static './css/bootstrap.min.css/' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static './css/styles.css/' %}" rel="stylesheet" type="text/css" />
+        <style>
+            #msg {
+                visibility: hidden;
+                min-width: 250px;
+
+                background-color: yellow;
+                color: #000;
+                text-align: center;
+                border-radius: 2px;
+                padding: 16px;
+                position: fixed;
+                z-index: 1;
+                right: 30%;
+                top: 30px;
+                font-size: 17px;
+                margin-right: 50px;
+            }
+
+            #msg.show {
+                visibility: visible;
+                -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+                animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            }
+
+            @-webkit-keyframes fadein {
+                from {
+                    top: 0;
+                    opacity: 0;
+                }
+
+                to {
+                    top: 30px;
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadein {
+                from {
+                    top: 0;
+                    opacity: 0;
+                }
+
+                to {
+                    top: 30px;
+                    opacity: 1;
+                }
+            }
+
+            @-webkit-keyframes fadeout {
+                from {
+                    top: 30px;
+                    opacity: 1;
+                }
+
+                to {
+                    top: 0;
+                    opacity: 0;
+                }
+            }
+
+            @keyframes fadeout {
+                from {
+                    top: 30px;
+                    opacity: 1;
+                }
+
+                to {
+                    top: 0;
+                    opacity: 0;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <section class="forgot-pass-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        <div class="image-wrapper">
+                            <img class="img-responsive" src="{% static './image/forgot-pass.png/' %}" alt="">
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="content-wrapper">
+                            <h2>Forgot your Password?</h2>
+
+                            <form>
+                                <input type="email" name="email" placeholder="Enter your email" />
+                                <input class="reset-pass-btn" type="submit" value="Reset Password">
+                                <hr>
+                                <a class="login-page-btn" href="/login">Go back to Login Page</a>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!--<div class="forget">-->
+
+        <!--<form>-->
+
+        <!--<h2>Forget password</h2>-->
+        <!--<h5>Enter email here that you used on your account.We send link on your email to reset your password.</h5>-->
+        <!--<input type="text" name="username" placeholder="Enter your email" />-->
+        <!--<input type="button" value="Send" onclick="myFunction()"/>-->
+        <!--    <a href="login.html">Go back to Home page</a></form>-->
+        <!--</div>-->
+
+        <!--<div id="msg">Link sent to the email successfully!!</div>-->
+
+        <!--<script>-->
+        <!--function myFunction() {-->
+        <!--    var x = document.getElementById("msg");-->
+        <!--    x.className = "show";-->
+        <!--    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);-->
+        <!--}-->
+        <!--</script>-->
+        <script src="{% static './script/jquery3.min.js/' %}"></script>
+        <script src="{% static './script/bootstrap.min.js/' %}"></script>
+    </body>
+
+</html>

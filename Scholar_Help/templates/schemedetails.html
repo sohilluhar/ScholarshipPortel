@@ -1,0 +1,273 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <title>Scheme Details</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/slick.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+</head>
+
+<body class="view-book-detail-page">
+<!-- NAVBAR -->
+<nav class="color-nav">
+    <div class="container">
+        <div class="row">
+            <div class="brand">
+                <a href="/">ScholarHelp</a>
+            </div>
+            <div class="search">
+                <form>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Search books">
+                    </div>
+                </form>
+            </div>
+            <ul class="pull-right action-links">
+                {% if islog %}
+                    <li><a class="login-btn" href="/logout">LOGOUT</a></li>
+                {% else %}
+                    <li><a class="sell-btn" href="/register/">REGISTER</a></li>
+                    <li><a class="login-btn" href="/login/">LOGIN</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- BOOK CONTENT -->
+<section class="book-section">
+    <div class="container">
+
+        <!-- Heading Row -->
+        <div class="row">
+
+
+            <div class="col-sm-9">
+                <div class="book-details-right">
+                    <h1>{{ scheme.name }}</h1>
+                    <h6>For : {{ scheme.course }} Students</h6>
+                    <p><span>Upto ₹ {{ scheme.amount }}</span></p>
+
+                    <h6 style="font-size: larger;font-weight: bold">Trust Name</h6>
+                    <a href="/trust/{{ scheme.trust_id }}"
+                       style="font-size: medium;font-weight: normal;font-family: Karla-Regular">{{ trust.name }}</a>
+
+                    <h6 style="font-size: larger;font-weight: bold">Eligibility </h6>
+                    <p style="font-size: medium;font-weight: normal;font-family: Karla-Regular">
+                        {{ scheme.eligibility|linenumbers|linebreaks }}
+
+                    </p>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h6 style="font-size: larger;font-weight: bold">Dead Line </h6>
+                            <p style="font-size: medium;font-weight: normal;font-family: Karla-Regular">
+                                {{ scheme.lastdate }}</p>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <h6 style="font-size: larger;font-weight: bold">Category </h6>
+                            <a href="/getcat?category={{ scheme.level }}"
+                               style="font-size: medium;font-weight: normal;font-family: Karla-Regular">{{ scheme.level }}</a>
+                        </div>
+                    </div>
+
+                    {% if islog %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6 style="font-size: larger;font-weight: bold">Trust's Phone Number </h6>
+                                <p style="font-size: medium;font-weight: normal;font-family: Karla-Regular">
+                                    {{ trust.contact }}</p>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <h6 style="font-size: larger;font-weight: bold">Trust's Email Id </h6>
+                                <p style="font-size: medium;font-weight: normal;font-family: Karla-Regular">{{ trust.mailid }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="contact-details-wrapper">
+
+                        <div class="note-wrapper">
+                            <h6>Before Applying : </h6>
+                            <p style="font-size: medium;font-weight: normal;font-family: Karla-Regular">- Please contact
+                                trust for any enquiry about this scholarship.</p>
+                            <p style="font-size: medium;font-weight: normal;font-family: Karla-Regular">- Please check
+                                if you meet eligibility criteria of this scheme.</p>
+                            <p style="font-size: medium;font-weight: normal;font-family: Karla-Regular">- Actual amount
+                                sanctioned may vary.</p>
+                            <p style="font-size: medium;font-weight: normal;font-family: Karla-Regular">- Trust has full
+                                authority to Accept or Reject an application.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.col-md-6 -->
+            <div class="col-sm-3">
+                <div class="book-details-left text-center">
+                    <img class="img-responsive" src="{{ scheme.logo }}" alt="Trust Image">
+                </div>
+                <div class="contact-details-wrapper">
+
+                    <h3 class="text-center">Apply</h3>
+                    <div class="contact-wrapper">
+
+
+                        {% if islog %}
+                            <form>
+                                <input type="hidden" name="schemeid_apply" id="schemeid_apply"
+                                       value="{{ scheme_key }}">
+                                <input type="checkbox" name="terms" id="terms" required>
+                                <label for="terms">I agree terms and condition</label>
+                                <div style="height: 10vh" class="content-wrapper label-input">
+                                    <input style="background: #6c61f6" class="form-submit-btn" type="submit"
+                                           value="Apply">
+                                </div>
+                            </form>
+
+                        {% else %}
+                            <a class="contact-btn" href="/login">Login To Apply</a><br><br>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+</section>
+
+{#<section class="books-feed-section">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-sm-12">#}
+{#                <h1 class="section-title"><span><img src="{% static './icons/star.svg' %}" alt=""></span>#}
+{#                    Schemes</h1>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="books-wrapper">#}
+{#            <div class="row">#}
+{#                {% for key,values in scheme.items %}#}
+{#                    <!--to get all scheme type-->#}
+{##}
+{#                    {% csrf_token %}#}
+{#                    <div class="col-sm-4">#}
+{#                        <div data-aos="fade-up" data-aos-duration="1000" class="book">#}
+{#                            <img class="book-image img-responsive" src="{{ values.logo }}" alt="logo">#}
+{#                            <div class="content">#}
+{#                                <h5>{{ values.name }}</h5>#}
+{#                                <h6> For <b>{{ values.course }}</b></h6>#}
+{#                                <a href="/scheme/{{ key }}">₹ {{ values.amount }}</a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{#<hr>#}
+
+<section class="books-feed-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="section-title"><span><img src="{% static './icons/star.svg' %}" alt=""></span>
+                    Other {{ scheme.level }} Scholarship</h1>
+            </div>
+        </div>
+
+        <div class="books-wrapper">
+            <div class="row">
+                {% for key,values in other_schemes.items %}
+                    <!--to get all scheme type-->
+
+                    {% csrf_token %}
+                    <div class="col-sm-6">
+                        <div data-aos="fade-up" data-aos-duration="1000" class="book">
+                            <img class="book-image img-responsive" src="{{ values.logo }}" alt="logo">
+                            <div class="content">
+                                <h5>{{ values.name }}</h5>
+                                <h6> For <b>{{ values.course }}</b></h6>
+                                <h6> Upto ₹ {{ values.amount }}</h6>
+                                <a href="/scheme/{{ key }}">Apply</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- FAVOURITES  -->
+{#<section class="top-books-section">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-sm-12">#}
+{#                <h1 class="section-title">Other {{ scheme.level }} Scholarship </h1>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="slider-wrapper">#}
+{#            <!-- CONTROLS -->#}
+{#            <button class="left-arrow">#}
+{#                <i class="arrow left"></i>#}
+{#            </button>#}
+{#            <button class="right-arrow">#}
+{#                <i class="arrow right"></i>#}
+{#            </button>#}
+{#            <div class="inner-wrapper">#}
+{#                <!-- SLIDER -->#}
+{#                <div class="books-wrapper slider">#}
+{##}
+{#                    {% for key,values in all_trusts.items %}#}
+{#                        <h4>{{ values }}</h4>#}
+{#                        <h4>{{ key }}</h4>#}
+{#                        <div class="wrapper">#}
+{#                            <a href="/trust/{{ key }}"#}
+{#                            >#}
+{#                                <img class="book-image img-responsive" src="{{ values.logo }}" alt="">#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#        </div>#}
+{##}
+{#    </div>#}
+{#</section>#}
+
+<!-- SCRIPTS -->
+<script src="{% static 'script/jquery3.min.js' %}"></script>
+<script src="{% static 'script/bootstrap.min.js' %}"></script>
+<script src="{% static 'script/slick.min.js' %}"></script>
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script>
+    AOS.init({
+        once: true,
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.slider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 1000,
+            prevArrow: $('.left-arrow'),
+            nextArrow: $('.right-arrow')
+        });
+    });
+</script>
+</body>
+
+</html>

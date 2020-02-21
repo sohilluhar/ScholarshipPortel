@@ -1,0 +1,51 @@
+{% load static %}
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BookBuddyWeb</title>
+    <link href="{% static 'css/cong.css' %}" rel="stylesheet" type="text/css" />
+    <link href="static/css/cong.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background:url("{% static 'image/background.jpg' %}");
+        background-size: cover;
+        font-family: sans-serif;
+        color: #fff;
+        text-align: center;
+      }
+
+      .buttons {
+        border: none;
+        outline: none;
+        height: 40px;
+        color: #fff;
+        font-size: 16px;
+        background: rgb(255, 38, 126);
+        cursor: pointer;
+        border-radius: 15px;
+        padding: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cong">
+      <form>
+        <h2>Hello {{user.name}} </h2>
+        <h2>Congratulations you Log In successfully!!! </h2>
+        <a href="/user/addbook">
+          <button type="button" name="button" class="buttons">Add Book</button></a>
+        <a href="/">
+          <button type="button" name="button" class="buttons">View Book</button></a>
+        <a href="/user/logout">
+          <button type="button" name="button" class="buttons">Logout</button></a><br><br>
+        <a href="/">Go back to Home page</a>
+      </form>
+    </div>
+  </body>
+
+</html>

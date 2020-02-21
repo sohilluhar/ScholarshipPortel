@@ -1,0 +1,258 @@
+{% load static %}
+{% block content %}
+
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Scholar Help </title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/slick.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <nav>
+      <div class="container">
+        <div class="row">
+          <div class="brand">
+            <a href="/">Scholar Help</a>
+          </div>
+          <div class="search">
+            <form>
+              <div class="input-wrapper">
+                <input type="text" placeholder="Search books">
+              </div>
+            </form>
+          </div>
+          <ul class="pull-right action-links">
+            <li><a class="sell-btn" href="/user/addbook">START APPLYING</a></li>
+
+            <!-- {%if islog%}
+            <li><a class="login-btn" href="/user/logout">LOGOUT</a></li>
+            {%else%}
+            <li><a class="login-btn" href="/user/login">LOGIN</a></li>
+            {%endif%} -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ABOVE FOLD -->
+    <section class="above-fold-section">
+      <div class="black-overlay"></div>
+      <div class="content">
+        <h1 class="line anim-typewriter">Gateway to Scholarship World</h1>
+
+        <div class="title-wrapper">
+          <h2>Search from <span>1000'</span>s of Scholarship</h2>
+        </div>
+
+        <div class="search-wrapper">
+          <form method="GET" action="./search/">
+            <input type="text" name="booksearch" placeholder="search books">
+          </form>
+        </div>
+      </div>
+
+
+    </section>
+
+    <!-- OUR RECOMMENDATIONS SLIDER   -->
+    <section class="top-books-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title"> <span><img src="{% static './icons/star.svg' %}" alt=""></span>
+              Trusts
+            </h1>
+          </div>
+        </div>
+
+        <div class="slider-wrapper">
+          <!-- CONTROLS -->
+          <button class="left-arrow">
+            <i class="arrow left"></i>
+          </button>
+          <button class="right-arrow">
+            <i class="arrow right"></i>
+          </button>
+          <div class="inner-wrapper">
+            <!-- SLIDER -->
+            <div class="books-wrapper slider">
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Becoming-Michelle-Obama/dp/0241334144/ref=sr_1_16?crid=1YXOFHKAS510U&keywords=biography+books&qid=1570768211&s=books&sprefix=biogr%2Cstripbooks%2C259&sr=1-16"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/amp.png' %}" alt="">
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Wings-Fire-Autobiography-Abdul-Kalam/dp/8173711461/ref=zg_bs_books_36?_encoding=UTF8&psc=1&refRID=C4XBS311GYRWXHXVDW9M"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/tata.jpg' %}" alt="">
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Shoe-Dog-Memoir-Creator-NIKE/dp/1471146723/ref=pd_sbs_14_2/260-3611461-1752455?_encoding=UTF8&pd_rd_i=1471146723&pd_rd_r=d7178c6a-8bde-45bc-a531-231dc28d211f&pd_rd_w=76Tir&pd_rd_wg=9e65W&pf_rd_p=fbf43daf-8fb3-47b5-9deb-ae9cce3969a9&pf_rd_r=KHXP3Q3AVDESMV7JG85C&psc=1&refRID=KHXP3Q3AVDESMV7JG85C"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/sima.png' %}" alt="">
+                </a>
+              </div>
+
+              
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Why-Stopped-Wearing-My-Socks/dp/9387578704" target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/mesco.png' %}" alt="">
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Think-Like-Monk-Jay-Shetty/dp/0008386595/ref=zg_bs_books_2?_encoding=UTF8&psc=1&refRID=C4XBS311GYRWXHXVDW9M"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/samsung.png' %}" alt="">
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Mein-Kampf-Adolf-Hitler/dp/8172345429/ref=gbph_img_m-2_ec17_56952e9f?smid=A3H3WE9M6NY1KV&pf_rd_p=ec5b67e9-6f26-454c-b466-09ff19e7ec17&pf_rd_s=merchandised-search-2&pf_rd_t=101&pf_rd_i=976389031&pf_rd_m=A1VBAL9TL5WCBF&pf_rd_r=F0XVQJV6808DNWQ50NR7"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/hitler.jpg' %}" alt="">
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Subtle-Art-Not-Giving/dp/0062641549/ref=sr_1_1?crid=28I2MCEG09MCI&keywords=the+subtle+art+of+not+giving+a+fck&qid=1568539241&s=books&sprefix=the+sub%2Cstripbooks%2C271&sr=1-1"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/book4.jpg' %}" alt="">
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href=" https://www.amazon.in/Alibaba-House-that-Jack-Built/dp/0062413406/ref=sr_1_18?crid=1YXOFHKAS510U&keywords=biography+books&qid=1570768211&s=books&sprefix=biogr%2Cstripbooks%2C259&sr=1-18"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/jackma.jpg' %}" alt="">
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Hooked-How-Build-Habit-Forming-Products/dp/0241184835/ref=sr_1_3?keywords=hooked&qid=1570769391&s=books&sr=1-3"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/hooked.jpg' %}" alt="">
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TOP CATEGORIES -->
+    <section class="top-categories-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title"> <span><img src="{% static './icons/star.svg' %}" alt=""></span>Scholarships
+            </h1>
+          </div>
+        </div>
+        <div class="categories-wrapper">
+          <a href="./getcat/?category=Biography" class="category category1" data-aos="fade-up" data-aos-duration="1800">
+            <img src="./static/icons/biography.svg">
+            <p>Graduation</p>
+          </a>
+
+          <a href="./getcat/?category=Business" data-aos="fade-up" data-aos-duration="2000" class="category category2">
+            <img src="./static/icons/business.svg">
+            <p>College</p>
+          </a>
+
+          <a href="./getcat/?category=Technology" data-aos="fade-up" data-aos-duration="2400"
+            class="category category4">
+            <img src="./static/icons/science.svg">
+            <p>School</p>
+          </a>
+
+          <a href="./getcat/?category=Others" data-aos="fade-up" data-aos-duration="2200" class="category category3">
+            <img src="./static/icons/romance.svg">
+            <p>Others</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <section class="books-feed-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title"> <span><img src="{% static './icons/star.svg' %}" alt=""></span>Browse</h1>
+          </div>
+        </div>
+
+        <div class="books-wrapper">
+          <div class="row">
+            {%for key,values in allbooks.items %}
+            <!--to get all books type allbooks-->
+            {% csrf_token %}
+            <div class="col-sm-4">
+              <div data-aos="fade-up" data-aos-duration="1000" class="book">
+                <img class="book-image img-responsive" src="{{values.bookimg}}" alt="">
+                <div class="content">
+                  <h5>{{values.name}}</h5>
+                  <h6>Seller: <b>{{values.username}}</b></h6>
+                  <a href="/book/{{key}}">₹ {{values.price}}</a>
+                </div>
+              </div>
+            </div>
+            {%endfor%}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCRIPTS -->
+    <script src="{% static 'script/jquery3.min.js' %}"></script>
+    <script src="{% static 'script/bootstrap.min.js' %}"></script>
+    <script src="{% static 'script/slick.min.js' %}"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <script>
+      AOS.init({
+        once: true,
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $('.slider').slick({
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 1000,
+          prevArrow: $('.left-arrow'),
+          nextArrow: $('.right-arrow')
+        });
+      });
+    </script>
+
+
+
+    {% if book%}
+    <script>
+      alert('Book Not Found');
+    </script>
+    {%endif%}
+
+  </body>
+
+</html>
+{% endblock %}

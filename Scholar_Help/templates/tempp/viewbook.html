@@ -1,0 +1,212 @@
+{% load static %}
+<html lang="en">
+
+  <head>
+    <title>Book Details</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/slick.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  </head>
+
+  <body class="view-book-detail-page">
+    <!-- NAVBAR -->
+    <nav class="color-nav">
+      <div class="container">
+        <div class="row">
+          <div class="brand">
+            <a href="/">Second Store</a>
+          </div>
+          <div class="search">
+            <form>
+              <div class="input-wrapper">
+                <input type="text" placeholder="Search books">
+              </div>
+            </form>
+          </div>
+          <ul class="pull-right action-links">
+            <li><a class="sell-btn" href="/user/addbook">SELL</a></li>
+            {%if islog%}
+            <li><a class="login-btn" href="/user/logout">LOGOUT</a></li>
+            {%else%}
+            <li><a class="login-btn" href="/user/login">LOGIN</a></li>
+            {%endif%}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- BOOK CONTENT -->
+    <section class="book-section">
+      <div class="container">
+
+        <!-- Heading Row -->
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="book-details-left text-center">
+              <img class="img-responsive" src="{{book.bookimg}}" alt="Book Image">
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="book-details-right">
+              <h1>{{book.name}}</h1>
+              <h6>{{book.description}}</h6>
+              <p><span>₹</span> {{book.price}}</p>
+
+              <div class="hightlights-wrapper">
+                <h5>Highlights</h5>
+                <table width="100%">
+                  <tr>
+                    <td width="20%">Seller name</td>
+                    <td>{{book.username}}</td>
+                  </tr>
+                  <tr>
+                    <td width="20%">Author</td>
+                    <td> {{book.author}}</td>
+                  </tr>
+                  <tr>
+                    <td width="20%">Publication</td>
+                    <td>{{book.publication}}</td>
+                  </tr>
+                  <tr>
+                    <td width="20%">Category</td>
+                    <td> {{book.bookcat}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /.col-md-6 -->
+          <div class="col-sm-3">
+            <div class="contact-details-wrapper">
+
+              <h3>Seller's Contact</h3>
+              <div class="contact-wrapper">
+
+                <p>Phone Number :</p>
+                {%if islog%}
+                <h6>{{book.userphone}}</h6>
+                {%else%}
+                <a class="contact-btn" href="/user/login">Login To View</a><br><br>
+                {%endif%}
+              </div>
+
+              <div class="note-wrapper">
+                <h6>Before Buying : </h6>
+                <p>- Please check if the book is genuine.</p>
+                <p>- The book is not torn or damaged.</p>
+                <p>- Make sure no pages are torn off from the book. </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+      </div>
+    </section>
+
+    <!-- FAVOURITES  -->
+    <section class="top-books-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h1 class="section-title">Have A Look at Our
+              Recommendations
+            </h1>
+          </div>
+        </div>
+
+        <div class="slider-wrapper">
+          <!-- CONTROLS -->
+          <button class="left-arrow">
+            <i class="arrow left"></i>
+          </button>
+          <button class="right-arrow">
+            <i class="arrow right"></i>
+          </button>
+          <div class="inner-wrapper">
+            <!-- SLIDER -->
+            <div class="books-wrapper slider">
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Why-Stopped-Wearing-My-Socks/dp/9387578704" target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/book1.jpg' %}" alt="">
+                  <!-- <p>Alok Kejriwal</p> -->
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Alchemist-Paulo-Coelho/dp/8172234988/ref=sr_1_1?crid=1BIYGLRDS9OF8&keywords=alchemist+book&qid=1568539169&s=books&sprefix=achem%2Cstripbooks%2C270&sr=1-1"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/book2.jpg' %}" alt="">
+                  <!-- <p>Paulo Coelho</p> -->
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Think-Grow-Rich-Napoleon-Hill/dp/8192910911/ref=sr_1_3?crid=33Z1RSZV4XOBW&keywords=think+and+grow+rich&qid=1568539220&s=books&sprefix=think+%2Cstripbooks%2C276&sr=1-3"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/book3.jpg' %}" alt="">
+                  <!-- <p>Napolean Hill</p> -->
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Subtle-Art-Not-Giving/dp/0062641549/ref=sr_1_1?crid=28I2MCEG09MCI&keywords=the+subtle+art+of+not+giving+a+fck&qid=1568539241&s=books&sprefix=the+sub%2Cstripbooks%2C271&sr=1-1"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/book4.jpg' %}" alt="">
+                  <!-- <p>Mark Manson</p> -->
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/You-Can-Win-step-achievers/dp/9382951717/ref=sr_1_3?crid=1PDW8LCZT7K4K&keywords=shiv+khera&qid=1568539293&s=books&sprefix=shv+kh%2Cstripbooks%2C262&sr=1-3"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/book1.jpg' %}" alt="">
+                  <!-- <p>Shiv Khera</p> -->
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Think-Grow-Rich-Napoleon-Hill/dp/8192910911/ref=sr_1_3?crid=33Z1RSZV4XOBW&keywords=think+and+grow+rich&qid=1568539220&s=books&sprefix=think+%2Cstripbooks%2C276&sr=1-3"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/book3.jpg' %}" alt="">
+                  <!-- <p>Napolean Hill</p> -->
+                </a>
+              </div>
+
+              <div class="wrapper">
+                <a href="https://www.amazon.in/Subtle-Art-Not-Giving/dp/0062641549/ref=sr_1_1?crid=28I2MCEG09MCI&keywords=the+subtle+art+of+not+giving+a+fck&qid=1568539241&s=books&sprefix=the+sub%2Cstripbooks%2C271&sr=1-1"
+                  target="_blank">
+                  <img class="book-image img-responsive" src="{% static './image/book4.jpg' %}" alt="">
+                  <!-- <p>Mark Manson</p> -->
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCRIPTS -->
+    <script src="{% static 'script/jquery3.min.js' %}"></script>
+    <script src="{% static 'script/bootstrap.min.js' %}"></script>
+    <script src="{% static 'script/slick.min.js' %}"></script>
+    <script>
+      $(document).ready(function () {
+        $('.slider').slick({
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 1000,
+          prevArrow: $('.left-arrow'),
+          nextArrow: $('.right-arrow')
+        });
+      });
+    </script>
+  </body>
+
+</html>

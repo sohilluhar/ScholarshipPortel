@@ -1,0 +1,60 @@
+{% load static %}
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Login</title>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body class="login-page">
+
+<section class="login-section">
+    <div class="black-overlay"></div>
+
+    <!-- <div class="col-sm-">
+					<div class="login-background-img">
+						<img class="img-responsive" src="{% static 'image/reading.png' %}" alt="">
+					</div>
+				</div> -->
+
+    <div class="col-sm-4 col-sm-offset-7">
+        <div class="content-wrapper">
+            <div class="login-form-wrapper">
+                <h2 class="text-center">Sign in</h2>
+                <form method="post" action="/verify">
+                    {% csrf_token %}
+
+                    <div class="login-phone">
+                        <!--<p>Phone</p>-->
+                        <input type="text" name="mail" placeholder="Phone number"/>
+                    </div>
+                    <div class="login-password">
+                        <!--<p>Password</p>-->
+                        <input type="password" name="password" placeholder="Password"/>
+                    </div>
+
+                    <input class="login-btn" type="submit" value="Log in">
+
+                    <a class="forgot-btn" href="/forgotpassword">Forgot your password? </a>
+                    <hr>
+                    <a class="create-ac-btn" href="/register">New here? Register for new account </a>
+                    <a class="create-ac-btn" href="/trustlogin">Login as Trust </a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+<script src="{% static 'script/jquery3.min.js' %}"></script>
+<script src="{% static 'script/bootstrap.min.js' %}"></script>
+</body>
+
+</html>
