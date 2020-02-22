@@ -521,4 +521,4 @@ def saveusereducation(req):
     if save_draft == "0":
         return render(req, 'redirecthome.html',
                       {"swicon": "success", "swtitle": "Done", "swmsg": "Education Details Saved Successfully.",
-                       "path": "profile-education"})
+                       "path": "profile-uploaddoc"})
