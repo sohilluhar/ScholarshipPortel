@@ -1,0 +1,485 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+</head>
+<body class="hold-transition skin-blue sidebar-collapse">
+{#{% include "user_nav_header.html" %}#}
+
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h1></h1>
+
+
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+
+                <div class="modal fade" id="modal-wait">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Please wait ...</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Uploading document</p>
+
+                            </div>
+                            <div class="modal-footer justify-content-between">
+
+
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 offset-2">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Education Details</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             aria-valuenow="{{ currentuser.profilefill }}" aria-valuemin="0"
+                                             aria-valuemax="100" style="width: {{ currentuser.profilefill }}%">
+                                            <span>{{ currentuser.profilefill }}% Complete</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <form role="form" id="user-education" onsubmit="return false"
+                                  action="/saveusereducation" method="post">
+                                {% csrf_token %}
+                                <div class="card-body">
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Personal Documents</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label><span class="text-danger">* </span>Photo Proof Id</label>
+                                                    <button type="button" class="btn btn-sm" data-toggle="modal"
+                                                            data-target="#modal-lg">
+                                                        <span class="text-info"> View list of documents</span>
+                                                    </button>
+
+
+                                                    <div class="modal fade" id="modal-lg">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Photo ID Proof (Upload Any
+                                                                        one from list of accepted ID documents)</h4>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <ul>
+                                                                        <li>PAN Card</li>
+                                                                        <li>Voter Identity Card</li>
+                                                                        <li>Driver’s License</li>
+                                                                        <li>Aadhar Card</li>
+
+                                                                    </ul>
+
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <input type="text" name="docphotoidname"
+                                                                       class="form-control"
+                                                                       id="docphotoidname"
+                                                                       placeholder="Enter name of document eg: Adhaarcard,Pancard,Voter Id,etc"
+                                                                       title="Enter name of document eg: Adhaarcard,Pancard,Voter Id,etc">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="docphotoidfile"
+                                                                           name="docphotoidfile">
+                                                                    <input type="hidden" id="docphotoidurl"
+                                                                           name="docphotoidurl">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('docphotoidfile','{{ currentuser.phone }}-docphotoproof','docphotoidurl','docphotoidview')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="docphotoidview"
+                                                                   name="docphotoidview" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+
+                                    <input type="text" name="saveasdraft" class="form-control" id="saveasdraft"
+                                           hidden value="0">
+                                    <input type="text" name="fill" class="form-control" id="fill"
+                                           hidden value="50">
+                                    <button type="submit" class="btn btn-outline-primary" onclick="changeval()">Save as
+                                        Draft
+                                    </button>
+                                    <button type="submit" class="btn btn-primary" onclick="changeval2()">Next
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <div class="col-md-6">
+
+                    </div>
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+
+<script src="{% static 'include/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyArPSVhwHv-rxxehxy0OUCE1ILCGXp17bI",
+        authDomain: "scholar-help-966a2.firebaseapp.com",
+        databaseURL: "https://scholar-help-966a2.firebaseio.com",
+        projectId: "scholar-help-966a2",
+        storageBucket: "scholar-help-966a2.appspot.com",
+        messagingSenderId: "988235258939",
+        appId: "1:988235258939:web:14290d685174b9461e901e",
+        measurementId: "G-RM8V5QZ205"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+
+    function uploadimage(fileele, filename, fileurl, viewfilelink) {
+        var storage = firebase.storage();
+        var file = document.getElementById(fileele).files[0];
+        var storageRef = storage.ref();
+        var fileex = file.name.split('.').pop();
+        console.log(viewfilelink);
+        fileex = fileex.toLowerCase();
+        var filesize = file.size;
+
+
+        if (fileex === "pdf" || fileex === "jpg" || fileex === "jpeg" || fileex === "png") {
+            if (filesize < 5000000) {
+                var uploadTask = storageRef.child("userDocuments/" + filename + "." + fileex).put(file);
+                $('#modal-wait').modal('show');
+                uploadTask.on('state_changed', function (snapshot) {
+                    // Observe state change events such as progress, pause, and resume
+                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED: // or 'paused'
+                            console.log('Upload is paused');
+                            break;
+                        case firebase.storage.TaskState.RUNNING: // or 'running'
+                            console.log('Upload is running');
+                            break;
+                    }
+                }, function (error) {
+                    // Handle unsuccessful uploads
+                }, function () {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                        $('#modal-wait').modal('hide');
+                        console.log('File available at', downloadURL);
+
+                        document.getElementById(fileurl).value = downloadURL;
+                        console.log(document.getElementById(viewfilelink));
+                        document.getElementById(viewfilelink).href = downloadURL;
+                        document.getElementById(viewfilelink).setAttribute('target', '_blank');
+                        document.getElementById(viewfilelink).className = "text-info";
+
+
+                    });
+                });
+            } else {
+                alert("file size limit exceed ");
+            }
+
+        } else {
+            alert("File type not allowed");
+        }
+    }
+
+</script>
+
+
+<script>
+
+
+    function changeval() {
+        document.getElementById("saveasdraft").value = "1"
+    }
+
+    function changeval2() {
+        document.getElementById("saveasdraft").value = "0"
+        document.getElementById("fill").value = "75"
+    }
+
+    function validate(form) {
+        var saveasdraft = form.saveasdraft.value;
+        if (saveasdraft.match("1")) {
+            return true;
+        }
+
+        var collegename = form.collegename.value;
+        var collegeaddress = form.collegeaddress.value;
+
+
+        var coursename = form.coursename.value;
+        var coursefees = form.coursefees.value;
+
+        var course1name = form.course1name.value;
+        var course1year = form.course1year.value;
+        var course1board = form.course1board.value;
+        var course1per = form.course1per.value;
+        var course2name = form.course2name.value;
+        var course2year = form.course2year.value;
+        var course2board = form.course2board.value;
+        var course2per = form.course2per.value;
+        var course3name = form.course3name.value;
+        var course3year = form.course3year.value;
+        var course3board = form.course3board.value;
+        var course3per = form.course3per.value;
+        var year = /^\d{4}$/;
+        var per = /^\d{1,2}\.\d{1,2}$|^\d{1,3}$/;
+        var letters = /^[a-z.A-Z-,]+(\s{0,1}[a-z.A-Z-, ])*$/;
+        if (!collegename.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid College Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (collegeaddress.length < 20) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Address',
+                text: 'Enter correct college address',
+            });
+            return false;
+        }
+        if (!coursename.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!course1name.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 1 Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!(course1year.match(year))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Course 1 Year',
+                text: 'Enter correct year',
+            });
+            return false;
+        }
+        if (!course1board.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 1 Board',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (!course1per.match(per)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 1 Percentage',
+                text: 'Enter valid percentage upto two decimals Eg:90.80',
+            });
+            return false;
+        }
+
+        if (!course2name.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 2 Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!(course2year.match(year))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Course 2 Year',
+                text: 'Enter correct year',
+            });
+            return false;
+        }
+        if (!course2board.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 2 Board',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (!course2per.match(per)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 2 Percentage',
+                text: 'Enter valid percentage upto two decimals Eg:90.80',
+            });
+            return false;
+        }
+        if (!course3name.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 3 Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!(course3year.match(year))) {
+            Swal.fire({
+                icon: "error",
+                title: 'Incorrect Course 3 Year',
+                text: 'Enter correct year',
+            });
+            return false;
+        }
+        if (!course3board.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 3 Board',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+
+        if (!course3per.match(per)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Course 3 Percentage',
+                text: 'Enter valid percentage upto two decimals Eg:90.80',
+            });
+            return false;
+        } else {
+
+            return true;
+        }
+    }
+
+
+</script>
+
+</body>
+</html>

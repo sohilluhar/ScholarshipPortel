@@ -346,6 +346,25 @@ def profile_education(request):
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
 
 
+def profile_doc(request):
+    if (Common.isLogin):
+        userprofile = OrderedDict()
+
+        db = connect_firebase()
+
+        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        try:
+            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+        except:
+            print("Error")
+
+        return render(request, 'user_doc.html',
+                      {"userprofile": userprofile, "currentuser": Common.currentUser.val(), "config": PyConfig.config1})
+    else:
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
+
+
 def saveuserpersonalinfo(req):
     surname = req.POST['sname']
     first_name = req.POST['fname']

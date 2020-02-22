@@ -53,6 +53,8 @@ urlpatterns = [
     path('saveuserfamilyinfo', views.saveuserfamilyinfo),
     path('profile-education', views.profile_education),
     path('saveusereducation', views.saveusereducation),
+    path('profile-uploaddoc', views.profile_doc),
+    # path('saveuserdocuments', views.savedocuments),
 
     path('', views.home)
 ]
