@@ -369,14 +369,14 @@ def saveuserpersonalinfo(req):
     save_draft = req.POST['saveasdraft']
 
     db = connect_firebase()
-    olddata = dict()
+    data = dict()
     try:
-        olddata = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
-        olddata = dict(olddata)
+        data = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+        data = dict(data)
     except:
         pass
 
-    data = {
+    newdata = {
         "sname": surname, "fname": first_name, "lname": last_name, "dob": dob, "age": age, "gender": gender,
         "email": email, "phone": phone, "parent_phone": parent_phone,
         "religious": religious, "cast": cast, "annual_income": annual_income,
@@ -384,7 +384,7 @@ def saveuserpersonalinfo(req):
 
     }
 
-    data.update(olddata)
+    data.update(newdata)
     db.child("UserProfile").child(str(phone)).set(
         data
     )
@@ -419,10 +419,10 @@ def saveuserfamilyinfo(req):
 
     db = connect_firebase()
 
-    olddata = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
-    olddata = dict(olddata)
-    print(olddata)
-    data = {
+    data = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+    data = dict(data)
+    print(data)
+    newdata = {
         "address": address, "pincode": pincode,
         "fatheralive": fatheralive, "fathername": fathername, "fatheroccupation": fatheroccupation,
         "fatherincome": fatherincome,
@@ -430,7 +430,7 @@ def saveuserfamilyinfo(req):
         "motherincome": motherincome
     }
 
-    data.update(olddata)
+    data.update(newdata)
     print(data)
     db.child("UserProfile").child(Common.currentUser.val().get("phone")).set(
         data
@@ -476,10 +476,10 @@ def saveusereducation(req):
 
     db = connect_firebase()
 
-    olddata = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
-    olddata = dict(olddata)
-    print(olddata)
-    data = {
+    data = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+    data = dict(data)
+    print(data)
+    newdata = {
         "collegename": collegename, "collegeaddress": collegeaddress, "coursename": coursename,
         "coursefees": coursefees,
         "course1name": course1name, "course1board": course1board, "course1year": course1year, "course1per": course1per,
@@ -488,7 +488,7 @@ def saveusereducation(req):
         "achievement": achievement
     }
 
-    data.update(olddata)
+    data.update(newdata)
     print(data)
     db.child("UserProfile").child(Common.currentUser.val().get("phone")).set(
         data
