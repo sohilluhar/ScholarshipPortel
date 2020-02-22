@@ -54,7 +54,8 @@
                         <!-- jquery validation -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Education Details</h3>
+                                <h3 class="card-title">Documents</h3>
+
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -72,6 +73,12 @@
                             <!-- /.card-header -->
                             <!-- form start -->
 
+                            <div class="row ml-4">
+                                <div class="col-12">
+                                    <p class="text-danger text-sm  ">Only jpeg,jpg,png,pdf type are allow and File size
+                                        should be less than 5 MB</p>
+                                </div>
+                            </div>
                             <form role="form" id="user-education" onsubmit="return false"
                                   action="/saveusereducation" method="post">
                                 {% csrf_token %}
@@ -126,14 +133,24 @@
                                                     <!-- /.modal -->
                                                     <div class="row">
                                                         <div class="col-4">
+
                                                             <div class="form-group">
 
-                                                                <input type="text" name="docphotoidname"
-                                                                       class="form-control"
-                                                                       id="docphotoidname"
-                                                                       placeholder="Enter name of document eg: Adhaarcard,Pancard,Voter Id,etc"
-                                                                       title="Enter name of document eg: Adhaarcard,Pancard,Voter Id,etc">
+                                                                <select class="form-control" name="docphotoidname"
+                                                                        id="docphotoidname"
+                                                                        required>
+                                                                    <option value="">Select Document Type</option>
+                                                                    <option value="PAN Card">PAN Card</option>
+                                                                    <option value="Voter Identity Card">Voter Identity
+                                                                        Card
+                                                                    </option>
+                                                                    <option value="Driver’s License">Driver’s License
+                                                                    </option>
+                                                                    <option value="Aadhar Card">Aadhar Card</option>
+
+                                                                </select>
                                                             </div>
+
                                                         </div>
                                                         <div class="col-4">
                                                             <div class="form-group">
@@ -172,6 +189,579 @@
 
 
                                             </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label><span class="text-danger">* </span>Age Proof </label>
+                                                    <button type="button" class="btn btn-sm" data-toggle="modal"
+                                                            data-target="#modal-lg1">
+                                                        <span class="text-info"> View list of documents</span>
+                                                    </button>
+
+
+                                                    <div class="modal fade" id="modal-lg1">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Age Proof (Upload Any
+                                                                        one from list of accepted ID documents)</h4>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <ul>
+                                                                        <li>Birth Certificate</li>
+                                                                        <li>Passport</li>
+                                                                        <li>Leaving Certificate</li>
+
+
+                                                                    </ul>
+
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                    <div class="row">
+                                                        <div class="col-4">
+
+                                                            <div class="form-group">
+
+                                                                <select class="form-control" name="docageproofname"
+                                                                        id="docageproofname"
+                                                                        required>
+                                                                    <option value="">Select Document Type</option>
+                                                                    <option value="Birth Certificate">Birth
+                                                                        Certificate
+                                                                    </option>
+                                                                    <option value="Passport">Passport</option>
+                                                                    <option value="Leaving Certificate">Leaving
+                                                                        Certificate
+                                                                    </option>
+
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="docageprooffile"
+                                                                           name="docageprooffile">
+                                                                    <input type="hidden" id="docageproofurl"
+                                                                           name="docageproofurl">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('docageprooffile','{{ currentuser.phone }}-docphotoproof','docageproofurl','docageproofview')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="docageproofview"
+                                                                   name="docageproofview" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Education Documents</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label><span class="text-danger">* </span>Marksheet</label>
+
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+
+                                                            <div class="form-group">
+
+
+                                                                <input type="text" class="form-control"
+
+                                                                       disabled value="SSC">
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="doccourse1file"
+                                                                           name="doccourse1file">
+                                                                    <input type="hidden" id="doccourse1url"
+                                                                           name="doccourse1url">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('doccourse1file','{{ currentuser.phone }}-doccourse1','doccourse1url','doccourse1view')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="doccourse1view"
+                                                                   name="doccourse1view" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <input type="text" class="form-control" disabled
+                                                                       value="HSC">
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="doccourse2file"
+                                                                           name="doccourse2file">
+                                                                    <input type="hidden" id="doccourse2url"
+                                                                           name="doccourse2url">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('doccourse2file','{{ currentuser.phone }}-doccourse2','doccourse2url','doccourse2view')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="doccourse2view"
+                                                                   name="doccourse2view" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <input type="text" class="form-control" disabled
+                                                                       value="DIPLOMA">
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="doccourse3file"
+                                                                           name="doccourse3file">
+                                                                    <input type="hidden" id="doccourse3url"
+                                                                           name="doccourse3url">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('doccourse3file','{{ currentuser.phone }}-doccourse3','doccourse3url','doccourse3view')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="doccourse3view"
+                                                                   name="doccourse3view" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label><span class="text-danger">* </span>Proof of Current Year Fees</label>
+                                                    <button type="button" class="btn btn-sm" data-toggle="modal"
+                                                            data-target="#modal-lg2">
+                                                        <span class="text-info"> View list of documents</span>
+                                                    </button>
+
+
+                                                    <div class="modal fade" id="modal-lg2">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Proof of Current Year Fees
+                                                                        (Upload Any
+                                                                        one from list of accepted ID documents)</h4>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <ul>
+                                                                        <li>PAN Card</li>
+                                                                        <li>Voter Identity Card</li>
+                                                                        <li>Driver’s License</li>
+                                                                        <li>Aadhar Card</li>
+
+                                                                    </ul>
+
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                    <div class="row">
+                                                        <div class="col-4">
+
+                                                            <div class="form-group">
+
+                                                                <select class="form-control" name="doccurrentfeename"
+                                                                        id="doccurrentfeename"
+                                                                        required>
+                                                                    <option value="">Select Document Type</option>
+                                                                    <option value="PAN Card">PAN Card</option>
+                                                                    <option value="Voter Identity Card">Voter Identity
+                                                                        Card
+                                                                    </option>
+                                                                    <option value="Driver’s License">Driver’s License
+                                                                    </option>
+                                                                    <option value="Aadhar Card">Aadhar Card</option>
+
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="doccurrentfeefile"
+                                                                           name="doccurrentfeefile">
+                                                                    <input type="hidden" id="doccurrentfeeurl"
+                                                                           name="doccurrentfeeurl">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('doccurrentfeefile','{{ currentuser.phone }}-docphotoproof','doccurrentfeeurl','doccurrentfeeview')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="doccurrentfeeview"
+                                                                   name="doccurrentfeeview" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Other Documents</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label><span class="text-danger">* </span>Address Proof</label>
+                                                    <button type="button" class="btn btn-sm" data-toggle="modal"
+                                                            data-target="#modal-lg4">
+                                                        <span class="text-info"> View list of documents</span>
+                                                    </button>
+
+
+                                                    <div class="modal fade" id="modal-lg4">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Address Proof (Upload Any
+                                                                        one from list of accepted ID documents)</h4>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <ul>
+                                                                        <li>PAN Card</li>
+                                                                        <li>Voter Identity Card</li>
+                                                                        <li>Driver’s License</li>
+                                                                        <li>Aadhar Card</li>
+
+                                                                    </ul>
+
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                    <div class="row">
+                                                        <div class="col-4">
+
+                                                            <div class="form-group">
+
+                                                                <select class="form-control" name="docaddressname"
+                                                                        id="docaddressname"
+                                                                        required>
+                                                                    <option value="">Select Document Type</option>
+                                                                    <option value="PAN Card">PAN Card</option>
+                                                                    <option value="Voter Identity Card">Voter Identity
+                                                                        Card
+                                                                    </option>
+                                                                    <option value="Driver’s License">Driver’s License
+                                                                    </option>
+                                                                    <option value="Aadhar Card">Aadhar Card</option>
+
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="docaddressfile"
+                                                                           name="docaddressfile">
+                                                                    <input type="hidden" id="docaddressurl"
+                                                                           name="docaddressurl">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('docaddressfile','{{ currentuser.phone }}-docphotoproof','docaddressurl','docaddressview')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="docaddressview"
+                                                                   name="docaddressview" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label><span class="text-danger">* </span>Income Proof</label>
+                                                    <button type="button" class="btn btn-sm" data-toggle="modal"
+                                                            data-target="#modal-lg5">
+                                                        <span class="text-info"> View list of documents</span>
+                                                    </button>
+
+
+                                                    <div class="modal fade" id="modal-lg5">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Income Proof (Upload Any
+                                                                        one from list of accepted ID documents)</h4>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <ul>
+                                                                        <li>PAN Card</li>
+                                                                        <li>Voter Identity Card</li>
+                                                                        <li>Driver’s License</li>
+                                                                        <li>Aadhar Card</li>
+
+                                                                    </ul>
+
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                    <div class="row">
+                                                        <div class="col-4">
+
+                                                            <div class="form-group">
+
+                                                                <select class="form-control" name="docincomename"
+                                                                        id="docincomename"
+                                                                        required>
+                                                                    <option value="">Select Document Type</option>
+                                                                    <option value="PAN Card">PAN Card</option>
+                                                                    <option value="Voter Identity Card">Voter Identity
+                                                                        Card
+                                                                    </option>
+                                                                    <option value="Driver’s License">Driver’s License
+                                                                    </option>
+                                                                    <option value="Aadhar Card">Aadhar Card</option>
+
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="docincomefile"
+                                                                           name="docincomefile">
+                                                                    <input type="hidden" id="docincomeurl"
+                                                                           name="docincomeurl">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('docincomefile','{{ currentuser.phone }}-docphotoproof','docincomeurl','docincomeview')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="docincomeview"
+                                                                   name="docincomeview" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -183,11 +773,11 @@
                                     <input type="text" name="saveasdraft" class="form-control" id="saveasdraft"
                                            hidden value="0">
                                     <input type="text" name="fill" class="form-control" id="fill"
-                                           hidden value="50">
+                                           hidden value="75">
                                     <button type="submit" class="btn btn-outline-primary" onclick="changeval()">Save as
                                         Draft
                                     </button>
-                                    <button type="submit" class="btn btn-primary" onclick="changeval2()">Next
+                                    <button type="submit" class="btn btn-primary" onclick="changeval2()">Submit
                                     </button>
                                 </div>
                             </form>

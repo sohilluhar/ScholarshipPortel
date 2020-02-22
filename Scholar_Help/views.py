@@ -361,6 +361,7 @@ def profile_doc(request):
         return render(request, 'user_doc.html',
                       {"userprofile": userprofile, "currentuser": Common.currentUser.val(), "config": PyConfig.config1})
     else:
+       
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
 
