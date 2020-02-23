@@ -57,5 +57,7 @@ urlpatterns = [
     path('saveuserdocuments', views.savedocuments),
     path('user-completeprofile', views.user_completeprofile),
 
+    path('applyscholarship', views.applyscholarship),
+
     path('', views.home)
 ]

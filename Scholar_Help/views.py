@@ -244,6 +244,7 @@ def addscholarhiptofire(req):
         "level": scat, "logo": logo, "name": sname, "trust_id": trust_id
     }
     print(str(timestamp))
+
     strtimestamp = str(timestamp).replace('.', '')
 
     db.child("Scheme").child(strtimestamp).set(
@@ -278,13 +279,26 @@ def viewschemedetails(request, pk):
     #
     # all_trusts = db.child("Trust").order_by_key().get().val()
     # del all_trusts[str(pk)]
+    applied_scheme = None
+    try:
+
+        applied_scheme = Common.currentUser.val().get("applied_scheme")
+    except:
+        pass
+    if applied_scheme == None:
+        applied_scheme = []
+    isapply = "False"
+    if str(pk) in applied_scheme:
+        isapply = "True"
     scheme = db.child("Scheme").child(str(pk)).get().val()
     trust = db.child("Trust").child(scheme.get("trust_id")).get().val()
     other_schemes = db.child("Scheme").order_by_child("level").equal_to(scheme.get("level")).get().val()
     del other_schemes[str(pk)]
     return render(request, 'schemedetails.html',
                   {"scheme": scheme, 'trust': trust,
-                   "other_schemes": other_schemes, "islog": Common.isLogin, "scheme_key": str(pk)
+                   "other_schemes": other_schemes, "islog": Common.isLogin, "scheme_key": str(pk),
+                   "isapply": isapply
+
                    })
 
 
@@ -628,6 +642,76 @@ def user_completeprofile(request):
             return render(request, 'redirecthome.html',
                           {"swicon": "error", "swtitle": "Profile Not Submitted", "swmsg": "Please Complete profile",
                            "path": ""})
+    else:
+
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
+
+
+# Apply for scheme/scholarship
+
+def applyscholarship(request):  # user has click on apply button add userinfo to db
+    if (Common.isLogin):
+        userprofile = OrderedDict()
+
+        db = connect_firebase()
+
+        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        try:
+            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+        except:
+            print("Error")
+
+        if Common.currentUser.val().get("profilefill") == "100":
+
+            schemeid = request.POST['schemeid_apply']
+            amount = request.POST['amount']
+            trust_id = request.POST['trust_id']
+            schemename = request.POST['schemename']
+
+            userphone = Common.currentUser.val().get("phone")
+            name = userprofile.get("sname") + " " + userprofile.get("fname") + " " + userprofile.get("lname")
+            status = "Pending"
+
+            applicationid = datetime.timestamp(datetime.now())
+            applicationid = str(applicationid).replace('.', '')
+
+            data = {
+                "userid": userphone, "username": name,
+                "scheme_id": schemeid, "scheme_name": schemename, "schemeamount": amount,
+                "status": status, "remark": "", "sanctionedamount": "0"
+            }
+
+            db.child("AppliedScheme").child(trust_id).child(applicationid).set(
+                data
+            )
+            applied_scheme = None
+            try:
+
+                print(Common.currentUser.val())
+                applied_scheme = Common.currentUser.val().get("applied_scheme")
+
+                print(Common.currentUser.val())
+                print("inside try" + applied_scheme)
+            except:
+                pass
+            if applied_scheme == None:
+                applied_scheme = []
+            print(applied_scheme)
+            applied_scheme.append(schemeid)
+
+            db.child("users").child(userphone).update(
+                {"applied_scheme": applied_scheme}
+            )
+
+            return render(request, 'redirecthome.html',
+                          {"swicon": "success", "swtitle": "Done",
+                           "swmsg": "Applied Successfully. Your Application number is " + applicationid,
+                           "path": ""})
+        else:
+            return render(request, 'redirecthome.html',
+                          {"swicon": "error", "swtitle": "Profile Not Submitted", "swmsg": "Please Complete profile",
+                           "path": "profile-personalDetails"})
     else:
 
         return render(request, 'redirecthome.html',
