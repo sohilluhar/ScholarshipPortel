@@ -58,6 +58,7 @@ urlpatterns = [
     path('user-completeprofile', views.user_completeprofile),
 
     path('applyscholarship', views.applyscholarship),
+    path('appliedscholarship/', views.appliedscholarship),
 
     path('', views.home)
 ]

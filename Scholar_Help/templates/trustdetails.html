@@ -26,9 +26,6 @@
             </div>
             <ul class="pull-right action-links">
                 {% if islog %}
-                    <li><a class="sell-btn" href="/logout">Profile</a></li>
-                    <li><a class="sell-btn" href="/logout">Applied Scheme</a></li>
-                    <li><a class="login-btn" href="/logout">LOGOUT</a></li>
                 {% else %}
                     <li><a class="sell-btn" href="/register">REGISTER</a></li>
                     <li><a class="login-btn" href="/login">LOGIN</a></li>
@@ -99,14 +96,14 @@
                     <h3>Contact Details</h3>
                     <div class="contact-wrapper">
 
-                        {% if islog %}
-                            <p>Phone Number :</p>
-                            <h6>{{ trust.contact }}</h6>
-                            <p>Mail Id :</p>
-                            <h6>{{ trust.mailid }}</h6>
-                        {% else %}
-                            <a class="contact-btn" href="/login">Login To View Contact Details</a><br><br>
-                        {% endif %}
+                        {#                        {% if islog %}#}
+                        <p>Phone Number :</p>
+                        <h6>{{ trust.contact }}</h6>
+                        <p>Mail Id :</p>
+                        <h6>{{ trust.mailid }}</h6>
+                        {#                        {% else %}#}
+                        {#                            <a class="contact-btn" href="/login">Login To View Contact Details</a><br><br>#}
+                        {#                        {% endif %}#}
                     </div>
 
                     {#                    <div class="note-wrapper">#}

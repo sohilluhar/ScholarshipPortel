@@ -679,10 +679,10 @@ def applyscholarship(request):  # user has click on apply button add userinfo to
             data = {
                 "userid": userphone, "username": name,
                 "scheme_id": schemeid, "scheme_name": schemename, "schemeamount": amount,
-                "status": status, "remark": "", "sanctionedamount": "0"
+                "status": status, "remark": "", "sanctionedamount": "0", "trust_id": trust_id
             }
 
-            db.child("AppliedScheme").child(trust_id).child(applicationid).set(
+            db.child("AppliedScheme").child(applicationid).set(
                 data
             )
             applied_scheme = None
@@ -707,11 +707,30 @@ def applyscholarship(request):  # user has click on apply button add userinfo to
             return render(request, 'redirecthome.html',
                           {"swicon": "success", "swtitle": "Done",
                            "swmsg": "Applied Successfully. Your Application number is " + applicationid,
-                           "path": ""})
+                           "path": "appliedscholarship"})
         else:
             return render(request, 'redirecthome.html',
                           {"swicon": "error", "swtitle": "Profile Not Submitted", "swmsg": "Please Complete profile",
                            "path": "profile-personalDetails"})
+    else:
+
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
+
+
+def appliedscholarship(request):
+    if (Common.isLogin):
+        data = OrderedDict()
+
+        db = connect_firebase()
+        try:
+            data = db.child("AppliedScheme").order_by_child("userid").equal_to(
+                Common.currentUser.val().get("phone")).get().val()
+        except:
+            pass
+
+        return render(request, 'user_appliedscheme.html',
+                      {"currentuser": Common.currentUser.val(), "applied_schemes": data})
     else:
 
         return render(request, 'redirecthome.html',
