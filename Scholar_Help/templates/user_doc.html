@@ -79,8 +79,8 @@
                                         should be less than 5 MB</p>
                                 </div>
                             </div>
-                            <form role="form" id="user-education" onsubmit="return false"
-                                  action="/saveusereducation" method="post">
+                            <form role="form" id="user-doc" onsubmit="return validate(this)"
+                                  action="/saveuserdocuments" method="post">
                                 {% csrf_token %}
                                 <div class="card-body">
 
@@ -91,7 +91,7 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <label><span class="text-danger">* </span>Photo Proof Id</label>
+                                                    <label><span class="text-danger">* </span>Photo Id Proof</label>
                                                     <button type="button" class="btn btn-sm" data-toggle="modal"
                                                             data-target="#modal-lg">
                                                         <span class="text-info"> View list of documents</span>
@@ -138,8 +138,8 @@
 
                                                                 <select class="form-control" name="docphotoidname"
                                                                         id="docphotoidname"
-                                                                        required>
-                                                                    <option value="">Select Document Type</option>
+                                                                >
+                                                                    <option value="">Select Document</option>
                                                                     <option value="PAN Card">PAN Card</option>
                                                                     <option value="Voter Identity Card">Voter Identity
                                                                         Card
@@ -214,6 +214,7 @@
                                                                         <li>Birth Certificate</li>
                                                                         <li>Passport</li>
                                                                         <li>Leaving Certificate</li>
+                                                                        <li>Driver’s License</li>
 
 
                                                                     </ul>
@@ -238,8 +239,8 @@
 
                                                                 <select class="form-control" name="docageproofname"
                                                                         id="docageproofname"
-                                                                        required>
-                                                                    <option value="">Select Document Type</option>
+                                                                >
+                                                                    <option value="">Select Document</option>
                                                                     <option value="Birth Certificate">Birth
                                                                         Certificate
                                                                     </option>
@@ -248,6 +249,8 @@
                                                                         Certificate
                                                                     </option>
 
+                                                                    <option value="Driver’s License">Driver’s License
+                                                                    </option>
                                                                 </select>
                                                             </div>
 
@@ -289,6 +292,62 @@
 
 
                                             </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label><span class="text-danger">* </span>Bank Passbook</label>
+
+
+                                                    <div class="row">
+                                                        <div class="col-4">
+
+                                                            <div class="form-group">
+
+
+                                                                <input type="text" class="form-control"
+
+                                                                       disabled value="Passbook">
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="docpassbookfile"
+                                                                           name="docpassbookfile">
+                                                                    <input type="hidden" id="docpassbookurl"
+                                                                           name="docpassbookurl">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('docpassbookfile','{{ currentuser.phone }}-docpassbook','docpassbookurl','docpassbookview')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="docpassbookview"
+                                                                   name="docpassbookview" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
                                         </div>
                                     </div>
 
@@ -310,7 +369,7 @@
 
                                                                 <input type="text" class="form-control"
 
-                                                                       disabled value="SSC">
+                                                                       disabled value="{{ userprofile.course1name }}">
 
                                                             </div>
 
@@ -359,7 +418,7 @@
                                                             <div class="form-group">
 
                                                                 <input type="text" class="form-control" disabled
-                                                                       value="HSC">
+                                                                       value="{{ userprofile.course2name }}">
 
                                                             </div>
 
@@ -408,7 +467,7 @@
                                                             <div class="form-group">
 
                                                                 <input type="text" class="form-control" disabled
-                                                                       value="DIPLOMA">
+                                                                       value="{{ userprofile.course3name }}">
 
                                                             </div>
 
@@ -453,6 +512,109 @@
 
                                             <div class="row">
                                                 <div class="col-12">
+                                                    <label><span class="text-danger">* </span>Proof of Admission</label>
+                                                    <button type="button" class="btn btn-sm" data-toggle="modal"
+                                                            data-target="#modal-lg2">
+                                                        <span class="text-info"> View list of documents</span>
+                                                    </button>
+
+
+                                                    <div class="modal fade" id="modal-lg2">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Proof of Admission
+                                                                        (Upload Any
+                                                                        one from list of accepted ID documents)</h4>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <ul>
+                                                                        <li>College Id</li>
+                                                                        <li>Fee Receipt</li>
+                                                                        <li>Bonafied Certificate</li>
+                                                                        <li>Letter of Admission</li>
+
+                                                                    </ul>
+
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                    </button>
+
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                        <!-- /.modal-dialog -->
+                                                    </div>
+                                                    <!-- /.modal -->
+                                                    <div class="row">
+                                                        <div class="col-4">
+
+                                                            <div class="form-group">
+
+                                                                <select class="form-control" name="docadmissionname"
+                                                                        id="docadmissionname"
+                                                                >
+                                                                    <option value="">Select Document</option>
+
+                                                                    <option value="College Id">College Id</option>
+                                                                    <option value="Fee Receipt">Fee Receipt</option>
+                                                                    <option value="Bonafied Certificate">Bonafied
+                                                                        Certificate
+                                                                    </option>
+                                                                    <option value="Letter of Admission">Letter of
+                                                                        Admission
+                                                                    </option>
+
+                                                                </select>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+                                                                    <input type="file" class="file-upload"
+                                                                           id="docadmissionfile"
+                                                                           name="docadmissionfile">
+                                                                    <input type="hidden" id="docadmissionurl"
+                                                                           name="docadmissionurl">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="form-group">
+
+                                                                <div class="input-group">
+
+                                                                    <button type="button" class="btn btn-info"
+                                                                            onclick="uploadimage('docadmissionfile','{{ currentuser.phone }}-docadmissionsproof','docadmissionurl','docadmissionview')">
+                                                                        Upload
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-2">
+                                                            <div class="form-group mt-2">
+                                                                <a class="text-muted" id="docadmissionview"
+                                                                   name="docadmissionview" href="#">View
+                                                                    Document</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
                                                     <label><span class="text-danger">* </span>Proof of Current Year Fees</label>
                                                     <button type="button" class="btn btn-sm" data-toggle="modal"
                                                             data-target="#modal-lg2">
@@ -474,10 +636,8 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <ul>
-                                                                        <li>PAN Card</li>
-                                                                        <li>Voter Identity Card</li>
-                                                                        <li>Driver’s License</li>
-                                                                        <li>Aadhar Card</li>
+                                                                        <li>Fee Receipt</li>
+                                                                        <li>Fee Structure</li>
 
                                                                     </ul>
 
@@ -501,16 +661,11 @@
 
                                                                 <select class="form-control" name="doccurrentfeename"
                                                                         id="doccurrentfeename"
-                                                                        required>
-                                                                    <option value="">Select Document Type</option>
-                                                                    <option value="PAN Card">PAN Card</option>
-                                                                    <option value="Voter Identity Card">Voter Identity
-                                                                        Card
+                                                                >
+                                                                    <option value="">Select Document</option>
+                                                                    <option value="Fee Receipt">Fee Receipt</option>
+                                                                    <option value="Fee Structure">Fee Structure
                                                                     </option>
-                                                                    <option value="Driver’s License">Driver’s License
-                                                                    </option>
-                                                                    <option value="Aadhar Card">Aadhar Card</option>
-
                                                                 </select>
                                                             </div>
 
@@ -583,10 +738,11 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <ul>
-                                                                        <li>PAN Card</li>
-                                                                        <li>Voter Identity Card</li>
-                                                                        <li>Driver’s License</li>
-                                                                        <li>Aadhar Card</li>
+                                                                        <li>Current Electricity Bill</li>
+                                                                        <li>Ration Card</li>
+                                                                        <li>Rent Receipt</li>
+                                                                        <li>Leave And Licensee Agreement</li>
+
 
                                                                     </ul>
 
@@ -610,16 +766,17 @@
 
                                                                 <select class="form-control" name="docaddressname"
                                                                         id="docaddressname"
-                                                                        required>
-                                                                    <option value="">Select Document Type</option>
-                                                                    <option value="PAN Card">PAN Card</option>
-                                                                    <option value="Voter Identity Card">Voter Identity
-                                                                        Card
-                                                                    </option>
-                                                                    <option value="Driver’s License">Driver’s License
-                                                                    </option>
-                                                                    <option value="Aadhar Card">Aadhar Card</option>
+                                                                >
+                                                                    <option value="">Select Document</option>
 
+                                                                    <option value="Current Electricity Bill">Current
+                                                                        Electricity Bill
+                                                                    </option>
+                                                                    <option value="Ration Card">Ration Card</option>
+                                                                    <option value="Rent Receipt">Rent Receipt</option>
+                                                                    <option value="Leave And Licensee Agreement"> Leave
+                                                                        And Licensee Agreement
+                                                                    </option>
                                                                 </select>
                                                             </div>
 
@@ -683,11 +840,9 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <ul>
-                                                                        <li>PAN Card</li>
-                                                                        <li>Voter Identity Card</li>
-                                                                        <li>Driver’s License</li>
-                                                                        <li>Aadhar Card</li>
-
+                                                                        <li>Income certificate</li>
+                                                                        <li>Recent monthly Pay slip</li>
+                                                                        <li>Employee certificate</li>
                                                                     </ul>
 
                                                                 </div>
@@ -710,15 +865,17 @@
 
                                                                 <select class="form-control" name="docincomename"
                                                                         id="docincomename"
-                                                                        required>
-                                                                    <option value="">Select Document Type</option>
-                                                                    <option value="PAN Card">PAN Card</option>
-                                                                    <option value="Voter Identity Card">Voter Identity
-                                                                        Card
+                                                                >
+                                                                    <option value="">Select Document</option>
+                                                                    <option value="Income certificate">Income
+                                                                        certificate
                                                                     </option>
-                                                                    <option value="Driver’s License">Driver’s License
+                                                                    <option value="Recent monthly Pay slip ">Recent
+                                                                        monthly Pay slip
                                                                     </option>
-                                                                    <option value="Aadhar Card">Aadhar Card</option>
+                                                                    <option value="Employee certificate">Employee
+                                                                        certificate
+                                                                    </option>
 
                                                                 </select>
                                                             </div>
@@ -762,6 +919,51 @@
 
                                             </div>
 
+                                        </div>
+                                    </div>
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Declaration</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card-body">
+                                                        <dl>
+                                                            <dd>I <span
+                                                                    class="text-bold">{{ userprofile.fname }} {{ userprofile.lname }} {{ userprofile.sname }}</span>
+                                                                age
+                                                                <span class="text-bold">{{ userprofile.age }}</span>
+                                                                years, resident of <span
+                                                                        class="text-bold">{{ userprofile.address }}</span>
+                                                                of hereby declare that the information given above and
+                                                                in the uploaded documents is true to the best of my
+                                                                knowledge and belief and nothing has been concealed
+                                                                therein.
+                                                            </dd>
+                                                            <dd>I am well aware of the
+                                                                fact that if the information given by me is proved false
+                                                                / not true at any point of time, I will have to face
+                                                                punishment as per any provision of Law for the time
+                                                                being in force as well as the benefit availed of by
+                                                                me or the benefit accrued to me shall be summarily
+                                                                cancelled
+                                                            </dd>
+
+                                                        </dl>
+                                                        <div class="form-group mb-0">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="terms"
+                                                                       class="custom-control-input" id="terms">
+                                                                <label class="custom-control-label" for="terms">I
+                                                                    agree</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
                                         </div>
                                     </div>
 
@@ -887,11 +1089,20 @@
                     });
                 });
             } else {
-                alert("file size limit exceed ");
+
+                Swal.fire({
+                    icon: "error",
+                    title: 'File Size limit exceeded',
+                    text: 'Upload file less than 5 MB',
+                });
             }
 
         } else {
-            alert("File type not allowed");
+            Swal.fire({
+                icon: "error",
+                title: 'File Type not Allowed',
+                text: 'Upload only pdf,jpg,jpeg,png file',
+            });
         }
     }
 
@@ -899,7 +1110,74 @@
 
 
 <script>
+    document.getElementById("docphotoidname").value = "{{userprofile.docphotoidname}}";
+    document.getElementById("docageproofname").value = "{{userprofile.docageproofname}}";
+    document.getElementById("docadmissionname").value = "{{userprofile.docadmissionname}}";
+    document.getElementById("doccurrentfeename").value = "{{userprofile.doccurrentfeename}}";
+    document.getElementById("docaddressname").value = "{{userprofile.docaddressname}}";
+    document.getElementById("docincomename").value = "{{userprofile.docincomename}}";
 
+    document.getElementById("docphotoidurl").value = "{{userprofile.docphotoidurl}}";
+    document.getElementById("docageproofurl").value = "{{userprofile.docageproofurl}}";
+    document.getElementById("docadmissionurl").value = "{{userprofile.docadmissionurl}}";
+    document.getElementById("doccurrentfeeurl").value = "{{userprofile.doccurrentfeeurl}}";
+    document.getElementById("docaddressurl").value = "{{userprofile.docaddressurl}}";
+    document.getElementById("docincomeurl").value = "{{userprofile.docincomeurl}}";
+    document.getElementById("doccourse1url").value = "{{userprofile.doccourse1url}}";
+    document.getElementById("doccourse2url").value = "{{userprofile.doccourse2url}}";
+    document.getElementById("doccourse3url").value = "{{userprofile.doccourse3url}}";
+    document.getElementById("docpassbookurl").value = "{{userprofile.docpassbookurl}}";
+
+    {% if userprofile.docphotoidurl %}
+        document.getElementById("docphotoidview").href = "{{ userprofile.docphotoidurl }}";
+        document.getElementById("docphotoidview").setAttribute('target', '_blank');
+        document.getElementById("docphotoidview").className = "text-info";
+    {% endif %}
+    {% if userprofile.docageproofurl %}
+        document.getElementById("docageproofview").href = "{{ userprofile.docageproofurl }}";
+        document.getElementById("docageproofview").setAttribute('target', '_blank');
+        document.getElementById("docageproofview").className = "text-info";
+    {% endif %}
+    {% if userprofile.docadmissionurl %}
+        document.getElementById("docadmissionview").href = "{{ userprofile.docadmissionurl }}";
+        document.getElementById("docadmissionview").setAttribute('target', '_blank');
+        document.getElementById("docadmissionview").className = "text-info";
+    {% endif %}
+    {% if userprofile.doccurrentfeeurl %}
+        document.getElementById("doccurrentfeeview").href = "{{ userprofile.doccurrentfeeurl }}";
+        document.getElementById("doccurrentfeeview").setAttribute('target', '_blank');
+        document.getElementById("doccurrentfeeview").className = "text-info";
+    {% endif %}
+    {% if userprofile.docaddressurl %}
+        document.getElementById("docaddressview").href = "{{ userprofile.docaddressurl }}";
+        document.getElementById("docaddressview").setAttribute('target', '_blank');
+        document.getElementById("docaddressview").className = "text-info";
+    {% endif %}
+    {% if userprofile.docincomeurl %}
+        document.getElementById("docincomeview").href = "{{ userprofile.docincomeurl }}";
+        document.getElementById("docincomeview").setAttribute('target', '_blank');
+        document.getElementById("docincomeview").className = "text-info";
+    {% endif %}
+    {% if userprofile.doccourse1url %}
+        document.getElementById("doccourse1view").href = "{{ userprofile.doccourse1url }}";
+        document.getElementById("doccourse1view").setAttribute('target', '_blank');
+        document.getElementById("doccourse1view").className = "text-info";
+    {% endif %}
+    {% if userprofile.doccourse2url %}
+        document.getElementById("doccourse2view").href = "{{ userprofile.doccourse2url }}";
+        document.getElementById("doccourse2view").setAttribute('target', '_blank');
+        document.getElementById("doccourse2view").className = "text-info";
+    {% endif %}
+    {% if userprofile.doccourse3url %}
+        document.getElementById("doccourse3view").href = "{{ userprofile.doccourse3url }}";
+        document.getElementById("doccourse3view").setAttribute('target', '_blank');
+        document.getElementById("doccourse3view").className = "text-info";
+    {% endif %}
+    {% if userprofile.docpassbookurl %}
+        document.getElementById("docpassbookview").href = "{{ userprofile.docpassbookurl }}";
+        document.getElementById("docpassbookview").setAttribute('target', '_blank');
+        document.getElementById("docpassbookview").className = "text-info";
+    {% endif %}
 
     function changeval() {
         document.getElementById("saveasdraft").value = "1"
@@ -907,7 +1185,7 @@
 
     function changeval2() {
         document.getElementById("saveasdraft").value = "0"
-        document.getElementById("fill").value = "75"
+        document.getElementById("fill").value = "100"
     }
 
     function validate(form) {
@@ -916,155 +1194,152 @@
             return true;
         }
 
-        var collegename = form.collegename.value;
-        var collegeaddress = form.collegeaddress.value;
 
+        var photoidname = form.docphotoidname;
+        var docageproofname = form.docageproofname;
+        var docadmissionname = form.docadmissionname;
+        var doccurrentfeename = form.doccurrentfeename;
+        var docaddressname = form.docaddressname;
+        var docincomename = form.docincomename;
 
-        var coursename = form.coursename.value;
-        var coursefees = form.coursefees.value;
+        var photoidurl = form.docphotoidurl;
+        var docageproofurl = form.docageproofurl;
+        var docadmissionurl = form.docadmissionurl;
+        var doccurrentfeeurl = form.doccurrentfeeurl;
+        var docaddressurl = form.docaddressurl;
+        var docincomeurl = form.docincomeurl;
 
-        var course1name = form.course1name.value;
-        var course1year = form.course1year.value;
-        var course1board = form.course1board.value;
-        var course1per = form.course1per.value;
-        var course2name = form.course2name.value;
-        var course2year = form.course2year.value;
-        var course2board = form.course2board.value;
-        var course2per = form.course2per.value;
-        var course3name = form.course3name.value;
-        var course3year = form.course3year.value;
-        var course3board = form.course3board.value;
-        var course3per = form.course3per.value;
-        var year = /^\d{4}$/;
-        var per = /^\d{1,2}\.\d{1,2}$|^\d{1,3}$/;
-        var letters = /^[a-z.A-Z-,]+(\s{0,1}[a-z.A-Z-, ])*$/;
-        if (!collegename.match(letters)) {
-            Swal.fire({
-                icon: "error",
-                title: 'Invalid College Name',
-                text: 'Enter characters only',
-            });
-            return false;
-        }
+        var doccourse1url = form.doccourse1url;
+        var doccourse2url = form.doccourse2url;
+        var doccourse3url = form.doccourse3url;
+        var docpassbookurl = form.docpassbookurl;
 
-        if (collegeaddress.length < 20) {
-            Swal.fire({
-                icon: "error",
-                title: 'Incorrect Address',
-                text: 'Enter correct college address',
-            });
-            return false;
-        }
-        if (!coursename.match(letters)) {
-            Swal.fire({
-                icon: "error",
-                title: 'Invalid Course Name',
-                text: 'Enter characters only',
-            });
-            return false;
-        }
-        if (!course1name.match(letters)) {
-            Swal.fire({
-                icon: "error",
-                title: 'Invalid Course 1 Name',
-                text: 'Enter characters only',
-            });
-            return false;
-        }
-        if (!(course1year.match(year))) {
-            Swal.fire({
-                icon: "error",
-                title: 'Incorrect Course 1 Year',
-                text: 'Enter correct year',
-            });
-            return false;
-        }
-        if (!course1board.match(letters)) {
-            Swal.fire({
-                icon: "error",
-                title: 'Invalid Course 1 Board',
-                text: 'Enter characters only',
-            });
-            return false;
-        }
+        var declaration = form.terms;
+        console.log(declaration);
+        console.log(declaration.checked);
 
-        if (!course1per.match(per)) {
+        if (photoidname.selectedIndex === 0) {
             Swal.fire({
                 icon: "error",
-                title: 'Invalid Course 1 Percentage',
-                text: 'Enter valid percentage upto two decimals Eg:90.80',
+                title: 'Photo Id Proof not selected',
+                text: 'Please select Photo Id proof',
             });
             return false;
-        }
-
-        if (!course2name.match(letters)) {
+        } else if (photoidurl.value === "") {
             Swal.fire({
                 icon: "error",
-                title: 'Invalid Course 2 Name',
-                text: 'Enter characters only',
+                title: 'Photo Id Proof not uploaded',
+                text: 'Please upload Photo Id proof',
             });
             return false;
-        }
-        if (!(course2year.match(year))) {
+        } else if (docageproofname.selectedIndex === 0) {
             Swal.fire({
                 icon: "error",
-                title: 'Incorrect Course 2 Year',
-                text: 'Enter correct year',
+                title: 'Age Proof not selected',
+                text: 'Please select age proof',
             });
             return false;
-        }
-        if (!course2board.match(letters)) {
+        } else if (docageproofurl.value === "") {
             Swal.fire({
                 icon: "error",
-                title: 'Invalid Course 2 Board',
-                text: 'Enter characters only',
+                title: 'Age Proof not uploaded',
+                text: 'Please upload age proof',
             });
             return false;
-        }
-
-        if (!course2per.match(per)) {
+        } else if (docpassbookurl.value === "") {
             Swal.fire({
                 icon: "error",
-                title: 'Invalid Course 2 Percentage',
-                text: 'Enter valid percentage upto two decimals Eg:90.80',
+                title: 'Passbook not uploaded',
+                text: 'Please upload passbook',
             });
             return false;
-        }
-        if (!course3name.match(letters)) {
+        } else if (doccourse1url.value === "") {
             Swal.fire({
                 icon: "error",
-                title: 'Invalid Course 3 Name',
-                text: 'Enter characters only',
+                title: '{{ userprofile.course1name }} marksheet not uploaded',
+                text: 'Please upload marksheet',
             });
             return false;
-        }
-        if (!(course3year.match(year))) {
+        } else if (doccourse2url.value === "") {
             Swal.fire({
                 icon: "error",
-                title: 'Incorrect Course 3 Year',
-                text: 'Enter correct year',
+                title: '{{ userprofile.course2name }} marksheet not uploaded',
+                text: 'Please upload marksheet',
             });
             return false;
-        }
-        if (!course3board.match(letters)) {
+        } else if (doccourse3url.value === "") {
             Swal.fire({
                 icon: "error",
-                title: 'Invalid Course 3 Board',
-                text: 'Enter characters only',
+                title: '{{ userprofile.course3name }} marksheet not uploaded',
+                text: 'Please upload marksheet',
             });
             return false;
-        }
-
-        if (!course3per.match(per)) {
+        } else if (docadmissionname.selectedIndex === 0) {
             Swal.fire({
                 icon: "error",
-                title: 'Invalid Course 3 Percentage',
-                text: 'Enter valid percentage upto two decimals Eg:90.80',
+                title: 'Admission Proof not selected',
+                text: 'Please select admission proof',
+            });
+            return false;
+        } else if (docadmissionurl.value === "") {
+            Swal.fire({
+                icon: "error",
+                title: 'Admission Proof not uploaded',
+                text: 'Please upload admission proof',
+            });
+            return false;
+        } else if (doccurrentfeename.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: 'Fees Proof not selected',
+                text: 'Please select fees proof',
+            });
+            return false;
+        } else if (doccurrentfeeurl.value === "") {
+            Swal.fire({
+                icon: "error",
+                title: 'Fees Proof not uploaded',
+                text: 'Please upload fees proof',
+            });
+            return false;
+        } else if (docaddressname.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: ' Address proof not selected',
+                text: 'Please select address proof',
+            });
+            return false;
+        } else if (docaddressurl.value === "") {
+            Swal.fire({
+                icon: "error",
+                title: ' Address proof not uploaded',
+                text: 'Please upload address proof',
+            });
+            return false;
+        } else if (docincomename.selectedIndex === 0) {
+            Swal.fire({
+                icon: "error",
+                title: 'Income Proof not selected',
+                text: 'Please select income proof',
+            });
+            return false;
+        } else if (docincomeurl.value === "") {
+            Swal.fire({
+                icon: "error",
+                title: 'Income Proof not uploaded',
+                text: 'Please upload income proof',
+            });
+            return false;
+        } else if (!declaration.checked) {
+            Swal.fire({
+                icon: "error",
+                title: 'Declaration',
+                text: 'Please agree declaration',
             });
             return false;
         } else {
 
-            return true;
+            return confirm('Do you really want to submit the form? You want be able to change any details.');
         }
     }
 

@@ -301,8 +301,14 @@ def profile_personalDetails(request):
         except:
             print("Error")
 
-        return render(request, 'user_profileDetails.html',
-                      {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+        if (Common.currentUser.val().get("profilefill") != "100"):
+            return render(request, 'user_profileDetails.html',
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+        else:
+            return render(request, 'user_completeprofile.html',
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                           })
+
     else:
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
@@ -320,8 +326,13 @@ def profile_familyDetails(request):
         except:
             print("Error")
 
-        return render(request, 'user_familyDetails.html',
-                      {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+        if (Common.currentUser.val().get("profilefill") != "100"):
+            return render(request, 'user_familyDetails.html',
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+        else:
+            return render(request, 'user_completeprofile.html',
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                           })
     else:
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
@@ -339,8 +350,14 @@ def profile_education(request):
         except:
             print("Error")
 
-        return render(request, 'user_education.html',
-                      {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+        if (Common.currentUser.val().get("profilefill") != "100"):
+            return render(request, 'user_education.html',
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+        else:
+            return render(request, 'redirecthome.html',
+                          {"swicon": "error", "swtitle": "Profile Submitted", "swmsg": "You cant change any details",
+                           "path": ""})
+
     else:
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
@@ -358,10 +375,16 @@ def profile_doc(request):
         except:
             print("Error")
 
-        return render(request, 'user_doc.html',
-                      {"userprofile": userprofile, "currentuser": Common.currentUser.val(), "config": PyConfig.config1})
+        if (Common.currentUser.val().get("profilefill") != "100"):
+            return render(request, 'user_doc.html',
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                           "config": PyConfig.config1})
+        else:
+            return render(request, 'user_completeprofile.html',
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                           })
     else:
-       
+
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
 
@@ -382,6 +405,7 @@ def saveuserpersonalinfo(req):
     cast = req.POST['cast']
     annual_income = req.POST['anual_income']
 
+    nameinpassbook = req.POST['nameinpassbook']
     account_number = req.POST['account_number']
     bank_name = req.POST['bank_name']
     ifsc_code = req.POST['ifsc_code']
@@ -400,7 +424,8 @@ def saveuserpersonalinfo(req):
         "sname": surname, "fname": first_name, "lname": last_name, "dob": dob, "age": age, "gender": gender,
         "email": email, "phone": phone, "parent_phone": parent_phone,
         "religious": religious, "cast": cast, "annual_income": annual_income,
-        "account_number": account_number, "bank_name": bank_name, "ifsc_code": ifsc_code.upper()
+        "account_number": account_number, "bank_name": bank_name, "ifsc_code": ifsc_code.upper(),
+        "nameinpassbook": nameinpassbook
 
     }
 
@@ -412,11 +437,11 @@ def saveuserpersonalinfo(req):
     db.child("users").child(str(phone)).child("profilefill").set(fill)
     if save_draft == "1":
         return render(req, 'redirecthome.html',
-                      {"swicon": "success", "swtitle": "Done", "swmsg": "Personal Info Saved Successfully.",
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Personal Details Saved Successfully.",
                        "path": ""})
     if save_draft == "0":
         return render(req, 'redirecthome.html',
-                      {"swicon": "success", "swtitle": "Done", "swmsg": "Personal Info Saved Successfully.",
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Personal Details Saved Successfully.",
                        "path": "profile-familyDetails"})
 
 
@@ -459,11 +484,11 @@ def saveuserfamilyinfo(req):
     db.child("users").child(Common.currentUser.val().get("phone")).child("profilefill").set(fill)
     if save_draft == "1":
         return render(req, 'redirecthome.html',
-                      {"swicon": "success", "swtitle": "Done", "swmsg": "Family Info Saved Successfully.",
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Family Details Saved Successfully.",
                        "path": ""})
     if save_draft == "0":
         return render(req, 'redirecthome.html',
-                      {"swicon": "success", "swtitle": "Done", "swmsg": "Family Info Saved Successfully.",
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Family Details Saved Successfully.",
                        "path": "profile-education"})
 
 
@@ -523,3 +548,87 @@ def saveusereducation(req):
         return render(req, 'redirecthome.html',
                       {"swicon": "success", "swtitle": "Done", "swmsg": "Education Details Saved Successfully.",
                        "path": "profile-uploaddoc"})
+
+
+def savedocuments(req):
+    docphotoidname = req.POST['docphotoidname']
+    docageproofname = req.POST['docageproofname']
+
+    docadmissionname = req.POST['docadmissionname']
+    doccurrentfeename = req.POST['doccurrentfeename']
+
+    docaddressname = req.POST['docaddressname']
+    docincomename = req.POST['docincomename']
+
+    docphotoidurl = req.POST['docphotoidurl']
+
+    docageproofurl = req.POST['docageproofurl']
+
+    docadmissionurl = req.POST['docadmissionurl']
+    doccurrentfeeurl = req.POST['doccurrentfeeurl']
+    docaddressurl = req.POST['docaddressurl']
+    docincomeurl = req.POST['docincomeurl']
+
+    doccourse1url = req.POST['doccourse1url']
+    doccourse2url = req.POST['doccourse2url']
+    doccourse3url = req.POST['doccourse3url']
+    docpassbookurl = req.POST['docpassbookurl']
+
+    fill = req.POST['fill']
+    save_draft = req.POST['saveasdraft']
+
+    db = connect_firebase()
+
+    data = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+    data = dict(data)
+    print(data)
+    newdata = {
+        "docphotoidname": docphotoidname, "docageproofname": docageproofname, "docadmissionname": docadmissionname,
+        "doccurrentfeename": doccurrentfeename, "docaddressname": docaddressname, "docincomename": docincomename,
+        "docphotoidurl": docphotoidurl, "docageproofurl": docageproofurl, "docadmissionurl": docadmissionurl,
+        "doccurrentfeeurl": doccurrentfeeurl,
+        "docaddressurl": docaddressurl, "docincomeurl": docincomeurl, "doccourse1url": doccourse1url,
+        "doccourse2url": doccourse2url, "doccourse3url": doccourse3url, "docpassbookurl": docpassbookurl
+    }
+
+    data.update(newdata)
+    print(data)
+    db.child("UserProfile").child(Common.currentUser.val().get("phone")).set(
+        data
+    )
+
+    db.child("users").child(Common.currentUser.val().get("phone")).child("profilefill").set(fill)
+    if save_draft == "1":
+        return render(req, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Documents Saved Successfully.",
+                       "path": ""})
+    if save_draft == "0":
+        return render(req, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Profile Submitted Successfully.",
+                       "path": "user-completeprofile"})
+
+
+def user_completeprofile(request):
+    if (Common.isLogin):
+        userprofile = OrderedDict()
+
+        db = connect_firebase()
+
+        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        try:
+            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+        except:
+            print("Error")
+
+        if Common.currentUser.val().get("profilefill") == "100":
+            return render(request, 'user_completeprofile.html',
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                           })
+        else:
+            return render(request, 'redirecthome.html',
+                          {"swicon": "error", "swtitle": "Profile Not Submitted", "swmsg": "Please Complete profile",
+                           "path": ""})
+    else:
+
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})

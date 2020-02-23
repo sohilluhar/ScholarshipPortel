@@ -54,7 +54,8 @@ urlpatterns = [
     path('profile-education', views.profile_education),
     path('saveusereducation', views.saveusereducation),
     path('profile-uploaddoc', views.profile_doc),
-    # path('saveuserdocuments', views.savedocuments),
+    path('saveuserdocuments', views.savedocuments),
+    path('user-completeprofile', views.user_completeprofile),
 
     path('', views.home)
 ]

@@ -219,7 +219,17 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="ifsc_code">Name as in Passbook</label>
+                                                        <input type="text" name="nameinpassbook" class="form-control"
+                                                               id="nameinpassbook"
+                                                               placeholder="Enter your name as per banks passbook"
+                                                               value="{{ userprofile.nameinpassbook }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="account_number">Account Number</label>
                                                         <input type="number" name="account_number" class="form-control"
@@ -228,7 +238,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4">
+                                                <div class="col-6">
                                                     <div class="form-group">
                                                         <label>Bank Name</label>
                                                         <select class="form-control" name="bank_name" id="bank_name"
@@ -324,7 +334,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="ifsc_code">IFSC Code</label>
                                                         <input type="text" name="ifsc_code" class="form-control"
@@ -432,6 +442,7 @@
         var sname = form.sname.value;
         var fname = form.fname.value;
         var lname = form.lname.value;
+        var nameinpassbook = form.nameinpassbook.value;
 
         var dob = form.dob;
         var gender = form.gender;
@@ -534,6 +545,14 @@
         }
 
 
+        if (!nameinpassbook.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Name in Passbook',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
         if (account_num.length > 18 || account_num.length < 9) {
             Swal.fire({
                 icon: "error",
