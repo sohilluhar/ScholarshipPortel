@@ -116,37 +116,42 @@
                     <h3 class="text-center">Apply</h3>
                     <div class="contact-wrapper">
 
+                        {% if isclosed %}
 
-                        {% if islog %}
-                            {% if isapply == "False" %}
-                                <form onclick="confirm('Are you sure you want to apply for this scholarship. Make sure you are fulfill eligibility criteria')"
-                                      action="/applyscholarship" method="post"
-                                >
-                                    {% csrf_token %}
-                                    <input type="hidden" name="schemeid_apply" id="schemeid_apply"
-                                           value="{{ scheme_key }}">
-                                    <input type="hidden" name="schemename" id="schemename"
-                                           value="{{ scheme.name }}">
-                                    <input type="hidden" name="trust_id" id="trust_id"
-                                           value="{{ scheme.trust_id }}">
-                                    <input type="hidden" name="amount" id="amount"
-                                           value="{{ scheme.amount }}">
+                            <h3 class="text-center">Application is closed</h3>
+                        {% else %}
+                            {% if islog %}
+                                {% if isapply == "False" %}
+                                    <form onclick="confirm('Are you sure you want to apply for this scholarship. Make sure you are fulfill eligibility criteria')"
+                                          action="/applyscholarship" method="post"
+                                    >
+                                        {% csrf_token %}
+                                        <input type="hidden" name="schemeid_apply" id="schemeid_apply"
+                                               value="{{ scheme_key }}">
+                                        <input type="hidden" name="schemename" id="schemename"
+                                               value="{{ scheme.name }}">
+                                        <input type="hidden" name="trust_id" id="trust_id"
+                                               value="{{ scheme.trust_id }}">
+                                        <input type="hidden" name="amount" id="amount"
+                                               value="{{ scheme.amount }}">
+                                        <div style="height: 10vh" class="content-wrapper label-input">
+                                            <input style="background: #6c61f6" class="form-submit-btn" type="submit"
+                                                   value="Apply">
+                                        </div>
+                                    </form>
+
+                                {% else %}
+
                                     <div style="height: 10vh" class="content-wrapper label-input">
-                                        <input style="background: #6c61f6" class="form-submit-btn" type="submit"
-                                               value="Apply">
+                                        <input style="background: #6c61f6" class="form-submit-btn" disabled
+                                               value="Already Applied">
                                     </div>
-                                </form>
+                                {% endif %}
 
                             {% else %}
-
-                                <div style="height: 10vh" class="content-wrapper label-input">
-                                    <input style="background: #6c61f6" class="form-submit-btn" disabled
-                                           value="Already Applied">
-                                </div>
+                                <a class="contact-btn" href="/login">Login To Apply</a><br><br>
                             {% endif %}
 
-                        {% else %}
-                            <a class="contact-btn" href="/login">Login To Apply</a><br><br>
                         {% endif %}
                     </div>
                 </div>

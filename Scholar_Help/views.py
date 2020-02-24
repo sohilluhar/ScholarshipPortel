@@ -247,7 +247,7 @@ def addscholarhiptofire(req):
 
     strtimestamp = str(timestamp).replace('.', '')
 
-    db.child("Scheme").child(strtimestamp).set(
+    db.child("Scheme").child(strtimestamp[:13]).set(
         data
     )
 
@@ -294,10 +294,17 @@ def viewschemedetails(request, pk):
     trust = db.child("Trust").child(scheme.get("trust_id")).get().val()
     other_schemes = db.child("Scheme").order_by_child("level").equal_to(scheme.get("level")).get().val()
     del other_schemes[str(pk)]
+    isclosed = False
+    print(scheme.get("lastdate"))
+    deadline = datetime.strptime(scheme.get("lastdate"), "%d-%B-%Y")
+    today = datetime.now()
+    if deadline < today:
+        isclosed = True
+
     return render(request, 'schemedetails.html',
                   {"scheme": scheme, 'trust': trust,
                    "other_schemes": other_schemes, "islog": Common.isLogin, "scheme_key": str(pk),
-                   "isapply": isapply
+                   "isapply": isapply, "isclosed": isclosed
 
                    })
 
@@ -675,6 +682,7 @@ def applyscholarship(request):  # user has click on apply button add userinfo to
 
             applicationid = datetime.timestamp(datetime.now())
             applicationid = str(applicationid).replace('.', '')
+            applicationid = applicationid[:13]
 
             data = {
                 "userid": userphone, "username": name,
