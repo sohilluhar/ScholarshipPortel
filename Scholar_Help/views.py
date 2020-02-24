@@ -457,6 +457,8 @@ def saveuserpersonalinfo(req):
         data = dict(data)
     except:
         pass
+    if data == None:
+        data = dict()
 
     newdata = {
         "sname": surname, "fname": first_name, "lname": last_name, "dob": dob, "age": age, "gender": gender,
@@ -468,6 +470,7 @@ def saveuserpersonalinfo(req):
     }
 
     data.update(newdata)
+    print(data)
     db.child("UserProfile").child(str(phone)).set(
         data
     )
