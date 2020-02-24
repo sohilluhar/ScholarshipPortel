@@ -185,6 +185,30 @@ def trust_home(req):
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
 
 
+def viewtakeaction(request):
+    userphone = request.POST['userphone']
+    applicationid = request.POST['applicationid']
+
+    if (Common.isTrustLogin):
+
+        db = connect_firebase()
+
+        application = db.child("AppliedScheme").child(applicationid).get().val()
+        userprofile = db.child("UserProfile").child(userphone).get().val()
+        cipher = Fernet(Common.encyptionkey)
+        accno = cipher.decrypt(userprofile.get("account_number").encode()).decode()
+
+        return render(request, 'trust_takeaction.html',
+                      {"trustkey": Common.trustkey, "trust_val": Common.trustVal,
+                       "application": application, "applicationid": applicationid,
+                       "userprofile": userprofile, "accno": accno
+
+                       })
+    else:
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
 def addscholarhip(req):
     if (Common.isTrustLogin):
         return render(req, 'add_scholarship.html',

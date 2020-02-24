@@ -36,6 +36,7 @@ urlpatterns = [
     path('trustlogout/', views.trust_logout),
     path('addscholarhip/', views.addscholarhip),
     path('addscholarhiptofire', views.addscholarhiptofire),
+    path('takeaction', views.viewtakeaction),
 
     path('register/', views.register),
     path('verify', views.verify),

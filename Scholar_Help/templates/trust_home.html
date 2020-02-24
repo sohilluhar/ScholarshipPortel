@@ -67,7 +67,8 @@
                                             <td>{{ values.userid }}</td>
                                             <td>{{ values.status }}</td>
                                             <td>
-                                                <form method="post" onsubmit="return false" action="/takeaction">
+                                                <form method="post" action="/takeaction">
+                                                    {% csrf_token %}
                                                     <input type="hidden" name="userphone" id="userphone"
                                                            value="{{ values.userid }}"/>
                                                     <input type="hidden" name="applicationid" id="applicationid"

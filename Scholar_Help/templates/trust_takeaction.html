@@ -1,0 +1,953 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+
+    <link rel="stylesheet" href="{% static 'include/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "trustsidebar.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Applicant Profile</h1>
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title"> User Profile
+                                    - {{ userprofile.sname }} {{ userprofile.fname }} {{ userprofile.lname }}</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <div class="card-body">
+
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <h5 class="m-0">Personal Details</h5>
+                                    </div>
+                                    <div class="card-body">
+
+
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="sname">Name</label>
+                                                    <input disabled type="text" name="sname" class="form-control"
+                                                           id="sname"
+                                                           placeholder="Enter Surname "
+                                                           value="{{ userprofile.sname }} {{ userprofile.fname }} {{ userprofile.lname }}"
+                                                           disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="dob">DOB</label>
+                                                    <input disabled type="text" name="dob" class="form-control"
+                                                           id="dob"
+                                                           placeholder="Select DOB" value="{{ userprofile.dob }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="age">Age</label>
+                                                    <input disabled type="text" name="age" class="form-control"
+                                                           id="age"
+                                                           value="{{ userprofile.age }}"
+                                                           disabled>
+                                                    <input disabled type="text" name="age1" class="form-control"
+                                                           id="age1"
+                                                           value="{{ userprofile.age }}"
+                                                           hidden>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Gender</label>
+
+                                                    <input disabled type="text" class="form-control"
+                                                           value="{{ userprofile.gender }}"
+                                                    >
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input disabled type="text" name="email" class="form-control"
+                                                           id="email"
+                                                           disabled
+                                                           value="{{ userprofile.email }}">
+                                                    <input disabled type="text" name="email" class="form-control"
+                                                           id="email"
+                                                           hidden
+                                                           value="{{ userprofile.email }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="phone">Phone Number</label>
+                                                    <input disabled type="text" name="phone" class="form-control"
+                                                           id="phone"
+                                                           value="{{ userprofile.phone }}">
+                                                    <input disabled type="text" name="phone" class="form-control"
+                                                           id="phone"
+                                                           hidden value="{{ userprofile.phone }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="parent_phone">Parent Phone Number</label>
+                                                    <input disabled type="text" name="parent_phone"
+                                                           class="form-control"
+                                                           id="parent_phone"
+                                                           placeholder="Enter Parent Phone Number"
+                                                           value="{{ userprofile.parent_phone }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Religion</label>
+
+                                                    <input disabled type="text" class="form-control"
+                                                           value="{{ userprofile.religious }}"
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="cast">Caste Category</label>
+
+                                                <input disabled type="text" class="form-control"
+                                                       value="{{ userprofile.cast }}"
+                                                >
+
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="anual_income">Family Annual Income</label>
+                                                    <input disabled type="number" name="anual_income"
+                                                           class="form-control"
+                                                           id="anual_income"
+                                                           placeholder="Enter Family Annual Income" min="0"
+                                                           value="{{ userprofile.annual_income }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="ifsc_code">Name as in Passbook</label>
+                                                    <input disabled type="text" name="nameinpassbook"
+                                                           class="form-control"
+                                                           id="nameinpassbook"
+                                                           placeholder="Enter your name as per banks passbook"
+                                                           value="{{ userprofile.nameinpassbook }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="account_number">Account Number</label>
+                                                    <input disabled type="number" name="account_number"
+                                                           class="form-control"
+                                                           id="account_number" placeholder="Enter Account Number"
+                                                           value="{{ accno }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label>Bank Name</label>
+
+                                                    <input disabled type="text" class="form-control"
+                                                           value="{{ userprofile.bank_name }}"
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="ifsc_code">IFSC Code</label>
+                                                    <input disabled type="text" name="ifsc_code"
+                                                           class="form-control"
+                                                           id="ifsc_code" placeholder="IFSC Code"
+                                                           value="{{ userprofile.ifsc_code }}">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <h5 class="m-0">Family Details</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <textarea class="form-control" rows="3"
+                                                              name="address" id="address"
+                                                              placeholder="Enter address"
+                                                              disabled
+                                                    >{{ userprofile.address }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="pincode">Pin Code</label>
+                                                    <input type="number" name="pincode" class="form-control"
+                                                           id="pincode" value="{{ userprofile.pincode }}" disabled
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="fatheralive">Is Father Alive?</label>
+
+                                                    <input type="text" class="form-control"
+                                                           value="{{ userprofile.fatheralive }}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="fathername">Father Name</label>
+                                                    <input type="text" name="fathername" class="form-control" disabled
+
+                                                           value="{{ userprofile.fathername }}" id="fathername"
+                                                           placeholder="Enter father's name">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="father_occupation">Fathers Occupation</label>
+                                                    <input type="text" name="father_occupation" class="form-control"
+                                                           disabled
+                                                           id="father_occupation"
+
+                                                           value="{{ userprofile.fatheroccupation }}"
+                                                           placeholder="Enter father's occupation">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="father_income">Fathers Monthly Income</label>
+                                                    <input type="number" name="father_income" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.fatherincome }}"
+                                                           id="father_income"
+                                                           placeholder="Enter father's monthly income">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="motheralive">Is Mother Alive?</label>
+
+                                                    <input type="text" class="form-control"
+                                                           value="{{ userprofile.motheralive }}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="mothername">Mother Name</label>
+                                                    <input type="text" name="mothername" class="form-control" disabled
+
+                                                           value="{{ userprofile.mothername }}"
+                                                           id="mothername" placeholder="Enter mother's name">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="mother_occupation">Mothers Occupation</label>
+                                                    <input type="text" name="mother_occupation" class="form-control"
+                                                           disabled
+                                                           id="mother_occupation"
+
+                                                           value="{{ userprofile.motheroccupation }}"
+                                                           placeholder="Enter mother's occupation">
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="mother_income">Mothers Monthly Income</label>
+                                                    <input type="number" name="mother_income" class="form-control"
+                                                           disabled
+                                                           id="mother_income"
+
+                                                           value="{{ userprofile.motherincome }}"
+                                                           placeholder="Enter mother's monthly income">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <h5 class="m-0">Education Details</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="collegename">
+                                                        College Name</label>
+                                                    <input type="text" name="collegename" class="form-control"
+                                                           id="collegename" value="{{ userprofile.collegename }}"
+                                                           placeholder="Enter college name" disabled
+                                                    >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label> College
+                                                        Address</label>
+                                                    <textarea class="form-control" rows="2"
+                                                              name="collegeaddress" id="collegeaddress"
+                                                              placeholder="Enter college address" disabled
+
+                                                    >{{ userprofile.collegeaddress }}</textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="coursename">
+                                                        Current Course Name</label>
+                                                    <input type="text" name="coursename" class="form-control"
+                                                           id="coursename" value="{{ userprofile.coursename }}"
+                                                           placeholder="Enter course name eg: BSc-IT" disabled
+                                                    >
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="coursename"> Total
+                                                        Fees</label>
+                                                    <input type="number" name="coursefees" class="form-control"
+                                                           id="coursefees" value="{{ userprofile.coursefees }}"
+                                                           placeholder="Enter  total annual fees of current year"
+                                                           required disabled
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <h5 class="m-0">Past Education</h5>
+
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="course1name">
+                                                        Course</label>
+                                                    <input type="text" name="course1name" class="form-control"
+
+                                                           value="{{ userprofile.course1name }}" id="course1name"
+                                                           placeholder="Enter course name " disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="course1year"> Year
+                                                        of Study</label>
+                                                    <input type="number" name="course1year" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course1year }}" id="course1year"
+                                                           placeholder="Enter year">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="course1board">
+                                                        Board/University</label>
+                                                    <input type="text" name="course1board" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course1board }}" id="course1board"
+                                                           placeholder="Enter university or board name ">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <label for="course1per">
+                                                        Percentage</label>
+                                                    <input type="text" name="course1per" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course1per }}" id="course1per"
+                                                           placeholder="Enter percentage ">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <input type="text" name="course2name" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course2name }}" id="course2name"
+                                                           placeholder="Enter course name ">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <input type="number" name="course2year" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course2year }}" id="course2year"
+                                                           placeholder="Enter year">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+
+                                                    <input type="text" name="course2board" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course2board }}" id="course2board"
+                                                           placeholder="Enter university or board name ">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <input type="text" name="course2per" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course2per }}" id="course2per"
+                                                           placeholder="Enter percentage ">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <input type="text" name="course3name" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course3name }}" id="course3name"
+                                                           placeholder="Enter course name ">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <input type="number" name="course3year" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course3year }}" id="course3year"
+                                                           placeholder="Enter year">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <input type="text" name="course3board" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course3board }}" id="course3board"
+                                                           placeholder="Enter university or board name ">
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="form-group">
+                                                    <input type="text" name="course3per" class="form-control"
+                                                           disabled
+                                                           value="{{ userprofile.course3per }}" id="course3per"
+                                                           placeholder="Enter percentage ">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {% if userprofile.achievement %}
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Achievements</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" rows="4"
+                                                                  name="achievement" id="achievement"
+                                                                  placeholder="Enter achievements if any"
+
+                                                        >{{ userprofile.achievement }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+
+
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <h5 class="m-0">Uploaded Documents</h5>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label> Photo Id Proof</label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"
+                                                                   disabled value="{{ userprofile.docphotoidname }}">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+
+
+                                                        <a type="button" class="btn btn-info" target="_blank"
+                                                           href=" {{ userprofile.docphotoidurl }}"
+                                                        >
+                                                            View
+                                                        </a>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <label> Age Proof </label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"
+                                                                   disabled value="{{ userprofile.docageproofname }}">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+
+                                                            <div class="input-group">
+
+                                                                <a type="button" class="btn btn-info" target="_blank"
+                                                                   href=" {{ userprofile.docageproofurl }}"
+                                                                >
+                                                                    View
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <label> Bank Passbook</label>
+
+
+                                                <div class="row">
+                                                    <div class="col-8">
+
+                                                        <div class="form-group">
+
+
+                                                            <input type="text" class="form-control"
+
+                                                                   disabled value="Passbook">
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+
+                                                            <div class="input-group">
+
+                                                                <a type="button" class="btn btn-info" target="_blank"
+                                                                   href=" {{ userprofile.docpassbookurl }}"
+                                                                >
+                                                                    View
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label> Marksheet</label></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"
+                                                                   disabled value="{{ userprofile.course1name }}">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+
+
+                                                        <a type="button" class="btn btn-info" target="_blank"
+                                                           href=" {{ userprofile.doccourse1url }}"
+                                                        >
+                                                            View
+                                                        </a>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"
+                                                                   disabled value="{{ userprofile.course2name }}">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+
+                                                            <div class="input-group">
+
+                                                                <a type="button" class="btn btn-info" target="_blank"
+                                                                   href=" {{ userprofile.doccourse2url }}"
+                                                                >
+                                                                    View
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-4">
+
+
+                                                <div class="row">
+                                                    <div class="col-8">
+
+                                                        <div class="form-group">
+
+
+                                                            <input type="text" class="form-control"
+
+                                                                   disabled value="{{ userprofile.course3name }}">
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+
+                                                            <div class="input-group">
+
+                                                                <a type="button" class="btn btn-info" target="_blank"
+                                                                   href=" {{ userprofile.doccourse3url }}"
+                                                                >
+                                                                    View
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-6">
+                                                <label> Proof of Current Year Fees</label>
+
+
+                                                <div class="row">
+                                                    <div class="col-8">
+
+                                                        <div class="form-group">
+
+
+                                                            <input type="text" class="form-control"
+
+                                                                   disabled value="{{ userprofile.doccurrentfeename }}">
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+
+                                                            <div class="input-group">
+
+                                                                <a type="button" class="btn btn-info" target="_blank"
+                                                                   href=" {{ userprofile.doccurrentfeeurl }}"
+                                                                >
+                                                                    View
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label> Proof of Admission</label>
+
+
+                                                <div class="row">
+                                                    <div class="col-8">
+
+                                                        <div class="form-group">
+
+
+                                                            <input type="text" class="form-control"
+
+                                                                   disabled value="{{ userprofile.docadmissionname }}">
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+
+                                                            <div class="input-group">
+
+                                                                <a type="button" class="btn btn-info" target="_blank"
+                                                                   href=" {{ userprofile.docadmissionurl }}"
+                                                                >
+                                                                    View
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label> Address Proof</label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"
+                                                                   disabled value="{{ userprofile.docaddressname }}">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+
+
+                                                        <a type="button" class="btn btn-info" target="_blank"
+                                                           href=" {{ userprofile.docaddressurl }}"
+                                                        >
+                                                            View
+                                                        </a>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <label> Income Proof </label>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"
+                                                                   disabled
+                                                                   value="{{ userprofile.docincomename }}">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="form-group">
+
+                                                            <div class="input-group">
+
+                                                                <a type="button" class="btn btn-info" target="_blank"
+                                                                   href=" {{ userprofile.docincomeurl }}"
+                                                                >
+                                                                    View
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header">
+                                        <h5 class="m-0">Declaration</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card-body">
+                                                    <dl>
+                                                        <dd>I <span
+                                                                class="text-bold">{{ userprofile.fname }} {{ userprofile.lname }} {{ userprofile.sname }}</span>
+                                                            age
+                                                            <span class="text-bold">{{ userprofile.age }}</span>
+                                                            years, resident of <span
+                                                                    class="text-bold">{{ userprofile.address }}</span>
+                                                            of hereby declare that the information given above and
+                                                            in the uploaded documents is true to the best of my
+                                                            knowledge and belief and nothing has been concealed
+                                                            therein.
+                                                        </dd>
+                                                        <dd>I am well aware of the
+                                                            fact that if the information given by me is proved false
+                                                            / not true at any point of time, I will have to face
+                                                            punishment as per any provision of Law for the time
+                                                            being in force as well as the benefit availed of by
+                                                            me or the benefit accrued to me shall be summarily
+                                                            cancelled
+                                                        </dd>
+
+                                                    </dl>
+                                                    <div class="form-group mb-0">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" name="terms" checked disabled
+                                                                   class="custom-control-input" id="terms">
+                                                            <label class="custom-control-label" for="terms">I
+                                                                agree</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+
+
+                                <a class="btn btn-primary " href="/">Browse Scholarships
+                                </a>
+                            </div>
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <div class="col-md-6">
+
+                    </div>
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+
+<!-- DataTables -->
+<script src="{% static 'include/plugins/datatables/jquery.dataTables.js' %} "></script>
+<script src="{% static 'include/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script>
+
+    $(function () {
+        $("#example1").DataTable(
+            {
+                "aaSorting": [],
+                "ordering": true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }]
+            }
+        );
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

@@ -49,7 +49,7 @@
                                         <th>Scheme Name</th>
                                         <th>Amount Expected</th>
                                         <th>Status</th>
-                                        <th>Remark</th>
+                                        <th class="no-sort">Remark</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -155,7 +155,16 @@
 <script>
 
     $(function () {
-        $("#example1").DataTable();
+        $("#example1").DataTable(
+            {
+                "aaSorting": [],
+                "ordering": true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }]
+            }
+        );
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
