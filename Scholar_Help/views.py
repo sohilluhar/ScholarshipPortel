@@ -164,7 +164,20 @@ def trust_verify(request):
 
 
 def trust_home(req):
-    return render(req, 'trust_home.html', {"trustkey": Common.trustkey, "trust_val": Common.trustVal})
+    if (Common.isTrustLogin):
+        data = OrderedDict()
+
+        db = connect_firebase()
+        try:
+            data = db.child("AppliedScheme").order_by_child("trust_id").equal_to(
+                Common.trustkey).get().val()
+        except:
+            pass
+        return render(req, 'trust_home.html',
+                      {"trustkey": Common.trustkey, "trust_val": Common.trustVal, "applied_schemes": data})
+    else:
+        return render(req, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
 
 
 def addscholarhip(req):

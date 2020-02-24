@@ -3,6 +3,8 @@
 <html>
 <head>
     {% include "html_head.html" %}
+
+    <link rel="stylesheet" href="{% static 'include/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
@@ -27,7 +29,76 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
-                <h1>Test</h1>
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Applied Scheme</h3>
+                            </div>
+
+                            <!-- /.card-header -->
+
+
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Application Id</th>
+                                        <th>Scheme Name</th>
+                                        <th>Scheme Amount</th>
+                                        <th>Applicant Name</th>
+                                        <th>Applicant Phone</th>
+                                        <th>Status</th>
+                                        <th>Take Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for key,values in applied_schemes.items %}
+
+                                        <tr>
+                                            <td>{{ key }}</td>
+                                            <td>{{ values.scheme_name }}
+                                            </td>
+                                            <td>{{ values.schemeamount }}</td>
+                                            <td>{{ values.username }}</td>
+                                            <td>{{ values.userid }}</td>
+                                            <td>{{ values.status }}</td>
+                                            <td>
+                                                <form method="post" onsubmit="return false" action="/takeaction">
+                                                    <input type="hidden" name="userphone" id="userphone"
+                                                           value="{{ values.userid }}"/>
+                                                    <input type="hidden" name="applicationid" id="applicationid"
+                                                           value="{{ key }}"/>
+                                                    <button type="submit" class="btn btn-sm"
+                                                    >
+                                                        <span class="text-info"> Take Action</span>
+                                                    </button>
+                                                </form>
+
+
+                                            </td>
+                                        </tr>
+
+                                    {% endfor %}
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                            <!-- /.card-body -->
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <!--/.col (right) -->
+                </div>
+
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
@@ -43,6 +114,28 @@
 {% include "javascript.html" %}
 <script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
 <script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+
+<!-- DataTables -->
+<script src="{% static 'include/plugins/datatables/jquery.dataTables.js' %} "></script>
+<script src="{% static 'include/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script>
+
+    $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
+    document.getElementById("fatheralive").value = "{{userprofile.fatheralive}}";
+    document.getElementById("motheralive").value = "{{userprofile.motheralive}}";
+
+
+</script>
 
 </body>
 </html>
