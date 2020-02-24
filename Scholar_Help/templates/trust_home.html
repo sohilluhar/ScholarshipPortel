@@ -49,9 +49,9 @@
                                         <th>Scheme Name</th>
                                         <th>Scheme Amount</th>
                                         <th>Applicant Name</th>
-                                        <th>Applicant Phone</th>
+                                        <th class="no-sort">Applicant Phone</th>
                                         <th>Status</th>
-                                        <th>Take Action</th>
+                                        <th class="no-sort">Take Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -121,7 +121,16 @@
 <script>
 
     $(function () {
-        $("#example1").DataTable();
+        $("#example1").DataTable(
+            {
+                "aaSorting": [],
+                "ordering": true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }]
+            }
+        );
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -131,8 +140,6 @@
             "autoWidth": false,
         });
     });
-    document.getElementById("fatheralive").value = "{{userprofile.fatheralive}}";
-    document.getElementById("motheralive").value = "{{userprofile.motheralive}}";
 
 
 </script>

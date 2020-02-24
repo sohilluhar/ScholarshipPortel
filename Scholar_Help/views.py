@@ -1,3 +1,4 @@
+import collections
 from collections import OrderedDict
 from datetime import datetime
 from random import randint
@@ -171,8 +172,11 @@ def trust_home(req):
         try:
             data = db.child("AppliedScheme").order_by_child("trust_id").equal_to(
                 Common.trustkey).get().val()
+            data = collections.OrderedDict(reversed(list(data.items())))
         except:
             pass
+
+        print(data)
         return render(req, 'trust_home.html',
                       {"trustkey": Common.trustkey, "trust_val": Common.trustVal, "applied_schemes": data})
     else:
