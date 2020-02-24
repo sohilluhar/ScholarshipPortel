@@ -4,6 +4,7 @@ from datetime import datetime
 from random import randint
 
 import pyrebase
+from cryptography.fernet import Fernet
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -332,19 +333,21 @@ def profile_personalDetails(request):
         userprofile = OrderedDict()
 
         db = connect_firebase()
-
+        accno = ""
         Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
         try:
             userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+            cipher = Fernet(Common.encyptionkey)
+            accno = cipher.decrypt(userprofile.get("account_number").encode()).decode()
         except:
             print("Error")
-
+        
         if (Common.currentUser.val().get("profilefill") != "100"):
             return render(request, 'user_profileDetails.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(), "accno": accno})
         else:
             return render(request, 'user_completeprofile.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(), "accno": accno
                            })
 
     else:
@@ -460,11 +463,15 @@ def saveuserpersonalinfo(req):
     if data == None:
         data = dict()
 
+    cipher = Fernet(Common.encyptionkey)
+    encaccountnum = cipher.encrypt(account_number.encode())
+    print(encaccountnum)
+
     newdata = {
         "sname": surname, "fname": first_name, "lname": last_name, "dob": dob, "age": age, "gender": gender,
         "email": email, "phone": phone, "parent_phone": parent_phone,
         "religious": religious, "cast": cast, "annual_income": annual_income,
-        "account_number": account_number, "bank_name": bank_name, "ifsc_code": ifsc_code.upper(),
+        "account_number": encaccountnum.decode(), "bank_name": bank_name, "ifsc_code": ifsc_code.upper(),
         "nameinpassbook": nameinpassbook
 
     }
