@@ -48,6 +48,7 @@
                                         <th>Application Id</th>
                                         <th>Scheme Name</th>
                                         <th>Amount Expected</th>
+                                        <th>Amount Sectioned</th>
                                         <th>Status</th>
                                         <th class="no-sort">Remark</th>
                                     </tr>
@@ -62,6 +63,7 @@
                                                    href="/scheme/{{ values.scheme_id }}">{{ values.scheme_name }}</a>
                                             </td>
                                             <td>{{ values.schemeamount }}</td>
+                                            <td>{{ values.sanctionedamount }}</td>
                                             <td>{{ values.status }}</td>
                                             <td>
 
@@ -83,10 +85,21 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
+
+                                                                {% if values.sanctionedamount != "0" %}
+                                                                    <p><span
+                                                                            class="text-bold">Sanction Amount:</span> {{ values.sanctionedamount }}
+                                                                    </p>
+                                                                {% elif values.interviewdate %}
+                                                                    <p><span
+                                                                            class="text-bold">Interview Date:</span> {{ values.interviewdate }}
+                                                                    </p>
+                                                                {% endif %}
+
                                                                 {% if values.remark %}
                                                                     <p>{{ values.remark }}</p>
                                                                 {% else %}
-                                                                    <p>---</p>
+                                                                    <p>-</p>
                                                                 {% endif %}
 
 

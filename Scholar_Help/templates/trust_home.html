@@ -46,8 +46,8 @@
                                     <thead>
                                     <tr>
                                         <th>Application Id</th>
-                                        <th>Scheme Name</th>
-                                        <th>Scheme Amount</th>
+                                        <th>Scholarship Name</th>
+                                        <th>Scholarship Amount</th>
                                         <th>Applicant Name</th>
                                         <th class="no-sort">Applicant Phone</th>
                                         <th>Status</th>
@@ -73,10 +73,15 @@
                                                            value="{{ values.userid }}"/>
                                                     <input type="hidden" name="applicationid" id="applicationid"
                                                            value="{{ key }}"/>
-                                                    <button type="submit" class="btn btn-sm"
-                                                    >
-                                                        <span class="text-info"> Take Action</span>
-                                                    </button>
+                                                    {% if  values.status != "Approve" %}
+                                                        <button type="submit" class="btn btn-sm">
+                                                            <span class="text-info"> Take Action</span>
+                                                        </button>
+                                                    {% else %}
+                                                        <p class="text-mute text-center"> -- </p>
+
+
+                                                    {% endif %}
                                                 </form>
 
 

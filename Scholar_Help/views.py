@@ -192,18 +192,68 @@ def viewtakeaction(request):
     if (Common.isTrustLogin):
 
         db = connect_firebase()
-
+        applied = OrderedDict()
+        amount_received = 0
         application = db.child("AppliedScheme").child(applicationid).get().val()
         userprofile = db.child("UserProfile").child(userphone).get().val()
         cipher = Fernet(Common.encyptionkey)
         accno = cipher.decrypt(userprofile.get("account_number").encode()).decode()
+        pendingamt = int(userprofile.get("coursefees"))
+        schemeeligibility = db.child("Scheme").child(application.get("scheme_id")).child("eligibility").get().val()
 
+        userappliedscholarship = db.child("AppliedScheme").order_by_child("userid").equal_to(
+            userphone).get().val()
+        del userappliedscholarship[applicationid]
+        print(userappliedscholarship)
+
+        for key, value in userappliedscholarship.items():
+            print(key, "is ", value.get("status"))
+            if value.get("status") == "Approve":
+                print(value, "is approve")
+                amount_received += int(value.get("sanctionedamount"))
+                tmp = {key: value}
+                applied.update(tmp)
+                print(applied)
+        pendingamt = pendingamt - amount_received
         return render(request, 'trust_takeaction.html',
                       {"trustkey": Common.trustkey, "trust_val": Common.trustVal,
                        "application": application, "applicationid": applicationid,
-                       "userprofile": userprofile, "accno": accno
+                       "userprofile": userprofile, "accno": accno, "appliedscholarship": applied,
+                       "amtrec": str(amount_received), "amtpen": str(pendingamt), "schemeeligibility": schemeeligibility
 
                        })
+    else:
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+def updateapplicationstatus(request):
+    if (Common.isTrustLogin):
+        applicationid = request.POST['applicationid']
+        status = request.POST['status']
+        interviewdate = request.POST['interviewdate']
+        sancamt = request.POST['sancamt']
+        remark = request.POST['remark']
+        mail = request.POST['mail']
+        schemename = request.POST['schemename']
+
+        data = {
+            "interviewdate": interviewdate, "status": status, "sanctionedamount": sancamt,
+            "remark": remark
+        }
+        db = connect_firebase()
+        db.child("AppliedScheme").child(applicationid).update(data)
+
+        title = "ScholarHelp - Status updated fo applicatiod id " + applicationid
+        msg = "Your application status for " + schemename + " has been updated to " + status + ".Please login to " \
+                                                                                               "ScholarHelp to view " \
+                                                                                               "more details. "
+        print(msg)
+        sendmail(mail, title, msg)
+        return render(request, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Application Status Updated Successfully",
+                       "path": "trusthome"})
+
     else:
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})

@@ -9,6 +9,7 @@ def sendmail(receiver, title, msgbody):
     password = "Shifa@007"
     toaddrs = receiver
     message = "Subject:" + title + "\n" + msgbody
+    print(message)
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(smtp_server, port) as server:
         server.login(sender_email, password)
