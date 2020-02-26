@@ -1,0 +1,323 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "html_head.html" %}
+
+    <link rel="stylesheet" href="{% static 'include/plugins/datatables-bs4/css/dataTables.bootstrap4.css' %}">
+
+    {% include "javascript.html" %}
+    <script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "trustsidebar.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Scholarships</h1>
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-12">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Scholarships</h3>
+                            </div>
+
+                            <!-- /.card-header -->
+
+
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Scholarship Id</th>
+                                        <th>Scholarship Name</th>
+                                        <th>Amount</th>
+                                        <th>Deadline</th>
+
+                                        <th class="no-sort">
+                                            Update
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for key,values in scholarships.items %}
+
+                                        <tr>
+                                            <td>{{ key }}</td>
+                                            <td>{{ values.name }}
+                                            </td>
+                                            <td>{{ values.amount }}</td>
+                                            <td>{{ values.lastdate }}</td>
+                                            <td>
+                                                {#                                              Update modal here#}
+                                                <form role="form" method="POST"
+                                                      id="updatescholarship-{{ key }}"
+                                                      action="/updatescholarhiptofire"
+                                                      enctype="multipart/form-data">
+                                                    <button type="button" class="btn btn-sm" data-toggle="modal"
+                                                            data-target="#modal-{{ key }}">
+                                                        <span class="text-info"> Update</span>
+                                                    </button>
+
+                                                    <div class="modal fade" id="modal-{{ key }}">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+
+
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Scholarship Details</h4>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    {% csrf_token %}
+
+                                                                    <div class="card-body">
+
+
+                                                                        <div class="form-group">
+                                                                            <label for="exampleInputEmail1"><span
+                                                                                    class="text-danger">*</span>
+                                                                                Scholarship
+                                                                                Name:</label>
+                                                                            <input type="text" name="sname" id="sname"
+                                                                                   class="form-control"
+                                                                                   value="{{ values.name }}"
+                                                                                   required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="exampleInputEmail1"><span
+                                                                                    class="text-danger">*</span>
+                                                                                Scholarship
+                                                                                Amount:</label>
+                                                                            <input type="number" name="samt" id="samt"
+                                                                                   class="form-control"
+                                                                                   value="{{ values.amount }}"
+                                                                                   required>
+                                                                            <input type="hidden" name="key" id="key"
+                                                                                   class="form-control"
+                                                                                   value="{{ key }}"
+
+                                                                                   required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="exampleInputEmail1"><span
+                                                                                    class="text-danger">*</span>
+                                                                                Dead Line :</label>
+                                                                            <input type="text"
+                                                                                   name="sdeadline-{{ key }}"
+                                                                                   id="sdeadline-{{ key }}"
+                                                                                   class="form-control"
+                                                                                   value="{{ values.lastdate }}"
+                                                                                   required
+                                                                            >
+                                                                            <script>
+                                                                                var today = moment();
+
+                                                                                $(function () {
+                                                                                    $('input[name="sdeadline-{{ key }}"]').daterangepicker({
+                                                                                        singleDatePicker: true,
+                                                                                        autoUpdateInput: false,
+                                                                                        startDate: today,
+                                                                                    });
+                                                                                    $('#sdeadline-{{ key }}').on('apply.daterangepicker', function (ev, picker) {
+                                                                                        document.getElementById("sdeadline-{{ key }}").value = picker.startDate.format('DD-MMMM-YYYY');
+                                                                                    });
+                                                                                });
+
+
+                                                                            </script>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label for="exampleInputEmail1"><span
+                                                                                    class="text-danger">*</span>
+                                                                                Course Name:</label>
+                                                                            <input type="text" name="scoursename"
+                                                                                   id="scoursename" class="form-control"
+                                                                                   value="{{ values.course }}"
+                                                                                   required>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label><span class="text-danger">*</span>
+                                                                                Scholarship Category:</label>
+                                                                            <select class="form-control" name="scat"
+                                                                                    id="scat-{{ key }}">
+                                                                                <option value="{{ values.level }}">{{ values.level }}
+                                                                                </option>
+
+                                                                                {% if values.level == "Graduation" %}
+
+
+                                                                                    <option value="College">College
+                                                                                    </option>
+                                                                                    <option value="School">School
+                                                                                    </option>
+                                                                                    <option value="Others">Other
+                                                                                    </option>
+
+                                                                                {% endif %}
+                                                                                {% if values.level == "College" %}
+
+                                                                                    <option value="Graduation">
+                                                                                        Graduation
+                                                                                    </option>
+                                                                                    <option value="School">School
+                                                                                    </option>
+                                                                                    <option value="Others">Other
+                                                                                    </option>
+
+                                                                                {% endif %}
+                                                                                {% if values.level == "School" %}
+
+                                                                                    <option value="Graduation">
+                                                                                        Graduation
+                                                                                    </option>
+                                                                                    <option value="College">College
+                                                                                    </option>
+                                                                                    <option value="Others">Other
+                                                                                    </option>
+
+                                                                                {% endif %}
+                                                                                {% if values.level == "Others" %}
+
+                                                                                    <option value="Graduation">
+                                                                                        Graduation
+                                                                                    </option>
+                                                                                    <option value="College">College
+                                                                                    </option>
+                                                                                    <option value="School">School
+                                                                                    </option>
+
+                                                                                {% endif %}
+                                                                            </select>
+
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label><span class="text-danger">*</span>
+                                                                                Eligibility Criteria:</label>
+                                                                            <textarea class="form-control" rows="3"
+                                                                                      id="seligibility"
+                                                                                      name="seligibility"
+
+                                                                                      required>{{ values.eligibility }}</textarea>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <!-- /.card-body -->
+
+
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                    </button>
+                                                                    <button type="submit" name="submit-{{ key }}"
+                                                                            id="submit-{{ key }}"
+                                                                            class="btn btn-primary">Update
+                                                                        Scholarship Details
+                                                                    </button>
+
+                                                                </div>
+
+                                                            </div
+                                                            >
+                                                            <!-- /.modal-content -->
+                                                        </div>
+
+
+                                                    </div>
+                                                </form>
+
+                                            </td>
+                                        </tr>
+
+                                    {% endfor %}
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                            <!-- /.card-body -->
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+
+<!-- DataTables -->
+<script src="{% static 'include/plugins/datatables/jquery.dataTables.js' %} "></script>
+<script src="{% static 'include/plugins/datatables-bs4/js/dataTables.bootstrap4.js' %}"></script>
+<script>
+
+    $(function () {
+        $("#example1").DataTable(
+            {
+                "aaSorting": [],
+                "ordering": true,
+                columnDefs: [{
+                    orderable: false,
+                    targets: "no-sort"
+                }]
+            }
+        );
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+        });
+    });
+
+
+</script>
+
+</body>
+</html>

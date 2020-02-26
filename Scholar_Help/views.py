@@ -268,6 +268,19 @@ def addscholarhip(req):
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
 
 
+def viewallscholarships(request):
+    schemes = OrderedDict()
+    db = connect_firebase()
+    try:
+        schemes = db.child("Scheme").order_by_child("trust_id").equal_to(Common.trustkey).get().val()
+    except:
+        print("Error")
+    return render(request, 'trust_allscheme.html',
+                  {"trustkey": Common.trustkey, "trust_val": Common.trustVal,
+                   "scholarships": schemes
+                   })
+
+
 def register(request):
     return render(request, 'register.html', {})
 
@@ -277,6 +290,7 @@ def trust_logout(request):
     Common.trustVal = None
     Common.isTrustLogin = False
     Common.isLogin = False
+
     return render(request, 'redirecthome.html',
                   {"swicon": "success", "swtitle": "Done", "swmsg": "Logout Successfully", "path": ""})
 
@@ -317,6 +331,34 @@ def adduser(req):
         return render(req, 'redirecthome.html',
                       {"swicon": "success", "swtitle": "Done", "swmsg": "Registration Done Successfully.",
                        "path": "login"})
+
+
+def updatescholarhiptofire(req):
+    sname = req.POST['sname']
+    samt = req.POST['samt']
+    scourse = req.POST['scoursename']
+    scat = req.POST['scat']
+    seligibility = req.POST['seligibility']
+
+    key = req.POST['key']
+    strdead = 'sdeadline-' + key
+    sdeadline = req.POST[strdead]
+    logo = Common.trustVal.get("logo")
+    trust_id = Common.trustkey
+    db = connect_firebase()
+
+    data = {
+        "amount": samt, "course": scourse, "eligibility": seligibility, "lastdate": sdeadline,
+        "level": scat, "logo": logo, "name": sname, "trust_id": trust_id
+    }
+
+    db.child("Scheme").child(key).update(
+        data
+    )
+
+    return render(req, 'redirecthome.html',
+                  {"swicon": "success", "swtitle": "Done", "swmsg": "Scholarhip Updated Successfully.",
+                   "path": "trusthome"})
 
 
 def addscholarhiptofire(req):
