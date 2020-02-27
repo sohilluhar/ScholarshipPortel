@@ -24,13 +24,13 @@
     <div class="col-sm-4 col-sm-offset-4">
         <div class="content-wrapper">
             <div class="login-form-wrapper">
-                <h2 class="text-center">Trust Sign in</h2>
-                <form method="post" action="/trustverify">
+                <h2 class="text-center">Login</h2>
+                <form method="post" action="/adminverify">
                     {% csrf_token %}
 
                     <div class="login-phone">
                         <!--<p>Phone</p>-->
-                        <input type="text" name="trust_username" placeholder="Trust Id"/>
+                        <input type="text" name="trust_username" placeholder="Admin Id"/>
                     </div>
                     <div class="login-password">
                         <!--<p>Password</p>-->
@@ -38,9 +38,7 @@
                     </div>
 
                     <input class="login-btn" type="submit" value="Log in">
-                    
-                    <hr>
-                    <a class="create-ac-btn" href="/login">Login as Student </a>
+
 
                 </form>
             </div>

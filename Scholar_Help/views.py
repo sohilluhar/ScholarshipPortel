@@ -42,6 +42,28 @@ def login(request):
     return render(request, 'login.html', {})
 
 
+def adminlogin(request):
+    return render(request, 'adminlogin.html', {})
+
+
+def adminverify(request):
+    adminname = request.POST.get('trust_username')
+    password = request.POST.get('password')
+
+    db = connect_firebase()
+    username = db.child("Admin").child("username").get().val()
+    passworddb = db.child("Admin").child("password").get().val()
+
+    if adminname == username and password == passworddb:
+
+        Common.isAdminLogin = True
+        return HttpResponseRedirect('/')
+    else:
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Invalid Password or usrername",
+                       "path": "admin-login"})
+
+
 def trust_login(request):
     return render(request, 'trust_login.html', {})
 
@@ -260,6 +282,9 @@ def updateapplicationstatus(request):
 
 
 def viewtrustprofile(request):
+    db = connect_firebase()
+    Common.trustVal = db.child("Trust").child(Common.trustkey).get().val()
+
     return render(request, 'trust_profile.html',
                   {"trustkey": Common.trustkey, "trust_val": Common.trustVal})
 

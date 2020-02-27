@@ -87,20 +87,81 @@
                                                   required>{{ trust_val.vision }}</textarea>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="tpass"> Change Password
-                                        </label>
-                                        <input type="password" name="tpass" id="tpass" class="form-control"
-                                               value="{{ trust_val.password }}"
-                                        >
+
+                                    <div class="card card-primary  collapsed-card">
+                                        <div class="card-header">
+                                            <h5 class="m-0 card-title">Change Password</h5>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
+
+
+                                                    <div class="form-group">
+                                                        <label for="tpass"> Change Password
+                                                        </label>
+                                                        <input type="password" name="tpass" id="tpass"
+                                                               class="form-control"
+                                                               value="{{ trust_val.password }}"
+                                                        >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="tpass"> Retype Password
+                                                        </label>
+                                                        <input type="password" name="cpass" id="cpass"
+                                                               class="form-control"
+                                                               value="{{ trust_val.password }}"
+                                                        >
+                                                    </div>
+
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="tpass"> Retype Password
-                                        </label>
-                                        <input type="password" name="cpass" id="cpass" class="form-control"
-                                               value="{{ trust_val.password }}"
-                                        >
+                                    <div class="card card-primary  collapsed-card">
+                                        <div class="card-header">
+                                            <h5 class="m-0 card-title">Change Logo</h5>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label>Current Logo</label>
+                                                    <img class="img-responsive pad" src="{{ trust_val.logo }}"
+                                                         alt="Logo">
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label>Upload New Logo</label>
+
+                                                        <div class="input-group">
+                                                            <input type="file" class="file-upload"
+                                                                   id="trustlogofile"
+                                                                   name="trustlogofile">
+                                                            <input type="hidden" id="trustlogourl"
+                                                                   name="trustlogourl">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
                                     </div>
+
 
                                 </div>
                                 <!-- /.card-body -->
@@ -117,6 +178,26 @@
                     <!-- right column -->
 
                     <!--/.col (right) -->
+                </div>
+
+                <div class="modal fade" id="modal-wait">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Please wait ...</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Uploading document</p>
+
+                            </div>
+                            <div class="modal-footer justify-content-between">
+
+
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
                 </div>
 
             </div><!-- /.container-fluid -->
@@ -138,22 +219,99 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
 <script>
-    var today = moment();
-    document.getElementById("sdeadline").value = today.format('DD-MMMM-YYYY');
-    $(function () {
-        $('input[name="sdeadline"]').daterangepicker({
-            singleDatePicker: true,
-            autoUpdateInput: false,
-            startDate: today,
-        });
-        $('#sdeadline').on('apply.daterangepicker', function (ev, picker) {
-            document.getElementById("sdeadline").value = picker.startDate.format('DD-MMMM-YYYY');
-        });
-    });
 
 
     function validate(form) {
+
+        var firebaseConfig = {
+            apiKey: "AIzaSyArPSVhwHv-rxxehxy0OUCE1ILCGXp17bI",
+            authDomain: "scholar-help-966a2.firebaseapp.com",
+            databaseURL: "https://scholar-help-966a2.firebaseio.com",
+            projectId: "scholar-help-966a2",
+            storageBucket: "scholar-help-966a2.appspot.com",
+            messagingSenderId: "988235258939",
+            appId: "1:988235258939:web:14290d685174b9461e901e",
+            measurementId: "G-RM8V5QZ205"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        var storage = firebase.storage();
+        var file = document.getElementById("trustlogofile").files[0];
+        var storageRef = storage.ref();
+
+
+        if (file) {
+            var fileex = file.name.split('.').pop();
+            fileex = fileex.toLowerCase();
+            var filesize = file.size;
+
+            if (fileex === "png") {
+                if (filesize < 5000000) {
+                    var uploadTask = storageRef.child("trust_logo/" + {{trustkey}} +".png").put(file);
+                    uploadTask.on('state_changed', function (snapshot) {
+                        // Observe state change events such as progress, pause, and resume
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                        switch (snapshot.state) {
+                            case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                console.log('Upload is paused');
+                                break;
+                            case firebase.storage.TaskState.RUNNING: // or 'running'
+                                console.log('Upload is running');
+                                break;
+                        }
+                    }, function (error) {
+                        // Handle unsuccessful uploads
+                        console.log(error)
+                    }, function () {
+                        // Handle successful uploads on complete
+                        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            console.log('File available at', downloadURL);
+                            document.getElementById("trustlogourl").value = downloadURL;
+
+
+                        });
+                    });
+                } else {
+
+                    Swal.fire({
+                        icon: "error",
+                        title: 'File Size limit exceeded',
+                        text: 'Upload file less than 5 MB',
+                    });
+
+                    return false;
+                }
+
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: 'File Type not Allowed',
+                    text: 'Upload only png file',
+                });
+
+                return false;
+            }
+        }
+
+
         password1 = form.tpass.value;
         password2 = form.cpass.value;
 
@@ -183,7 +341,15 @@
             {#alert("Password Match: Welcome to GeeksforGeeks!")#}
             return true;
         }
+
+
+        // Your web app's Firebase configuration
+
     }
+</script>
+<script>
+
+
 </script>
 
 </body>

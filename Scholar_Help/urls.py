@@ -66,5 +66,7 @@ urlpatterns = [
     path('applyscholarship', views.applyscholarship),
     path('appliedscholarship/', views.appliedscholarship),
 
+    path('admin-login', views.adminlogin),
+    path('adminverify', views.adminverify),
     path('', views.home)
 ]
