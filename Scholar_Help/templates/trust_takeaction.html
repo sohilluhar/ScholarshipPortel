@@ -941,6 +941,7 @@
                             </div>
                         </div>
 
+                    {% if application.status != "Approve" %}
                         <div class="card card-primary card-outline">
                             <form method="post" action="/updateapplicationstatus">
                                 <input type="text" hidden name="mail" id="mail" value="{{ userprofile.email }}">
@@ -988,11 +989,12 @@
                                             <div class="form-group">
                                                 <label>Status</label>
                                                 <select onchange="showstatus.call(this, event)"
-                                                        class="form-control" name="status" id="status"
+                                                        class="form-control" name="status" id="status" required
                                                 >
                                                     <option value="">Select</option>
                                                     <option value="In-Progress">Call for Interview</option>
                                                     <option value="Approve">Approve</option>
+                                                    <option value="Reject">Reject</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1038,7 +1040,51 @@
                                 </div>
                             </form>
                         </div>
+                    {% else %}
+                        <div class="card card-primary card-outline">
+                            <input type="text" hidden name="mail" id="mail" value="{{ userprofile.email }}">
+                            <input type="text" hidden name="schemename" id="schemename"
+                                   value="{{ userprofile.scheme_name }}">
+                            <div class="card-header">
+                                <h3 class="m-0 text-center text-primary text-bold">Sanctioned Amount</h3>
+                            </div>
+                            <div class="card-body">
 
+                                <div class="row">
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="lname">Application Id</label>
+                                            <input type="text" disabled class="form-control"
+
+                                                   value="{{ applicationid }}">
+                                            <input type="text" hidden
+                                                   id="applicationid"
+                                                   name="applicationid"
+                                                   class="form-control"
+                                                   value="{{ applicationid }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="lname">Scholarship Name</label>
+                                            <input type="text" disabled class="form-control"
+                                                   value="{{ application.scheme_name }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="lname">Amount</label>
+                                            <input type="text" disabled class="form-control"
+                                                   value="{{ application.sanctionedamount }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    {% endif %}
 
                         <!-- /.card -->
                     </div>

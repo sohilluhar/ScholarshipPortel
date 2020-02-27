@@ -259,6 +259,37 @@ def updateapplicationstatus(request):
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
 
 
+def viewtrustprofile(request):
+    return render(request, 'trust_profile.html',
+                  {"trustkey": Common.trustkey, "trust_val": Common.trustVal})
+
+
+def updatetrustprofile(request):
+    if (Common.isTrustLogin):
+        tname = request.POST['tname']
+        tcontact = request.POST['tcontact']
+        temailid = request.POST['temailid']
+        tabout = request.POST['tabout']
+        taddress = request.POST['taddress']
+        tvision = request.POST['tvision']
+        tpass = request.POST['tpass']
+
+        data = {
+            "name": tname, "contact": tcontact, "mailid": temailid,
+            "about": tabout, "address": taddress, "vision": tvision, "password": tpass
+        }
+        db = connect_firebase()
+        db.child("Trust").child(Common.trustkey).update(data)
+
+        return render(request, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Profile Updated Successfully",
+                       "path": "trusthome"})
+
+    else:
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
 def addscholarhip(req):
     if (Common.isTrustLogin):
         return render(req, 'add_scholarship.html',

@@ -1,0 +1,190 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    {% include "html_head.html" %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "trustsidebar.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Trust Profile</h1>
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 col-lg-8 col-sm-12 offset-md-2 offset-lg-2">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Trust Details</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <form role="form" method="POST" id="addscholarhiptofire" action="/update-profile"
+                                  onsubmit="return validate(this)"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="card-body">
+
+
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Trust
+                                            Name:</label>
+                                        <input type="text" name="tname" id="tname" class="form-control"
+                                               value="{{ trust_val.name }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"> Trust
+                                            Contact:</label>
+                                        <input type="number" name="tcontact" id="tcontact" class="form-control"
+                                               value="{{ trust_val.contact }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">
+                                            Trust Email Id</label>
+                                        <input type="text" name="temailid" id="temailid" class="form-control"
+                                               value="{{ trust_val.mailid }}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address </label>
+                                        <textarea class="form-control" rows="3"
+                                                  id="taddress" name="taddress"
+                                                  required>{{ trust_val.address }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>About</label>
+                                        <textarea class="form-control" rows="5"
+                                                  id="tabout" name="tabout"
+
+                                                  required>{{ trust_val.about }}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Vision</label>
+                                        <textarea class="form-control" rows="3"
+                                                  id="tvision" name="tvision"
+
+                                                  required>{{ trust_val.vision }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tpass"> Change Password
+                                        </label>
+                                        <input type="password" name="tpass" id="tpass" class="form-control"
+                                               value="{{ trust_val.password }}"
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tpass"> Retype Password
+                                        </label>
+                                        <input type="password" name="cpass" id="cpass" class="form-control"
+                                               value="{{ trust_val.password }}"
+                                        >
+                                    </div>
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Update
+
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+
+                    <!--/.col (right) -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+<script>
+    var today = moment();
+    document.getElementById("sdeadline").value = today.format('DD-MMMM-YYYY');
+    $(function () {
+        $('input[name="sdeadline"]').daterangepicker({
+            singleDatePicker: true,
+            autoUpdateInput: false,
+            startDate: today,
+        });
+        $('#sdeadline').on('apply.daterangepicker', function (ev, picker) {
+            document.getElementById("sdeadline").value = picker.startDate.format('DD-MMMM-YYYY');
+        });
+    });
+
+
+    function validate(form) {
+        password1 = form.tpass.value;
+        password2 = form.cpass.value;
+
+
+        var decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+        if (!password1.match(decimal)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Password',
+                text: 'Password length should be 8 to 15 and must contain at least one small letter,one capital letter,one digit and one special character!',
+            });
+
+            return false;
+        }
+        // If Not same return False.
+        if (password1 !== password2) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Password Mismatch',
+                text: 'Password and Confirm password did not match!',
+            });
+            return false;
+        }
+
+        // If same return True.
+        else {
+            {#alert("Password Match: Welcome to GeeksforGeeks!")#}
+            return true;
+        }
+    }
+</script>
+
+</body>
+</html>

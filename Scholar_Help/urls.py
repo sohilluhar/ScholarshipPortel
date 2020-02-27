@@ -40,6 +40,8 @@ urlpatterns = [
     path('updateapplicationstatus', views.updateapplicationstatus),
     path('view-allscholarships/', views.viewallscholarships),
     path('updatescholarhiptofire', views.updatescholarhiptofire),
+    path('view-profile', views.viewtrustprofile),
+    path('update-profile', views.updatetrustprofile),
 
     path('register/', views.register),
     path('verify', views.verify),
