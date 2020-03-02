@@ -57,11 +57,108 @@ def adminverify(request):
     if adminname == username and password == passworddb:
 
         Common.isAdminLogin = True
-        return HttpResponseRedirect('/')
+        Common.admin = db.child("Admin").get().val()
+        return HttpResponseRedirect('/adminhome')
     else:
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Invalid Password or usrername",
                        "path": "admin-login"})
+
+
+def adminhome(req):
+    if (Common.isAdminLogin):
+        data = OrderedDict()
+
+        db = connect_firebase()
+        try:
+            data = db.child("Trust").get().val()
+        except:
+            pass
+
+        print(data)
+        return render(req, 'admin_home.html',
+                      {"admin": Common.admin, "trusts": data})
+    else:
+        return render(req, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+def addtrust(req):
+    if (Common.isAdminLogin):
+
+        timestamp = datetime.timestamp(datetime.now())
+        trustkey = str(timestamp).replace('.', '')
+        return render(req, 'addtrust.html',
+                      {"admin": Common.admin, "trustkey": trustkey})
+    else:
+        return render(req, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+def addtrustdb(request):
+    if (Common.isAdminLogin):
+        tname = request.POST['tname']
+        tcontact = request.POST['tcontact']
+        temailid = request.POST['temailid']
+        tabout = request.POST['tabout']
+        taddress = request.POST['taddress']
+        tvision = request.POST['tvision']
+        tpass = request.POST['tpass']
+        tkey = request.POST['trustkey']
+        logo = request.POST['trustlogourl']
+        print(logo)
+        tlogo = "https://firebasestorage.googleapis.com/v0/b/scholar-help-966a2.appspot.com/o/trust_logo%2F" + tkey + ".png?alt=media"
+
+        db = connect_firebase()
+        temail = None
+        tphone = None
+
+        try:
+            temail = db.child("Trust").order_by_child("mailid").equal_to(temailid).get().val()
+            print(temail + "mailid")
+        except:
+            pass
+        try:
+
+            tphone = db.child("Trust").order_by_child("contact").equal_to(tcontact).get().val()
+
+        except:
+            pass
+        if temail:
+            return render(request, 'redirecthome.html',
+                          {"swicon": "error", "swtitle": "Error", "swmsg": "Trust Email Exists", "path": "addtrust"})
+        elif tphone:
+            return render(request, 'redirecthome.html',
+                          {"swicon": "error", "swtitle": "Error", "swmsg": "Trust Phone Exists", "path": "addtrust"})
+        else:
+
+            data = {
+                "name": tname, "contact": tcontact, "mailid": temailid,
+                "about": tabout, "address": taddress, "vision": tvision, "password": tpass
+                , "logo": tlogo, "username": tname
+
+            }
+            msgsend = "" \
+                      "You have been register on scholarhelp. " \
+                      "Your password is " \
+                      "" + tpass + " ."
+            print(data)
+
+            db.child("Trust").child(str(tkey)).update(data)
+            sendmail(temailid, "Successfully Registered on Scholar Help -" + tkey
+                     , msgsend
+                     )
+
+            return render(request, 'redirecthome.html',
+                          {"swicon": "success", "swtitle": "Done", "swmsg": "Trust Added Successfully",
+                           "path": "adminhome"})
+
+    else:
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+'''NOTE:: Generate Key first then send to add trust'''
 
 
 def trust_login(request):
@@ -165,7 +262,7 @@ def trust_verify(request):
 
         print(password)
         db = connect_firebase()
-        user = db.child("Trust").order_by_child("username").equal_to(trustusername).get().val()
+        user = db.child("Trust").order_by_child("mailid").equal_to(trustusername).get().val()
         for key, value in user.items():
             trustkey = key
             trust = value

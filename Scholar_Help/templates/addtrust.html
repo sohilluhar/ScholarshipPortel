@@ -1,0 +1,361 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    {% include "html_head.html" %}
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+
+    {% include "nav_header.html" %}
+    {% include "adminsidebar.html" %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Add Trust</h1>
+                    </div>
+
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- left column -->
+                    <div class="col-md-8 col-lg-8 col-sm-12 offset-md-2 offset-lg-2">
+                        <!-- jquery validation -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Trust Details</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <form role="form" method="POST" id="addscholarhiptofire" action="/addtrustdb"
+                                  onsubmit="return validate(this)"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="card-body">
+
+
+                                    <div class="form-group">
+                                        <label for="tname">Trust
+                                            Name:</label>
+                                        <input type="text" name="tname" id="tname" class="form-control"
+                                               placeholder="Enter trust name"
+                                               value="test"
+                                        >
+                                        <input type="hidden" name="trustkey" id="trustkey" class="form-control"
+                                               value="{{ trustkey }}"
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tcontact"> Trust
+                                            Contact:</label>
+                                        <input type="number" name="tcontact" id="tcontact" class="form-control"
+                                               placeholder="Enter trust contact" min="0"
+                                               value="1234567890"
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="temailid">
+                                            Trust Email Id</label>
+                                        <input type="email" name="temailid" id="temailid" class="form-control"
+                                               placeholder="Enter trust email" required
+                                               value="ade@gmail.com"
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address </label>
+                                        <textarea class="form-control" rows="3"
+                                                  id="taddress" name="taddress"
+                                                  placeholder="Enter trust address"
+                                                  value="test"
+                                        ></textarea>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>About</label>
+                                        <textarea class="form-control" rows="5"
+                                                  id="tabout" name="tabout"
+                                                  placeholder="Enter about of trust"
+                                                  value="test"
+                                        ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tvision">Vision</label>
+                                        <textarea class="form-control" rows="3"
+                                                  id="tvision" name="tvision"
+                                                  placeholder="Enter vision of trust"
+
+                                        ></textarea>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="tpass"> Password
+                                        </label>
+                                        <input type="password" name="tpass" id="tpass"
+                                               class="form-control"
+                                               placeholder="Create New Password"
+                                               value="Aqwes@1234"
+                                               required
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cpass"> Retype Password
+                                        </label>
+                                        <input type="password" name="cpass" id="cpass"
+                                               class="form-control"
+                                               placeholder="Retype Password"
+                                               value="Aqwes@1234"
+                                               required
+                                        >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Upload Logo (png Only) </label>
+
+                                        <div class="input-group">
+                                            <input type="file" class="file-upload"
+                                                   id="trustlogofile" required
+                                                   name="trustlogofile">
+                                            <input type="hidden" id="trustlogourl"
+                                                   name="trustlogourl">
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Add
+
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!--/.col (left) -->
+                    <!-- right column -->
+
+                    <!--/.col (right) -->
+                </div>
+
+                <div class="modal fade" id="modal-wait">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Please wait ...</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Uploading document</p>
+
+                            </div>
+                            <div class="modal-footer justify-content-between">
+
+
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+</div>
+
+{% include "javascript.html" %}
+<script src=" {% static 'include/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
+<script src="{% static 'include/plugins/jquery-validation/additional-methods.min.js' %}"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-storage.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-analytics.js"></script>
+
+<script>
+
+
+    function validate(form) {
+        var firebaseConfig = {
+            apiKey: "AIzaSyArPSVhwHv-rxxehxy0OUCE1ILCGXp17bI",
+            authDomain: "scholar-help-966a2.firebaseapp.com",
+            databaseURL: "https://scholar-help-966a2.firebaseio.com",
+            projectId: "scholar-help-966a2",
+            storageBucket: "scholar-help-966a2.appspot.com",
+            messagingSenderId: "988235258939",
+            appId: "1:988235258939:web:14290d685174b9461e901e",
+            measurementId: "G-RM8V5QZ205"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        var storage = firebase.storage();
+        var file = document.getElementById("trustlogofile").files[0];
+        var storageRef = storage.ref();
+
+
+        tname = form.tname.value;
+        tcontact = form.tcontact.value;
+        temailid = form.temailid.value;
+
+        password1 = form.tpass.value;
+        password2 = form.cpass.value;
+
+        var phoneno = /^\d{10}$/;
+        var letters = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+        var decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+
+
+        if (!tname.match(letters)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!(tcontact.match(phoneno))) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Incorrect Phone Number',
+                text: 'Enter valid 10 digit phone number',
+            });
+            return false;
+        }
+        if (!password1.match(decimal)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Password',
+                text: 'Password length should be 8 to 15 and must contain at least one small letter,one capital letter,one digit and one special character!',
+            });
+
+            return false;
+        }
+        // If Not same return False.
+
+
+        if (password1 !== password2) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Password Mismatch',
+                text: 'Password and Confirm password did not match!',
+            });
+            return false;
+        }
+
+
+        // If same return True.
+        else {
+
+
+            if (file) {
+                var fileex = file.name.split('.').pop();
+                fileex = fileex.toLowerCase();
+                var filesize = file.size;
+
+                if (fileex === "png") {
+                    if (filesize < 5000000) {
+                        var uploadTask = storageRef.child("trust_logo/" + {{trustkey}} +".png").put(file);
+                        uploadTask.on('state_changed', function (snapshot) {
+                            // Observe state change events such as progress, pause, and resume
+                            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload is ' + progress + '% done');
+                            switch (snapshot.state) {
+                                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                    console.log('Upload is paused');
+                                    break;
+                                case firebase.storage.TaskState.RUNNING: // or 'running'
+                                    console.log('Upload is running');
+                                    break;
+                            }
+                        }, function (error) {
+                            // Handle unsuccessful uploads
+                            console.log(error)
+                        }, function () {
+                            // Handle successful uploads on complete
+                            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                                console.log('File available at', downloadURL);
+                                document.getElementById("trustlogourl").value = downloadURL;
+                                document.getElementById("trustlogourl").value = downloadURL;
+
+
+                            });
+                        });
+                    } else {
+
+                        Swal.fire({
+                            icon: "error",
+                            title: 'File Size limit exceeded',
+                            text: 'Upload file less than 5 MB',
+                        });
+
+                        return false;
+                    }
+
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: 'File Type not Allowed',
+                        text: 'Upload only png file',
+                    });
+
+                    return false;
+                }
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Logo',
+                    text: 'Please upload trust logo!',
+                });
+                return false;
+            }
+            return true;
+        }
+
+
+        // Your web app's Firebase configuration
+
+    }
+</script>
+<script>
+
+
+</script>
+
+</body>
+</html>

@@ -66,7 +66,10 @@ urlpatterns = [
     path('applyscholarship', views.applyscholarship),
     path('appliedscholarship/', views.appliedscholarship),
 
-    path('admin-login', views.adminlogin),
+    path('admin-login/', views.adminlogin),
     path('adminverify', views.adminverify),
+    path('adminhome/', views.adminhome),
+    path('addtrust/', views.addtrust),
+    path('addtrustdb', views.addtrustdb),
     path('', views.home)
 ]
