@@ -71,5 +71,13 @@ urlpatterns = [
     path('adminhome/', views.adminhome),
     path('addtrust/', views.addtrust),
     path('addtrustdb', views.addtrustdb),
+    path('adminupdatetrust', views.adminupdattrust),
+    path('adminedittrust', views.adminedittrustview),
+    path('admin_student', views.adminstudentview),
+    path('studentprofile', views.studentprofile),
+    path('removestudent', views.removestudent),
+    path('removetrust', views.removetrust),
+
+    path('adminlogout', views.adminlogout),
     path('', views.home)
 ]

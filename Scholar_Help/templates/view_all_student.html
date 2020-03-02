@@ -35,7 +35,7 @@
                         <!-- jquery validation -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">List of Trusts</h3>
+                                <h3 class="card-title">List of Students</h3>
                             </div>
 
                             <!-- /.card-header -->
@@ -45,47 +45,35 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                     <tr>
-                                        <th>Trust Id</th>
-                                        <th>Trust Name</th>
+                                        <th>Student Phone</th>
+                                        <th>Student Name</th>
+                                        <th>Profile Completed</th>
                                         <th class="no-sort"> Update</th>
-                                        {#                                        <th class="no-sort"> Remove</th>#}
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    {% for key,values in trusts.items %}
+                                    {% for key,values in Users.items %}
 
                                         <tr>
                                             <td>{{ key }}</td>
                                             <td>{{ values.name }}
                                             </td>
+                                            <td>{{ values.profilefill }}
+                                            </td>
                                             <td>
-                                                <form method="post" action="/adminedittrust">
+                                                <form method="post" action="/studentprofile">
                                                     {% csrf_token %}
-                                                    <input type="hidden" name="tkey" id="tkey"
+                                                    <input type="hidden" name="tkey" id="userphone"
                                                            value="{{ key }}"/>
 
                                                     <button type="submit" class="btn btn-sm">
-                                                        <span class="text-info"> Edit</span>
+                                                        <span class="text-info"> View</span>
                                                     </button>
                                                 </form>
 
 
                                             </td>
-                                            {#                                            <td>#}
-                                            {#                                                <form method="post" action="/removetrust">#}
-                                            {#                                                    {% csrf_token %}#}
-                                            {#                                                    <input type="hidden" name="tkey" id="tkey"#}
-                                            {#                                                           value="{{ key }}"/>#}
-                                            {##}
-                                            {#                                                    <button onclick="confirm('Are you sure you want to remove? This action will not revert once done.')"#}
-                                            {#                                                            type="submit" class="btn btn-sm">#}
-                                            {#                                                        <span class="text-danger"> Remove</span>#}
-                                            {#                                                    </button>#}
-                                            {#                                                </form>#}
-                                            {##}
-                                            {##}
-                                            {#                                            </td>#}
                                         </tr>
 
                                     {% endfor %}

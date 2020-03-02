@@ -19,7 +19,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Add Trust</h1>
+                        <h1>Trust Profile</h1>
                     </div>
 
                 </div>
@@ -40,7 +40,7 @@
                             <!-- /.card-header -->
                             <!-- form start -->
 
-                            <form role="form" method="POST" id="addscholarhiptofire" action="/addtrustdb"
+                            <form role="form" method="POST" id="addscholarhiptofire" action="/adminupdatetrust"
                                   onsubmit="return validate(this)"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
@@ -49,101 +49,161 @@
 
 
                                     <div class="form-group">
-                                        <label for="tname"><span class="text-danger">* </span>
-                                            Trust Name:</label>
+                                        <label for="exampleInputEmail1">Trust
+                                            Name:</label>
                                         <input type="text" name="tname" id="tname" class="form-control"
-                                               placeholder="Enter trust name"
-
-                                        >
-                                        <input type="hidden" name="trustkey" id="trustkey" class="form-control"
-                                               value="{{ trustkey }}"
-                                        >
+                                               value="{{ trust_val.name }}">
+                                        <input type="hidden" name="tkey" id="tkey" class="form-control"
+                                               value="{{ trustkey }}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="tcontact"><span class="text-danger">* </span> Trust
+                                        <label for="exampleInputEmail1"> Trust
                                             Contact:</label>
                                         <input type="number" name="tcontact" id="tcontact" class="form-control"
-                                               placeholder="Enter trust contact" min="0"
-
-                                        >
+                                               value="{{ trust_val.contact }}" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="temailid"><span class="text-danger">* </span>
+                                        <label for="exampleInputEmail1">
                                             Trust Email Id</label>
-                                        <input type="email" name="temailid" id="temailid" class="form-control"
-                                               placeholder="Enter trust email" required
-
-                                        >
+                                        <input type="text" name="temailid" id="temailid" class="form-control"
+                                               value="{{ trust_val.mailid }}" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Address </label>
                                         <textarea class="form-control" rows="3"
                                                   id="taddress" name="taddress"
-                                                  placeholder="Enter trust address"
-
-                                        ></textarea>
-
+                                                  required>{{ trust_val.address }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>About</label>
                                         <textarea class="form-control" rows="5"
                                                   id="tabout" name="tabout"
-                                                  placeholder="Enter about of trust"
 
-                                        ></textarea>
+                                                  required>{{ trust_val.about }}</textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tvision">Vision</label>
+                                        <label>Vision</label>
                                         <textarea class="form-control" rows="3"
                                                   id="tvision" name="tvision"
-                                                  placeholder="Enter vision of trust"
 
-                                        ></textarea>
+                                                  required>{{ trust_val.vision }}</textarea>
                                     </div>
 
 
-                                    <div class="form-group">
-                                        <label for="tpass"><span class="text-danger">* </span> Password
-                                        </label>
-                                        <input type="password" name="tpass" id="tpass"
-                                               class="form-control"
-                                               placeholder="Create New Password"
-
-                                               required
-                                        >
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cpass"> <span class="text-danger">* </span>Retype Password
-                                        </label>
-                                        <input type="password" name="cpass" id="cpass"
-                                               class="form-control"
-                                               placeholder="Retype Password"
-
-                                               required
-                                        >
-                                    </div>
-                                    <div class="form-group">
-                                        <label><span class="text-danger">* </span>Upload Logo (png Only) </label>
-
-                                        <div class="input-group">
-                                            <input type="file" class="file-upload"
-                                                   id="trustlogofile" required
-                                                   name="trustlogofile">
-                                            <input type="hidden" id="trustlogourl"
-                                                   name="trustlogourl">
+                                    <div class="card card-primary  collapsed-card">
+                                        <div class="card-header">
+                                            <h5 class="m-0 card-title">Change Password</h5>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
                                         </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-12">
 
+
+                                                    <div class="form-group">
+                                                        <label for="tpass"> Change Password
+                                                        </label>
+                                                        <input type="password" name="tpass" id="tpass"
+                                                               class="form-control"
+                                                               value="{{ trust_val.password }}"
+                                                        >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="tpass"> Retype Password
+                                                        </label>
+                                                        <input type="password" name="cpass" id="cpass"
+                                                               class="form-control"
+                                                               value="{{ trust_val.password }}"
+                                                        >
+                                                    </div>
+
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card card-primary  collapsed-card">
+                                        <div class="card-header">
+                                            <h5 class="m-0 card-title">Change Logo</h5>
+                                            <div class="card-tools">
+                                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <label>Current Logo</label>
+                                                    <img class="img-responsive pad" src="{{ trust_val.logo }}"
+                                                         alt="Logo">
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label>Upload New Logo</label>
+
+                                                        <div class="input-group">
+                                                            <input type="file" class="file-upload"
+                                                                   id="trustlogofile"
+                                                                   name="trustlogofile">
+                                                            <input type="hidden" id="trustlogourl"
+                                                                   name="trustlogourl">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
                                     </div>
 
 
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Add
+                                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Update
 
                                     </button>
                                 </div>
                             </form>
+                        </div>
+
+                        <div class="card card-danger card-outline collapsed-card">
+                            <div class="card-header">
+                                <h5 class="m-0 card-title text-danger">Remove</h5>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                            class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form method="post" action="/removetrust"
+                                              onsubmit="return confirm('Are Your Sure you want to remove this Trust? ')">
+                                            <input type="text" hidden name="tkey" id="tkey"
+                                                   value="{{ trustkey }}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-block">Remove Trust
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card-footer">
+
+
+                            </div>
+
                         </div>
                         <!-- /.card -->
                     </div>
@@ -336,13 +396,6 @@
 
                     return false;
                 }
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Logo',
-                    text: 'Please upload trust logo!',
-                });
-                return false;
             }
             return true;
         }

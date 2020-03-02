@@ -158,7 +158,162 @@ def addtrustdb(request):
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
 
 
-'''NOTE:: Generate Key first then send to add trust'''
+def adminedittrustview(req):
+    if (Common.isAdminLogin):
+        tkey = req.POST['tkey']
+        db = connect_firebase()
+        tru = db.child("Trust").child(str(tkey)).get().val()
+
+        return render(req, 'admin_edit_trust.html',
+                      {"trustkey": str(tkey), "trust_val": tru})
+    else:
+        return render(req, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+def adminstudentview(req):
+    if (Common.isAdminLogin):
+        db = connect_firebase()
+        try:
+            data = db.child("users").get().val()
+        except:
+            pass
+
+        print(data)
+        return render(req, 'view_all_student.html',
+                      {"admin": Common.admin, "Users": data})
+
+    else:
+        return render(req, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+def studentprofile(req):
+    if (Common.isAdminLogin):
+        tkey = req.POST['tkey']
+        db = connect_firebase()
+        userprofile = None
+        accno = None
+        try:
+            userprofile = db.child("UserProfile").child(str(tkey)).get().val()
+
+            cipher = Fernet(Common.encyptionkey)
+            accno = cipher.decrypt(userprofile.get("account_number").encode()).decode()
+
+        except:
+            pass
+        return render(req, 'student_comp_profile.html',
+                      {
+
+                          "userprofile": userprofile, "accno": accno,
+
+                      })
+
+
+    else:
+        return render(req, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+def removestudent(req):
+    if (Common.isAdminLogin):
+        tkey = req.POST['tkey']
+        db = connect_firebase()
+        userprofile = None
+        accno = None
+        try:
+            db.child("UserProfile").child(str(tkey)).remove()
+
+        except:
+            pass
+        try:
+            db.child("users").child(str(tkey)).remove()
+
+        except:
+            pass
+        try:
+            print(tkey + "user id")
+            userapp = db.child("AppliedScheme").order_by_child("userid").equal_to(str(tkey)).get().val()
+            all11 = db.child("AppliedScheme").get().val()
+            all(map(all11.pop, userapp))
+            db.child("AppliedScheme").set(all11)
+        except:
+            pass
+        return render(req, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Student Remove Successfully",
+                       "path": "adminhome"})
+
+
+    else:
+        return render(req, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+def removetrust(req):
+    if (Common.isAdminLogin):
+        tkey = req.POST['tkey']
+        db = connect_firebase()
+        userprofile = None
+        print(tkey + " tt")
+        accno = None
+        try:
+            tt = db.child("Trust").child(str(tkey)).remove()
+            print(tt + " tt")
+
+        except:
+            pass
+
+        try:
+
+            tscheme = db.child("Scheme").order_by_child("trust_id").equal_to(str(tkey)).get().val()
+            alls = db.child("Scheme").get().val()
+            all(map(alls.pop, tscheme))
+            db.child("Scheme").set(alls)
+        except:
+            pass
+        try:
+
+            ascheme = db.child("AppliedScheme").order_by_child("trust_id").equal_to(str(tkey)).get().val()
+            allaps = db.child("AppliedScheme").get().val()
+            all(map(allaps.pop, ascheme))
+            db.child("AppliedScheme").set(allaps)
+        except:
+            pass
+        return render(req, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Trust Remove Successfully",
+                       "path": "adminhome"})
+
+
+    else:
+        return render(req, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
+
+
+def adminupdattrust(request):
+    if (Common.isAdminLogin):
+        tname = request.POST['tname']
+        tcontact = request.POST['tcontact']
+        temailid = request.POST['temailid']
+        tabout = request.POST['tabout']
+        taddress = request.POST['taddress']
+        tvision = request.POST['tvision']
+        tpass = request.POST['tpass']
+        tkey = request.POST['tkey']
+
+        data = {
+            "name": tname, "contact": tcontact, "mailid": temailid,
+            "about": tabout, "address": taddress, "vision": tvision, "password": tpass
+        }
+        db = connect_firebase()
+        db.child("Trust").child(tkey).update(data)
+
+        return render(request, 'redirecthome.html',
+                      {"swicon": "success", "swtitle": "Done", "swmsg": "Trust Updated Successfully",
+                       "path": "adminhome"})
+
+    else:
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
 
 
 def trust_login(request):
@@ -443,6 +598,13 @@ def trust_logout(request):
     Common.trustVal = None
     Common.isTrustLogin = False
     Common.isLogin = False
+
+    return render(request, 'redirecthome.html',
+                  {"swicon": "success", "swtitle": "Done", "swmsg": "Logout Successfully", "path": ""})
+
+
+def adminlogout(request):
+    Common.isAdminLogin = False
 
     return render(request, 'redirecthome.html',
                   {"swicon": "success", "swtitle": "Done", "swmsg": "Logout Successfully", "path": ""})
