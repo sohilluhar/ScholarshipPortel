@@ -86,11 +86,12 @@
                                                             </div>
                                                             <div class="modal-body">
 
-                                                                {% if values.sanctionedamount != "0" %}
+                                                                {% if values.status == "Approve" %}
                                                                     <p><span
                                                                             class="text-bold">Sanction Amount:</span> {{ values.sanctionedamount }}
                                                                     </p>
-                                                                {% elif values.interviewdate %}
+                                                                {% endif %}
+                                                                {% if values.status == "In-Progress" %}
                                                                     <p><span
                                                                             class="text-bold">Interview Date:</span> {{ values.interviewdate }}
                                                                     </p>

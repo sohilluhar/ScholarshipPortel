@@ -73,16 +73,31 @@
                                                            value="{{ values.userid }}"/>
                                                     <input type="hidden" name="applicationid" id="applicationid"
                                                            value="{{ key }}"/>
-                                                    {% if  values.status != "Approve" %}
-                                                        <button type="submit" class="btn btn-sm">
-                                                            <span class="text-info"> Take Action</span>
-                                                        </button>
-                                                    {% else %}
+                                                    {% if  values.status == "Approve" %}
                                                         <button type="submit" class="btn btn-sm">
                                                             <span class="text-info"> View </span>
                                                         </button>
-
                                                     {% endif %}
+                                                    {% if values.status == "Reject" %}
+                                                        <p>
+                                                            <button type="submit" class="btn btn-sm">
+                                                                <span class="text-info">Change</span>
+                                                            </button>
+                                                        </p>
+                                                    {% endif %}
+                                                    {% if  values.status == "Pending" %}
+
+                                                        <button type="submit" class="btn btn-sm">
+                                                            <span class="text-info"> Take Action</span>
+                                                        </button>
+
+                                                    {% endif %} {% if  values.status == "In-Progress" %}
+
+                                                    <button type="submit" class="btn btn-sm">
+                                                        <span class="text-info"> Take Action</span>
+                                                    </button>
+
+                                                {% endif %}
                                                 </form>
 
 
