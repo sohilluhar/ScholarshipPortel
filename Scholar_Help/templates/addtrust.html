@@ -280,15 +280,16 @@
         // If same return True.
         else {
 
+            var ch = false;
 
-            if (file) {
-                var fileex = file.name.split('.').pop();
-                fileex = fileex.toLowerCase();
-                var filesize = file.size;
 
-                if (fileex === "png") {
-                    if (filesize < 5000000) {
-                        var uploadTask = storageRef.child("trust_logo/" + {{trustkey}} +".png").put(file);
+            var fileex = file.name.split('.').pop();
+            fileex = fileex.toLowerCase();
+            var filesize = file.size;
+
+            if (fileex === "png") {
+                if (filesize < 5000000) {
+                    var uploadTask = storageRef.child("trust_logo/" + {{trustkey}} +".png").put(file);
                         uploadTask.on('state_changed', function (snapshot) {
                             // Observe state change events such as progress, pause, and resume
                             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -312,39 +313,34 @@
                                 console.log('File available at', downloadURL);
                                 document.getElementById("trustlogourl").value = downloadURL;
                                 document.getElementById("trustlogourl").value = downloadURL;
-
+                                ch = true;
 
                             });
                         });
-                    } else {
+                } else {
 
-                        Swal.fire({
-                            icon: "error",
-                            title: 'File Size limit exceeded',
-                            text: 'Upload file less than 5 MB',
-                        });
+                    Swal.fire({
+                        icon: "error",
+                        title: 'File Size limit exceeded',
+                        text: 'Upload file less than 5 MB',
+                    });
 
                         return false;
                     }
 
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: 'File Type not Allowed',
-                        text: 'Upload only png file',
-                    });
-
-                    return false;
-                }
             } else {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Logo',
-                    text: 'Please upload trust logo!',
+                    icon: "error",
+                    title: 'File Type not Allowed',
+                    text: 'Upload only png file',
                 });
+
                 return false;
             }
-            return true;
+
+            if (ch) {
+                return true;
+            }
         }
 
 

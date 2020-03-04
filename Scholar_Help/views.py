@@ -1142,15 +1142,19 @@ def applyscholarship(request):  # user has click on apply button add userinfo to
             applicationid = str(applicationid).replace('.', '')
             applicationid = applicationid[:13]
 
+            tname = db.child("Trust").child(trust_id).child("name").get().val()
+            print(tname)
+
             data = {
                 "userid": userphone, "username": name,
                 "scheme_id": schemeid, "scheme_name": schemename, "schemeamount": amount,
-                "status": status, "remark": "", "sanctionedamount": "0", "trust_id": trust_id
+                "status": status, "remark": "", "sanctionedamount": "0", "trust_id": trust_id, "tname": tname
             }
 
             db.child("AppliedScheme").child(applicationid).set(
                 data
             )
+
             applied_scheme = None
             try:
 
