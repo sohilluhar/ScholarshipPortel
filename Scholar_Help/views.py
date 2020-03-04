@@ -417,12 +417,17 @@ def trust_verify(request):
 
         print(password)
         db = connect_firebase()
-        user = db.child("Trust").order_by_child("mailid").equal_to(trustusername).get().val()
-        for key, value in user.items():
-            trustkey = key
-            trust = value
+        trust = None
+        try:
+            user = db.child("Trust").order_by_child("mailid").equal_to(trustusername).get().val()
 
-        if not trust:
+            for key, value in user.items():
+                trustkey = key
+                trust = value
+        except:
+            pass
+
+        if trust == None:
             return render(request, 'redirecthome.html',
                           {"swicon": "error", "swtitle": "Error", "swmsg": "Invalid Trust Id", "path": "trustlogin"})
         elif password == trust.get("password"):
@@ -701,7 +706,7 @@ def addscholarhiptofire(req):
     )
 
     return render(req, 'redirecthome.html',
-                  {"swicon": "success", "swtitle": "Done", "swmsg": "Scholarhip Added Successfully.",
+                  {"swicon": "success", "swtitle": "Done", "swmsg": "Scholarship Added Successfully.",
                    "path": "trusthome"})
 
 
