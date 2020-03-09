@@ -3,4 +3,4 @@ gunicorn
 django-heroku
 pyrebase4
 whitenoise
-cyptography
+cryptography
