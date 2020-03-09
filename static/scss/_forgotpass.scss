@@ -1,0 +1,90 @@
+.forgot-pass-section {
+	background-color: white;
+	.image-wrapper {
+		display: flex;
+		height: 100vh;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+
+		img {
+			width: 70%;
+		}
+	}
+
+	.content-wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		align-content: center;
+		height: 100vh;
+
+		h2 {
+			font-family: PlayfairDisplay-Bold;
+			font-size: 50px;
+			width: 49%;
+			margin-bottom: 50px;
+		}
+
+		form {
+			width: 50%;
+			input {
+				font-family: Karla-Regular;
+				letter-spacing: 1.3px;
+				width: 100%;
+				border: none;
+				border-bottom: solid 1px lightgrey;
+				// height: 45px;
+				font-size: 16px;
+				padding: 10px 15px;
+				transition: all 0.2s ease-in-out;
+
+				&:focus {
+					border: none !important;
+					border-bottom: solid 1px $base-color !important;
+					box-shadow: unset;
+					outline: none;
+				}
+			}
+
+			::placeholder {
+				color: grey;
+				font-size: 14px;
+				font-family: Karla-Regular;
+			}
+
+			.reset-pass-btn {
+				margin-top: 30px;
+				font-family: Karla-Bold;
+				font-size: 16px;
+				display: block;
+				width: 100%;
+				padding: 1.5rem;
+				background: #333;
+				color: white;
+				border-bottom: none;
+				border-radius: 4px;
+				box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+
+				&:hover {
+					box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.12);
+				}
+				&:focus {
+					border: none !important;
+					border-bottom: none !important;
+				}
+			}
+
+			.login-page-btn {
+				margin-top: 10px;
+				display: block;
+				text-align: center;
+				font-family: Karla-Regular;
+				font-size: 16px;
+				color: #6c61f6;
+				width: 100%;
+			}
+		}
+	}
+}

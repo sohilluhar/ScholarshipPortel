@@ -1,0 +1,82 @@
+.title {
+	font-family: Karla-Bold;
+	font-size: 3.5rem;
+	margin: 0;
+	margin-bottom: 2rem;
+}
+
+.featured-books {
+	background-color: $grey;
+	.title {
+		font-size: 3.5rem;
+	}
+}
+.all-books {
+	display: flex;
+	padding: 8rem 0 10rem 0;
+	h1 {
+		font-size: 2.5rem;
+	}
+	.book-card-wrapper {
+		background-color: white;
+		border-radius: 4px;
+		border: solid 0.5px lightgrey;
+		margin-bottom: 2.5rem;
+		&:hover {
+			box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149);
+		}
+		a {
+			font-family: Karla-Regular;
+			color: #333333;
+			.book-card {
+				display: flex;
+				height: 20rem;
+				padding: 2rem;
+				align-items: center;
+				.col-A {
+					flex: 1;
+					text-align: center;
+					img {
+						width: 8rem;
+						height: 12rem;
+						border-radius: 4px;
+					}
+				}
+
+				.col-B {
+					flex: 2;
+					margin-left: 1rem;
+					height: 100%;
+
+					.b-name {
+						font-family: Karla-Bold;
+						text-transform: capitalize;
+						font-size: 2rem;
+					}
+					.b-username {
+						font-family: Montserrat-Regular;
+						text-transform: capitalize;
+						font-size: 1.6rem;
+						span {
+							font-family: Montserrat-SemiBold;
+							font-size: 1.2rem;
+						}
+					}
+					.b-price {
+						font-family: Montserrat-Bold;
+						font-size: 2.2rem;
+						span {
+							font-family: Montserrat-SemiBold;
+							font-size: 1.2rem;
+						}
+					}
+				}
+			}
+
+			&:hover {
+				text-transform: none;
+				text-decoration: none;
+			}
+		}
+	}
+}

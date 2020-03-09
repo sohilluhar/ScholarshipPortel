@@ -1,0 +1,99 @@
+nav {
+	padding: 1rem 0;
+	background-color: $base-color;
+	background-color: transparent;
+	position: absolute;
+	top: 0;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	margin-top: 1.5rem;
+	z-index: 9999;
+	&.color-nav {
+		background-color: $base-color;
+		padding: 1rem 0;
+		background-color: #6c61f6;
+		width: 100vw;
+		position: relative;
+		margin-top: 0;
+		z-index: 9999;
+	}
+	.brand,
+	.search,
+	.action-links {
+		display: inline-block;
+		&:focus {
+			text-transform: none;
+			text-decoration: none;
+		}
+	}
+	.brand {
+		line-height: 4rem;
+		a {
+			color: white;
+			font-family: PlayfairDisplay-Black;
+			font-size: 3.2rem;
+			&:hover {
+				text-decoration: none;
+				text-transform: none;
+			}
+		}
+	}
+	.search {
+		display: none;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		margin: 0;
+		padding: 0;
+
+		form {
+			margin: 0;
+			input {
+				width: 70rem;
+				height: 4rem;
+				padding: 1rem;
+				font-family: Karla-Regular;
+				border: solid 1px $base-color;
+				border-radius: 2px;
+				outline: none;
+				box-sizing: border-box;
+
+				&:focus {
+					width: 70rem;
+					height: 4rem;
+					border: solid 1px black;
+					padding: 1rem;
+				}
+			}
+			button {
+				padding: 1rem;
+			}
+		}
+	}
+
+	.action-links {
+		line-height: 4rem;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		li {
+			display: inline-block;
+			a {
+				color: white;
+				font-family: Karla-Bold;
+				&:hover {
+					text-decoration: none;
+					text-transform: none;
+				}
+			}
+			.sell-btn {
+				margin-right: 2rem;
+				padding: 1rem 3rem;
+				background-color: white;
+				color: $base-color;
+				color: #000;
+				border-radius: 32px;
+			}
+		}
+	}
+}

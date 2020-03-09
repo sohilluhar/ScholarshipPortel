@@ -1,1 +1,1 @@
-web: gunicorn Scholarship_Portal.wsgi --log-file -
+web: gunicorn Scholars_Help.wsgi --log-file -

@@ -1,0 +1,239 @@
+.login-page {
+	padding: 0;
+}
+.login-section {
+	background-image: url("../../image/WP_main.jpg");
+	background-image: url("../../image/login.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100vw;
+	height: 100vh;
+
+	.black-overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		opacity: 0.7;
+	}
+	h2 {
+		font-family: PlayfairDisplay-Black;
+		font-size: 32px;
+		margin-top: 0;
+	}
+	.content-wrapper {
+		height: 100%;
+		.login-form-wrapper {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-content: center;
+			width: 80%;
+			background: white;
+			padding: 2rem 3rem;
+			border-radius: 4px;
+			form {
+				margin-top: 2rem;
+				.login-phone {
+					margin-top: 30px;
+					p {
+						font-family: Karla-Regular;
+						font-size: 14px;
+					}
+					input {
+						font-family: Karla-Regular;
+						letter-spacing: 1.3px;
+						width: 100%;
+						border: none;
+						border-bottom: solid 1px lightgrey;
+						height: 45px;
+						font-size: 16px;
+						padding: 1rem;
+						transition: all 0.2s ease-in-out;
+
+						&:focus {
+							border: none !important;
+							border-bottom: solid 1px $base-color !important;
+							box-shadow: unset;
+							outline: none;
+						}
+					}
+					::placeholder {
+						color: grey;
+						font-size: 14px;
+						font-family: Karla-Regular;
+					}
+				}
+
+				.login-password {
+					margin-top: 30px;
+					p {
+						font-family: Karla-Regular;
+						font-size: 14px;
+					}
+					input {
+						font-family: Karla-Regular;
+						letter-spacing: 1.3px;
+						width: 100%;
+						border: none;
+						border-bottom: solid 1px lightgray;
+						height: 45px;
+						font-size: 16px;
+						padding: 1rem;
+						transition: all 0.2s ease-in-out;
+
+						&:focus {
+							border: none !important;
+							border-bottom: solid 1px $base-color !important;
+							box-shadow: unset;
+							outline: none;
+						}
+					}
+					::placeholder {
+						color: grey;
+						font-size: 14px;
+						font-family: Karla-Regular;
+					}
+				}
+
+				.login-btn {
+					margin-top: 30px;
+					font-family: Karla-Bold;
+					font-size: 16px;
+					display: block;
+					width: 100%;
+					padding: 1.5rem;
+					background: #333;
+					border-radius: 4px;
+					color: white;
+					box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+
+					&:hover {
+						box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.12);
+					}
+					&:focus {
+						border: none !important;
+						border-bottom: none !important;
+					}
+				}
+
+				.forgot-btn,
+				.create-ac-btn {
+					margin-top: 10px;
+					display: block;
+					text-align: center;
+					color: #333;
+					font-family: Karla-Regular;
+					font-size: 14px;
+				}
+
+				.create-ac-btn {
+					font-size: 16px;
+					color: #6c61f6;
+					width: 100%;
+
+					&:hover {
+						text-decoration: none;
+						text-transform: none;
+					}
+				}
+
+				caret-color: $base-color;
+			}
+		}
+	}
+}
+
+// ADD BOOK STYLES
+
+.add-book-page {
+	background-image: url("../../image/bookbg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 100vw;
+	height: 100vh;
+
+	.black-overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		opacity: 0.7;
+	}
+	.add-book-form-wrapper {
+		form {
+			margin-top: 50%;
+			background: white;
+			padding: 3rem;
+			border-radius: 4px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			flex-direction: row;
+
+			h2 {
+				font-family: PlayfairDisplay-Bold;
+				font-size: 28px;
+				text-align: left;
+				margin-top: 0;
+				color: black;
+				margin-bottom: 4rem;
+			}
+
+			input,
+			select,
+			textarea {
+				width: 100%;
+				font-family: Karla-Regular;
+				letter-spacing: 1.3px;
+				width: 100%;
+				border: none;
+				border-bottom: solid 1px lightgrey;
+				height: 4rem;
+				font-size: 14px;
+				padding: 1rem;
+				margin-bottom: 1.5rem;
+				transition: all 0.2s ease-in-out;
+				color: black;
+				border-radius: 0px;
+				background-color: white;
+				&:focus {
+					border: none !important;
+					border-bottom: solid 1px $base-color !important;
+					box-shadow: unset;
+					outline: none;
+				}
+			}
+			::placeholder {
+				color: grey;
+				font-size: 14px;
+				font-family: Karla-Regular;
+			}
+
+			.sell-btn {
+				height: unset;
+				border: none;
+				margin-top: 0;
+				margin-bottom: 0;
+				font-family: Karla-Bold;
+				font-size: 16px;
+				display: block;
+				width: 65%;
+				padding: 1rem;
+				background: #333;
+				border-radius: 4px;
+				color: white;
+				box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+
+				&:hover {
+					box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.12);
+				}
+				&:focus {
+					border: none !important;
+					border-bottom: none !important;
+				}
+			}
+		}
+	}
+}
