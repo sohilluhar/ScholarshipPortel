@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    
     'django.contrib.staticfiles',
 ]
 
@@ -121,7 +120,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'Scholar_Help/templates/static'),
 )
 
-]
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
