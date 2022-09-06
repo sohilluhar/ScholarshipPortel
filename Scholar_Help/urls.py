@@ -13,9 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 
 from . import views
 
@@ -23,9 +23,9 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^trust/(?P<pk>\d+)$', views.viewtrustdetails),
-    url(r'^scheme/(?P<pk>\d+)$', views.viewschemedetails),
-    url(r'^getcat([?^/*])', views.category),
+    re_path(r'^trust/(?P<pk>\d+)$', views.viewtrustdetails),
+    re_path(r'^scheme/(?P<pk>\d+)$', views.viewschemedetails),
+    re_path(r'^getcat([?^/*])', views.category),
 
     path('login/', views.login),
     path('logout/', views.logout),

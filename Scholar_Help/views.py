@@ -28,14 +28,18 @@ def category(request, key):
         schemes = db.child("Scheme").order_by_child("level").equal_to(catname).get().val()
     except:
         print("Error")
-    return render(request, 'category.html', {"scheme": schemes, "islog": Common.isLogin})
+    return render(request, 'category.html',
+                  {"scheme": schemes, "islog": True if 'isLogin' in request.session else False})
 
 
 def home(request):
     db = connect_firebase()
     trusts = db.child("Trust").order_by_key().get().val()
     schemes = db.child("Scheme").order_by_key().limit_to_last(9).get().val()
-    return render(request, 'home.html', {"scheme": schemes, "all_trusts": trusts, "islog": Common.isLogin})
+    isLogin = False
+    if 'isLogin' in request.session:
+        isLogin = True
+    return render(request, 'home.html', {"scheme": schemes, "all_trusts": trusts, "islog": isLogin})
 
 
 def login(request):
@@ -55,9 +59,13 @@ def adminverify(request):
     passworddb = db.child("Admin").child("password").get().val()
 
     if adminname == username and password == passworddb:
+        # 
+        # Common.isAdminLogin = True
+        # request.session['admin'] = db.child("Admin").get().val()
 
-        Common.isAdminLogin = True
-        Common.admin = db.child("Admin").get().val()
+        request.session['isAdminLogin'] = True
+        request.session['admin'] = db.child("Admin").get().val()
+
         return HttpResponseRedirect('/adminhome')
     else:
         return render(request, 'redirecthome.html',
@@ -66,7 +74,8 @@ def adminverify(request):
 
 
 def adminhome(req):
-    if (Common.isAdminLogin):
+    # if 'cart' not in request.session:
+    if ('isAdminLogin' in req.session):
         data = OrderedDict()
 
         db = connect_firebase()
@@ -77,26 +86,26 @@ def adminhome(req):
 
         print(data)
         return render(req, 'admin_home.html',
-                      {"admin": Common.admin, "trusts": data})
+                      {"admin": req.session['admin'], "trusts": data})
     else:
         return render(req, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
 
 
 def addtrust(req):
-    if (Common.isAdminLogin):
+    if ('isAdminLogin' in req.session):
 
         timestamp = datetime.timestamp(datetime.now())
         trustkey = str(timestamp).replace('.', '')
         return render(req, 'addtrust.html',
-                      {"admin": Common.admin, "trustkey": trustkey})
+                      {"admin": req.session['admin'], "trustkey": trustkey})
     else:
         return render(req, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
 
 
 def addtrustdb(request):
-    if (Common.isAdminLogin):
+    if ('isAdminLogin' in request.session):
         tname = request.POST['tname']
         tcontact = request.POST['tcontact']
         temailid = request.POST['temailid']
@@ -159,7 +168,7 @@ def addtrustdb(request):
 
 
 def adminedittrustview(req):
-    if (Common.isAdminLogin):
+    if ('isAdminLogin' in req.session):
         tkey = req.POST['tkey']
         db = connect_firebase()
         tru = db.child("Trust").child(str(tkey)).get().val()
@@ -172,7 +181,7 @@ def adminedittrustview(req):
 
 
 def adminstudentview(req):
-    if (Common.isAdminLogin):
+    if ('isAdminLogin' in req.session):
         db = connect_firebase()
         try:
             data = db.child("users").get().val()
@@ -181,7 +190,7 @@ def adminstudentview(req):
 
         print(data)
         return render(req, 'view_all_student.html',
-                      {"admin": Common.admin, "Users": data})
+                      {"admin": req.session['admin'], "Users": data})
 
     else:
         return render(req, 'redirecthome.html',
@@ -189,7 +198,7 @@ def adminstudentview(req):
 
 
 def studentprofile(req):
-    if (Common.isAdminLogin):
+    if ('isAdminLogin' in req.session):
         tkey = req.POST['tkey']
         db = connect_firebase()
         userprofile = None
@@ -216,7 +225,7 @@ def studentprofile(req):
 
 
 def removestudent(req):
-    if (Common.isAdminLogin):
+    if ('isAdminLogin' in req.session):
         tkey = req.POST['tkey']
         db = connect_firebase()
         userprofile = None
@@ -250,7 +259,7 @@ def removestudent(req):
 
 
 def removetrust(req):
-    if (Common.isAdminLogin):
+    if ('isAdminLogin' in req.session):
         tkey = req.POST['tkey']
         db = connect_firebase()
         userprofile = None
@@ -290,7 +299,7 @@ def removetrust(req):
 
 
 def adminupdattrust(request):
-    if (Common.isAdminLogin):
+    if ('isAdminLogin' in request.session):
         tname = request.POST['tname']
         tcontact = request.POST['tcontact']
         temailid = request.POST['temailid']
@@ -339,12 +348,15 @@ def sendotp(request):
                        "path": "forgotpassword"})
 
     otp = str(randint(1000, 9999))
-    Common.forgotpassotp = otp
-    Common.forgotpassotptime = datetime.now()
+    # Common.forgotpassotp = otp
+    request.session['forgotpassotp'] = otp
+    request.session['forgotpassotptime'] = datetime.now()
+    # Common.forgotpassotptime = datetime.now()
     title = "Reset Your Password"
-    msg = "Enter following OTP within 15 minutes to chage your password.\nOTP is " + otp
+    msg = "Enter following OTP within 15 minutes to change your password.\nOTP is " + otp
     for key, value in user.items():
-        Common.userphone = key
+        request.session['userphone'] = key
+        # Common.userphone = key
 
     sendmail(getmail, title, msg)
     return HttpResponseRedirect('/verifyotp')
@@ -356,9 +368,9 @@ def verifyotp(request):
 
 def checkotp(request):
     getOTP = request.POST['otp']
-    diff = datetime.now() - Common.forgotpassotptime
+    diff = datetime.now() - request.session['forgotpassotptime']
     otptime = diff.total_seconds()
-    if getOTP != Common.forgotpassotp:
+    if getOTP != request.session['forgotpassotp']:
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Wrong OTP Entered", "path": "verifyotp"})
     elif otptime > 15 * 60:
@@ -376,7 +388,7 @@ def updatepassword(request):
     new_password = request.POST['pass']
     db = connect_firebase()
 
-    db.child("users").child(Common.userphone).child("password").set(
+    db.child("users").child(request.session['userphone']).child("password").set(
         new_password
     )
 
@@ -386,7 +398,7 @@ def updatepassword(request):
 
 
 def verify(request):
-    if not Common.isLogin:
+    if 'isLogin' not in request.session:
         mail = request.POST.get('mail')
         password = request.POST.get('password')
 
@@ -398,20 +410,25 @@ def verify(request):
                           {"swicon": "error", "swtitle": "Error", "swmsg": "User does not exists", "path": "login"})
         elif password == user.val().get("password"):
             c = {'user': user.val()}
-            Common.currentUser = user
-            Common.isLogin = True
+            #
+            # req.session['currentUser'] = user
+            # req.session['isLogin'] = True
+
+            request.session['currentUser'] = user.val()
+            request.session['isLogin'] = True
+
             return HttpResponseRedirect('/')
         else:
             return render(request, 'redirecthome.html',
                           {"swicon": "error", "swtitle": "Error", "swmsg": "Invalid Password",
                            "path": "login"})
     else:
-        c = {'user': Common.currentUser.val()}
+        # c = {'user': req.session['currentUser'].val()}
         return HttpResponseRedirect('/')
 
 
 def trust_verify(request):
-    if not Common.isTrustLogin:
+    if 'isTrustLogin' not in request.session:
         trustusername = request.POST.get('trust_username')
         password = request.POST.get('password')
 
@@ -431,34 +448,40 @@ def trust_verify(request):
             return render(request, 'redirecthome.html',
                           {"swicon": "error", "swtitle": "Error", "swmsg": "Invalid Trust Id", "path": "trustlogin"})
         elif password == trust.get("password"):
-            Common.trustkey = trustkey
-            Common.trustVal = trust
-            Common.isTrustLogin = True
+            # Common.trustkey = trustkey
+            # Common.trustVal = trust
+            # Common.isTrustLogin = True
+
+            request.session['trustkey'] = trustkey
+            request.session['trustVal'] = trust
+            request.session['isTrustLogin'] = True
+
             return HttpResponseRedirect('/trusthome')
         else:
             return render(request, 'redirecthome.html',
                           {"swicon": "error", "swtitle": "Error", "swmsg": "Invalid Password",
                            "path": "trustlogin"})
     else:
-        c = {'user': Common.currentUser.val()}
+
         return HttpResponseRedirect('/')
 
 
 def trust_home(req):
-    if (Common.isTrustLogin):
+    if ('isTrustLogin' in req.session):
         data = OrderedDict()
 
         db = connect_firebase()
         try:
-            data = db.child("AppliedScheme").order_by_child("trust_id").equal_to(
-                Common.trustkey).get().val()
+            data = db.child("AppliedScheme").order_by_child("trust_id").equal_to(req.session['trustkey']).get().val()
             data = collections.OrderedDict(reversed(list(data.items())))
         except:
             pass
 
         print(data)
         return render(req, 'trust_home.html',
-                      {"trustkey": Common.trustkey, "trust_val": Common.trustVal, "applied_schemes": data})
+                      {"trustkey": req.session['trustkey'],
+                       "trust_val": req.session['trustVal'],
+                       "applied_schemes": data})
     else:
         return render(req, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
@@ -468,7 +491,7 @@ def viewtakeaction(request):
     userphone = request.POST['userphone']
     applicationid = request.POST['applicationid']
 
-    if (Common.isTrustLogin):
+    if ('isTrustLogin' in request.session):
 
         db = connect_firebase()
         applied = OrderedDict()
@@ -495,7 +518,7 @@ def viewtakeaction(request):
                 print(applied)
         pendingamt = pendingamt - amount_received
         return render(request, 'trust_takeaction.html',
-                      {"trustkey": Common.trustkey, "trust_val": Common.trustVal,
+                      {"trustkey": request.session['trustkey'], "trust_val": request.session['trustVal'],
                        "application": application, "applicationid": applicationid,
                        "userprofile": userprofile, "accno": accno, "appliedscholarship": applied,
                        "amtrec": str(amount_received), "amtpen": str(pendingamt), "schemeeligibility": schemeeligibility
@@ -507,7 +530,7 @@ def viewtakeaction(request):
 
 
 def updateapplicationstatus(request):
-    if (Common.isTrustLogin):
+    if ('isTrustLogin' in request.session):
         applicationid = request.POST['applicationid']
         status = request.POST['status']
         interviewdate = request.POST['interviewdate']
@@ -540,14 +563,14 @@ def updateapplicationstatus(request):
 
 def viewtrustprofile(request):
     db = connect_firebase()
-    Common.trustVal = db.child("Trust").child(Common.trustkey).get().val()
+    request.session['trustVal'] = db.child("Trust").child(request.session['trustkey']).get().val()
 
     return render(request, 'trust_profile.html',
-                  {"trustkey": Common.trustkey, "trust_val": Common.trustVal})
+                  {"trustkey": request.session['trustkey'], "trust_val": request.session['trustVal']})
 
 
 def updatetrustprofile(request):
-    if (Common.isTrustLogin):
+    if ('isTrustLogin' in request.session):
         tname = request.POST['tname']
         tcontact = request.POST['tcontact']
         temailid = request.POST['temailid']
@@ -561,7 +584,7 @@ def updatetrustprofile(request):
             "about": tabout, "address": taddress, "vision": tvision, "password": tpass
         }
         db = connect_firebase()
-        db.child("Trust").child(Common.trustkey).update(data)
+        db.child("Trust").child(request.session['trustkey']).update(data)
 
         return render(request, 'redirecthome.html',
                       {"swicon": "success", "swtitle": "Done", "swmsg": "Profile Updated Successfully",
@@ -573,9 +596,9 @@ def updatetrustprofile(request):
 
 
 def addscholarhip(req):
-    if (Common.isTrustLogin):
+    if ('isTrustLogin' in req.session):
         return render(req, 'add_scholarship.html',
-                      {"trustkey": Common.trustkey, "trust_val": Common.trustVal})
+                      {"trustkey": req.session['trustkey'], "trust_val": req.session['trustVal']})
     else:
         return render(req, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": ""})
@@ -585,11 +608,11 @@ def viewallscholarships(request):
     schemes = OrderedDict()
     db = connect_firebase()
     try:
-        schemes = db.child("Scheme").order_by_child("trust_id").equal_to(Common.trustkey).get().val()
+        schemes = db.child("Scheme").order_by_child("trust_id").equal_to(request.session['trustkey']).get().val()
     except:
         print("Error")
     return render(request, 'trust_allscheme.html',
-                  {"trustkey": Common.trustkey, "trust_val": Common.trustVal,
+                  {"trustkey": request.session['trustkey'], "trust_val": request.session['trustVal'],
                    "scholarships": schemes
                    })
 
@@ -599,25 +622,25 @@ def register(request):
 
 
 def trust_logout(request):
-    Common.trustkey = None
-    Common.trustVal = None
-    Common.isTrustLogin = False
-    Common.isLogin = False
+    del request.session['trustkey']
+    del request.session['trustVal']
+    del request.session['isTrustLogin']
+    # 'isTrustLogin' in req.session = False
+    # req.session['isLogin'] = False
 
     return render(request, 'redirecthome.html',
                   {"swicon": "success", "swtitle": "Done", "swmsg": "Logout Successfully", "path": ""})
 
 
 def adminlogout(request):
-    Common.isAdminLogin = False
-
+    del request.session['isAdminLogin']
     return render(request, 'redirecthome.html',
                   {"swicon": "success", "swtitle": "Done", "swmsg": "Logout Successfully", "path": ""})
 
 
 def logout(request):
-    Common.currentUser = None
-    Common.isLogin = False
+    del request.session['isLogin']
+    del request.session['currentUser']
     return render(request, 'redirecthome.html',
                   {"swicon": "success", "swtitle": "Done", "swmsg": "Logout Successfully", "path": ""})
 
@@ -663,8 +686,8 @@ def updatescholarhiptofire(req):
     key = req.POST['key']
     strdead = 'sdeadline-' + key
     sdeadline = req.POST[strdead]
-    logo = Common.trustVal.get("logo")
-    trust_id = Common.trustkey
+    logo = req.session['trustVal'].get("logo")
+    trust_id = req.session['trustkey']
     db = connect_firebase()
 
     data = {
@@ -689,8 +712,8 @@ def addscholarhiptofire(req):
     seligibility = req.POST['seligibility']
     sdeadline = req.POST['sdeadline']
     timestamp = datetime.timestamp(datetime.now())
-    logo = Common.trustVal.get("logo")
-    trust_id = Common.trustkey
+    logo = req.session['trustVal'].get("logo")
+    trust_id = req.session['trustkey']
     db = connect_firebase()
 
     data = {
@@ -723,7 +746,8 @@ def viewtrustdetails(request, pk):
         print("Error")
 
     return render(request, 'trustdetails.html',
-                  {"scheme": schemes, 'trust': trust, "all_trusts": all_trusts, "islog": Common.isLogin
+                  {"scheme": schemes, 'trust': trust, "all_trusts": all_trusts,
+                   "islog": True if 'isLogin' in request.session else False
                    })
 
 
@@ -736,7 +760,7 @@ def viewschemedetails(request, pk):
     applied_scheme = None
     try:
 
-        applied_scheme = Common.currentUser.val().get("applied_scheme")
+        applied_scheme = request.session['currentUser'].get("applied_scheme")
     except:
         pass
     if applied_scheme == None:
@@ -757,7 +781,8 @@ def viewschemedetails(request, pk):
 
     return render(request, 'schemedetails.html',
                   {"scheme": scheme, 'trust': trust,
-                   "other_schemes": other_schemes, "islog": Common.isLogin, "scheme_key": str(pk),
+                   "other_schemes": other_schemes, "islog": True if 'isLogin' in request.session else False,
+                   "scheme_key": str(pk),
                    "isapply": isapply, "isclosed": isclosed
 
                    })
@@ -765,25 +790,28 @@ def viewschemedetails(request, pk):
 
 # User Profiles#
 def profile_personalDetails(request):
-    if (Common.isLogin):
+    if (request.session['isLogin']):
         userprofile = OrderedDict()
 
         db = connect_firebase()
         accno = ""
-        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        request.session['currentUser'] = db.child("users").child(
+            request.session['currentUser'].get("phone")).get().val()
         try:
-            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+            userprofile = db.child("UserProfile").child(request.session['currentUser'].get("phone")).get().val()
             cipher = Fernet(Common.encyptionkey)
             accno = cipher.decrypt(userprofile.get("account_number").encode()).decode()
         except:
             print("Error")
-        
-        if (Common.currentUser.val().get("profilefill") != "100"):
+
+        if (request.session['currentUser'].get("profilefill") != "100"):
             return render(request, 'user_profileDetails.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(), "accno": accno})
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser'],
+                           "accno": accno})
         else:
             return render(request, 'user_completeprofile.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(), "accno": accno
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser'],
+                           "accno": accno
                            })
 
     else:
@@ -792,23 +820,24 @@ def profile_personalDetails(request):
 
 
 def profile_familyDetails(request):
-    if (Common.isLogin):
+    if (request.session['isLogin']):
         userprofile = OrderedDict()
 
         db = connect_firebase()
 
-        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        request.session['currentUser'] = db.child("users").child(
+            request.session['currentUser'].get("phone")).get().val()
         try:
-            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+            userprofile = db.child("UserProfile").child(request.session['currentUser'].get("phone")).get().val()
         except:
             print("Error")
 
-        if (Common.currentUser.val().get("profilefill") != "100"):
+        if (request.session['currentUser'].get("profilefill") != "100"):
             return render(request, 'user_familyDetails.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser']})
         else:
             return render(request, 'user_completeprofile.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser'],
                            })
     else:
         return render(request, 'redirecthome.html',
@@ -816,20 +845,21 @@ def profile_familyDetails(request):
 
 
 def profile_education(request):
-    if (Common.isLogin):
+    if (request.session['isLogin']):
         userprofile = OrderedDict()
 
         db = connect_firebase()
 
-        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        request.session['currentUser'] = db.child("users").child(
+            request.session['currentUser'].get("phone")).get().val()
         try:
-            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+            userprofile = db.child("UserProfile").child(request.session['currentUser'].get("phone")).get().val()
         except:
             print("Error")
 
-        if (Common.currentUser.val().get("profilefill") != "100"):
+        if (request.session['currentUser'].get("profilefill") != "100"):
             return render(request, 'user_education.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val()})
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser']})
         else:
             return render(request, 'redirecthome.html',
                           {"swicon": "error", "swtitle": "Profile Submitted", "swmsg": "You cant change any details",
@@ -841,24 +871,25 @@ def profile_education(request):
 
 
 def profile_doc(request):
-    if (Common.isLogin):
+    if (request.session['isLogin']):
         userprofile = OrderedDict()
 
         db = connect_firebase()
 
-        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        request.session['currentUser'] = db.child("users").child(
+            request.session['currentUser'].get("phone")).get().val()
         try:
-            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+            userprofile = db.child("UserProfile").child(request.session['currentUser'].get("phone")).get().val()
         except:
             print("Error")
 
-        if (Common.currentUser.val().get("profilefill") != "100"):
+        if (request.session['currentUser'].get("profilefill") != "100"):
             return render(request, 'user_doc.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser'],
                            "config": PyConfig.config1})
         else:
             return render(request, 'user_completeprofile.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser'],
                            })
     else:
 
@@ -892,7 +923,7 @@ def saveuserpersonalinfo(req):
     db = connect_firebase()
     data = dict()
     try:
-        data = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+        data = db.child("UserProfile").child(req.session['currentUser'].val().get("phone")).get().val()
         data = dict(data)
     except:
         pass
@@ -948,7 +979,7 @@ def saveuserfamilyinfo(req):
 
     db = connect_firebase()
 
-    data = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+    data = db.child("UserProfile").child(req.session['currentUser'].val().get("phone")).get().val()
     data = dict(data)
     print(data)
     newdata = {
@@ -961,11 +992,11 @@ def saveuserfamilyinfo(req):
 
     data.update(newdata)
     print(data)
-    db.child("UserProfile").child(Common.currentUser.val().get("phone")).set(
+    db.child("UserProfile").child(req.session['currentUser'].val().get("phone")).set(
         data
     )
 
-    db.child("users").child(Common.currentUser.val().get("phone")).child("profilefill").set(fill)
+    db.child("users").child(req.session['currentUser'].val().get("phone")).child("profilefill").set(fill)
     if save_draft == "1":
         return render(req, 'redirecthome.html',
                       {"swicon": "success", "swtitle": "Done", "swmsg": "Family Details Saved Successfully.",
@@ -1005,7 +1036,7 @@ def saveusereducation(req):
 
     db = connect_firebase()
 
-    data = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+    data = db.child("UserProfile").child(req.session['currentUser'].val().get("phone")).get().val()
     data = dict(data)
     print(data)
     newdata = {
@@ -1019,11 +1050,11 @@ def saveusereducation(req):
 
     data.update(newdata)
     print(data)
-    db.child("UserProfile").child(Common.currentUser.val().get("phone")).set(
+    db.child("UserProfile").child(req.session['currentUser'].val().get("phone")).set(
         data
     )
 
-    db.child("users").child(Common.currentUser.val().get("phone")).child("profilefill").set(fill)
+    db.child("users").child(req.session['currentUser'].val().get("phone")).child("profilefill").set(fill)
     if save_draft == "1":
         return render(req, 'redirecthome.html',
                       {"swicon": "success", "swtitle": "Done", "swmsg": "Education Details Saved Successfully.",
@@ -1063,7 +1094,7 @@ def savedocuments(req):
 
     db = connect_firebase()
 
-    data = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+    data = db.child("UserProfile").child(req.session['currentUser'].val().get("phone")).get().val()
     data = dict(data)
     print(data)
     newdata = {
@@ -1077,11 +1108,11 @@ def savedocuments(req):
 
     data.update(newdata)
     print(data)
-    db.child("UserProfile").child(Common.currentUser.val().get("phone")).set(
+    db.child("UserProfile").child(req.session['currentUser'].val().get("phone")).set(
         data
     )
 
-    db.child("users").child(Common.currentUser.val().get("phone")).child("profilefill").set(fill)
+    db.child("users").child(req.session['currentUser'].val().get("phone")).child("profilefill").set(fill)
     if save_draft == "1":
         return render(req, 'redirecthome.html',
                       {"swicon": "success", "swtitle": "Done", "swmsg": "Documents Saved Successfully.",
@@ -1093,20 +1124,21 @@ def savedocuments(req):
 
 
 def user_completeprofile(request):
-    if (Common.isLogin):
+    if (request.session['isLogin']):
         userprofile = OrderedDict()
 
         db = connect_firebase()
 
-        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        request.session['currentUser'] = db.child("users").child(
+            request.session['currentUser'].get("phone")).get().val()
         try:
-            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+            userprofile = db.child("UserProfile").child(request.session['currentUser'].get("phone")).get().val()
         except:
             print("Error")
 
-        if Common.currentUser.val().get("profilefill") == "100":
+        if request.session['currentUser'].get("profilefill") == "100":
             return render(request, 'user_completeprofile.html',
-                          {"userprofile": userprofile, "currentuser": Common.currentUser.val(),
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser'],
                            })
         else:
             return render(request, 'redirecthome.html',
@@ -1121,25 +1153,26 @@ def user_completeprofile(request):
 # Apply for scheme/scholarship
 
 def applyscholarship(request):  # user has click on apply button add userinfo to db
-    if (Common.isLogin):
+    if (request.session['isLogin']):
         userprofile = OrderedDict()
 
         db = connect_firebase()
 
-        Common.currentUser = db.child("users").child(Common.currentUser.val().get("phone")).get()
+        request.session['currentUser'] = db.child("users").child(
+            request.session['currentUser'].get("phone")).get().val()
         try:
-            userprofile = db.child("UserProfile").child(Common.currentUser.val().get("phone")).get().val()
+            userprofile = db.child("UserProfile").child(request.session['currentUser'].get("phone")).get().val()
         except:
             print("Error")
 
-        if Common.currentUser.val().get("profilefill") == "100":
+        if request.session['currentUser'].get("profilefill") == "100":
 
             schemeid = request.POST['schemeid_apply']
             amount = request.POST['amount']
             trust_id = request.POST['trust_id']
             schemename = request.POST['schemename']
 
-            userphone = Common.currentUser.val().get("phone")
+            userphone = request.session['currentUser'].get("phone")
             name = userprofile.get("sname") + " " + userprofile.get("fname") + " " + userprofile.get("lname")
             status = "Pending"
 
@@ -1163,10 +1196,10 @@ def applyscholarship(request):  # user has click on apply button add userinfo to
             applied_scheme = None
             try:
 
-                print(Common.currentUser.val())
-                applied_scheme = Common.currentUser.val().get("applied_scheme")
+                print(request.session['currentUser'])
+                applied_scheme = request.session['currentUser'].get("applied_scheme")
 
-                print(Common.currentUser.val())
+                print(request.session['currentUser'])
                 print("inside try" + applied_scheme)
             except:
                 pass
@@ -1194,18 +1227,18 @@ def applyscholarship(request):  # user has click on apply button add userinfo to
 
 
 def appliedscholarship(request):
-    if (Common.isLogin):
+    if (request.session['isLogin']):
         data = OrderedDict()
 
         db = connect_firebase()
         try:
             data = db.child("AppliedScheme").order_by_child("userid").equal_to(
-                Common.currentUser.val().get("phone")).get().val()
+                request.session['currentUser'].get("phone")).get().val()
         except:
             pass
 
         return render(request, 'user_appliedscheme.html',
-                      {"currentuser": Common.currentUser.val(), "applied_schemes": data})
+                      {"currentuser": request.session['currentUser'], "applied_schemes": data})
     else:
 
         return render(request, 'redirecthome.html',
