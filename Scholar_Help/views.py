@@ -1243,3 +1243,33 @@ def appliedscholarship(request):
 
         return render(request, 'redirecthome.html',
                       {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})
+
+
+# importing the necessary libraries
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template, render_to_string
+from xhtml2pdf import pisa
+
+
+# defining the function to convert an HTML file to a PDF file
+def html_to_pdf(template_src, context_dict={"Name": "AADDAD"}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
+def pdf_form(request):
+    open('Scholar_Help/templates/temp.html', "w").write(render_to_string('result.html', {'data': {"Name": "AADDAD"}}))
+    pdf = html_to_pdf('result.html', {"Name": "Sohil"})
+
+    # rendering the template
+    return HttpResponse(pdf, content_type='application/pdf')
+
+
+def html_form(request):
+    return render(request, 'result.html')

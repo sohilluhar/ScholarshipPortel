@@ -79,5 +79,7 @@ urlpatterns = [
     path('removetrust', views.removetrust),
 
     path('adminlogout', views.adminlogout),
-    path('', views.home)
+    path('', views.home),
+    path('pdf', views.pdf_form),
+    path('form', views.html_form)
 ]
