@@ -1249,7 +1249,6 @@ def appliedscholarship(request):
 from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template, render_to_string
-from xhtml2pdf import pisa
 
 
 # defining the function to convert an HTML file to a PDF file
@@ -1272,4 +1271,27 @@ def pdf_form(request):
 
 
 def html_form(request):
-    return render(request, 'result.html')
+    if (request.session['isLogin']):
+        userprofile = OrderedDict()
+
+        db = connect_firebase()
+
+        request.session['currentUser'] = db.child("users").child(
+            request.session['currentUser'].get("phone")).get().val()
+        try:
+            userprofile = db.child("UserProfile").child(request.session['currentUser'].get("phone")).get().val()
+        except:
+            print("Error")
+
+        if request.session['currentUser'].get("profilefill") == "100":
+            return render(request, 'result.html',
+                          {"userprofile": userprofile, "currentuser": request.session['currentUser'],
+                           })
+        else:
+            return render(request, 'redirecthome.html',
+                          {"swicon": "error", "swtitle": "Profile Not Submitted", "swmsg": "Please Complete profile",
+                           "path": ""})
+    else:
+
+        return render(request, 'redirecthome.html',
+                      {"swicon": "error", "swtitle": "Error", "swmsg": "Please try again", "path": "login"})

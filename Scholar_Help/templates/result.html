@@ -91,7 +91,9 @@
             </div>
 
             <div class="col-5">
-                <p>Student Full Name: <span class="txt_cap txt_un">sohil Ayub Luhar</span></p>
+                <p>Student Full Name: <span
+                        class="txt_cap txt_un">{{ userprofile.sname }} {{ userprofile.fname }} {{ userprofile.lname }}</span>
+                </p>
             </div>
 
             <div class="col-3">
@@ -101,34 +103,35 @@
         </div>
         <div class="row">
             <div class="col-4">
-                <p>Father Name: <span class="txt_cap txt_un">Ayub Luhar</span></p>
+                <p>Father Name: <span class="txt_cap txt_un">{{ userprofile.fathername }}</span></p>
             </div>
             <div class="col-2">
-                <p>Expired: <span class="txt_cap txt_un"> No</span></p>
+                <p>Alive : <span class="txt_cap txt_un"> {{ userprofile.fatheralive }}</span></p>
             </div>
 
             <div class="col-4">
-                <p>Mother Name: <span class="txt_cap txt_un">Ayub Luhar</span></p>
+                <p>Mother Name: <span class="txt_cap txt_un">{{ userprofile.mothername }}</span></p>
 
             </div>
             <div class="col-2">
-                <p>Expired: <span class="txt_cap txt_un"> No</span></p>
+                <p>Alive: <span class="txt_cap txt_un"> {{ userprofile.motheralive }}</span></p>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <p> Permanent Address : <span class="txt_cap txt_un">Azad nagar,Ghatkopar westAzad nagar,Ghatkopar westAzad nagar,</span>
+                <p> Permanent Address : <span
+                        class="txt_cap txt_un">{{ userprofile.address }} - {{ userprofile.pincode }}</span>
                 </p>
             </div>
 
             <div class="col-6">
-                <p> Contact Number : <span class="txt_cap txt_un">9833771892</span></p>
+                <p> Contact Number : <span class="txt_cap txt_un">{{ currentuser.phone }}</span></p>
             </div>
         </div>
 
         <div class="row">
             <div class="col-6">
-                <p> Reference Given By: <span class="txt_cap txt_un">dfsdfsdfsdfsdfsd</span>
+                <p> Reference Given By: <span class="txt_cap txt_un">Sohil Luhar</span>
                 </p>
             </div>
 
@@ -247,31 +250,36 @@
                 <th scope="col" class="mt-0 py-0 all_border">Total</th>
                 <th scope="col" class="mt-0 py-0 all_border">Year</th>
                 <th scope="col" class="mt-0 py-0 all_border">% Obtained</th>
-                <th scope="col" class="mt-0 py-0 all_border">Class/Grade</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td class="mt-0 py-0 txt_cap all_border">SSC</td>
-                <td class="mt-0 py-0 txt_cap all_border">k j somaiya</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1name }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1board }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">english</td>
                 <td class="mt-0 py-0 txt_cap all_border">449</td>
                 <td class="mt-0 py-0 txt_cap all_border">500</td>
-                <td class="mt-0 py-0 txt_cap all_border">2014</td>
-                <td class="mt-0 py-0 txt_cap all_border">90.80</td>
-                <td class="mt-0 py-0 txt_cap all_border">A</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1year }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1per }}</td>
 
             </tr>
             <tr>
-                <td class="mt-0 py-0 txt_cap all_border">SSC</td>
-                <td class="mt-0 py-0 txt_cap all_border">k j somaiya</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2name }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2board }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">english</td>
                 <td class="mt-0 py-0 txt_cap all_border">449</td>
                 <td class="mt-0 py-0 txt_cap all_border">500</td>
-                <td class="mt-0 py-0 txt_cap all_border">2014</td>
-                <td class="mt-0 py-0 txt_cap all_border">90.80</td>
-                <td class="mt-0 py-0 txt_cap all_border">A</td>
-
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2year }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2per }}</td>
+            </tr>
+            <tr>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course3name }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course3board }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">english</td>
+                <td class="mt-0 py-0 txt_cap all_border">449</td>
+                <td class="mt-0 py-0 txt_cap all_border">500</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course3year }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course3per }}</td>
             </tr>
 
             </tbody>
@@ -285,7 +293,7 @@
         <p><b> 4. </b><span class="txt_b_u_upper">details of course</span></p>
     </div>
     <div class="col-6">
-        <p>Name of Course <span class="txt_cap txt_un">Btech in Computer  engineering</span></p>
+        <p>Name of Course <span class="txt_cap txt_un">{{ userprofile.coursename }}</span></p>
     </div>
     <div class="col-3">
         <p>Duration of Course <span class="txt_cap txt_un">3</span></p>
@@ -309,14 +317,14 @@
 
 
     <div class="col-6">
-        <p>Name of the Institute <span class="txt_cap txt_un">K j somaiya</span></p>
+        <p>Name of the Institute <span class="txt_cap txt_un">{{ userprofile.collegename }}</span></p>
     </div>
     <div class="col-6">
         <p>Name of the Principal/Director/Head Institute <span class="txt_cap txt_un">Subha patil</span></p>
 
     </div>
     <div class="col-12">
-        <p>Full Address of the Institute <span class="txt_cap txt_un">vidya vihar</span></p>
+        <p>Full Address of the Institute <span class="txt_cap txt_un">{{ userprofile.collegeaddress }}</span></p>
 
     </div>
 </div>
@@ -339,7 +347,7 @@
             </thead>
             <tbody>
             <tr>
-                <td class="mt-0 py-0 txt_cap all_border">120000</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.coursefees }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">20000</td>
                 <td class="mt-0 py-0 txt_cap all_border">100000</td>
 
@@ -421,3 +429,37 @@
 
 </body>
 </html>
+
+{##}
+{#<html>#}
+{#<head>#}
+{#    <script type='text/javascript'>#}
+{#        function addFields(){#}
+{#            // Generate a dynamic number of inputs#}
+{#            var number = document.getElementById("member").value;#}
+{#            // Get the element where the inputs will be added to#}
+{#            var container = document.getElementById("container");#}
+{#            // Remove every children it had before#}
+{#            while (container.hasChildNodes()) {#}
+{#                container.removeChild(container.lastChild);#}
+{#            }#}
+{#            for (i=0;i<number;i++){#}
+{#                // Append a node with a random text#}
+{#                container.appendChild(document.createTextNode("Member " + (i+1)));#}
+{#                // Create an <input> element, set its type and name attributes#}
+{#                var input = document.createElement("input");#}
+{#                input.type = "text";#}
+{#                input.name = "member" + i;#}
+{#                container.appendChild(input);#}
+{#                // Append a line break #}
+{#                container.appendChild(document.createElement("br"));#}
+{#            }#}
+{#        }#}
+{#    </script>#}
+{#</head>#}
+{#<body>#}
+{#    <input type="text" id="member" name="member" value="">Number of members: (max. 10)<br />#}
+{#    <a href="#" id="filldetails" onclick="addFields()">Fill Details</a>#}
+{#    <div id="container"/>#}
+{#</body>#}
+{#</html>#}
