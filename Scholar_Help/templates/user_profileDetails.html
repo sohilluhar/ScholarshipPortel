@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <div class="form-group">
                                                         <label>Religion</label>
                                                         <select class="form-control" name="religious" id="religious"
@@ -186,7 +186,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <label for="cast">Caste Category</label>
                                                     <select class="form-control" name="cast" id="cast"
                                                     >
@@ -198,7 +198,21 @@
                                                     </select>
 
                                                 </div>
-                                                <div class="col-4">
+
+                                                <div class="col-3">
+                                                    <label for="ParentStatus">Parent Status</label>
+                                                    <select class="form-control" name="ParentStatus" id="ParentStatus"
+                                                    >
+                                                        <option value="">Select</option>
+                                                        <option value="General">General</option>
+                                                        <option value="Widow">Widow</option>
+                                                        <option value="Divorce">Divorce</option>
+                                                        <option value="Orphan">Orphan</option>
+                                                        <option value="Single Parent">Single Parent</option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="col-3">
                                                     <div class="form-group">
                                                         <label for="anual_income">Family Annual Income</label>
                                                         <input type="number" name="anual_income" class="form-control"
@@ -400,6 +414,7 @@
     document.getElementById("religious").value = "{{userprofile.religious}}";
     document.getElementById("cast").value = "{{userprofile.cast}}";
     document.getElementById("bank_name").value = "{{userprofile.bank_name}}";
+    document.getElementById("ParentStatus").value = "{{userprofile.parent_status}}";
 
     var today = moment();
     {#document.getElementById("dob").value = today.format('DD-MMMM-YYYY');#}

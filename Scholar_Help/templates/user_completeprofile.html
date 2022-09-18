@@ -471,44 +471,44 @@
 
 
                                         </div>
-                                        <div class="row">
-
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <input type="text" name="course3name" class="form-control"
-                                                           disabled
-                                                           value="{{ userprofile.course3name }}" id="course3name"
-                                                           placeholder="Enter course name ">
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="form-group">
-                                                    <input type="number" name="course3year" class="form-control"
-                                                           disabled
-                                                           value="{{ userprofile.course3year }}" id="course3year"
-                                                           placeholder="Enter year">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-4">
-                                                <div class="form-group">
-                                                    <input type="text" name="course3board" class="form-control"
-                                                           disabled
-                                                           value="{{ userprofile.course3board }}" id="course3board"
-                                                           placeholder="Enter university or board name ">
-                                                </div>
-                                            </div>
-                                            <div class="col-2">
-                                                <div class="form-group">
-                                                    <input type="text" name="course3per" class="form-control"
-                                                           disabled
-                                                           value="{{ userprofile.course3per }}" id="course3per"
-                                                           placeholder="Enter percentage ">
-                                                </div>
-                                            </div>
-
-
-                                        </div>
+                                        {#                                        <div class="row">#}
+                                        {##}
+                                        {#                                            <div class="col-4">#}
+                                        {#                                                <div class="form-group">#}
+                                        {#                                                    <input type="text" name="course3name" class="form-control"#}
+                                        {#                                                           disabled#}
+                                        {#                                                           value="{{ userprofile.course3name }}" id="course3name"#}
+                                        {#                                                           placeholder="Enter course name ">#}
+                                        {#                                                </div>#}
+                                        {#                                            </div>#}
+                                        {#                                            <div class="col-2">#}
+                                        {#                                                <div class="form-group">#}
+                                        {#                                                    <input type="number" name="course3year" class="form-control"#}
+                                        {#                                                           disabled#}
+                                        {#                                                           value="{{ userprofile.course3year }}" id="course3year"#}
+                                        {#                                                           placeholder="Enter year">#}
+                                        {#                                                </div>#}
+                                        {#                                            </div>#}
+                                        {##}
+                                        {#                                            <div class="col-4">#}
+                                        {#                                                <div class="form-group">#}
+                                        {#                                                    <input type="text" name="course3board" class="form-control"#}
+                                        {#                                                           disabled#}
+                                        {#                                                           value="{{ userprofile.course3board }}" id="course3board"#}
+                                        {#                                                           placeholder="Enter university or board name ">#}
+                                        {#                                                </div>#}
+                                        {#                                            </div>#}
+                                        {#                                            <div class="col-2">#}
+                                        {#                                                <div class="form-group">#}
+                                        {#                                                    <input type="text" name="course3per" class="form-control"#}
+                                        {#                                                           disabled#}
+                                        {#                                                           value="{{ userprofile.course3per }}" id="course3per"#}
+                                        {#                                                           placeholder="Enter percentage ">#}
+                                        {#                                                </div>#}
+                                        {#                                            </div>#}
+                                        {##}
+                                        {##}
+                                        {#                                        </div>#}
                                     </div>
 
                                 </div>
@@ -945,25 +945,7 @@
     var today = moment();
     {#document.getElementById("dob").value = today.format('DD-MMMM-YYYY');#}
     $(function () {
-        $('input disabled[name="dob"]').daterangepicker({
-            singleDatePicker: true,
-            autoUpdateinput disabled
-    :
-        false,
-            startDate
-    :
-        '01/01/2005',
-            maxDate
-    :
-        today,
-            maxYear
-    :
-        5,
-            showDropdowns
-    :
-        true,
-    })
-        ;
+
         $('#dob').on('apply.daterangepicker', function (ev, picker) {
             document.getElementById("dob").value = picker.startDate.format('DD/MM/YYYY');
             var dob = picker.startDate.format('YYYY');

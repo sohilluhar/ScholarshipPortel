@@ -460,55 +460,55 @@
 
 
                                             </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="row">
-                                                        <div class="col-4">
-                                                            <div class="form-group">
-
-                                                                <input type="text" class="form-control" disabled
-                                                                       value="{{ userprofile.course3name }}">
-
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <div class="form-group">
-
-                                                                <div class="input-group">
-                                                                    <input type="file" class="file-upload"
-                                                                           id="doccourse3file"
-                                                                           name="doccourse3file">
-                                                                    <input type="hidden" id="doccourse3url"
-                                                                           name="doccourse3url">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-2">
-                                                            <div class="form-group">
-
-                                                                <div class="input-group">
-
-                                                                    <button type="button" class="btn btn-info"
-                                                                            onclick="uploadimage('doccourse3file','{{ currentuser.phone }}-doccourse3','doccourse3url','doccourse3view')">
-                                                                        Upload
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-2">
-                                                            <div class="form-group mt-2">
-                                                                <a class="text-muted" id="doccourse3view"
-                                                                   name="doccourse3view" href="#">View
-                                                                    Document</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
+                                            {#                                            <div class="row">#}
+                                            {#                                                <div class="col-12">#}
+                                            {#                                                    <div class="row">#}
+                                            {#                                                        <div class="col-4">#}
+                                            {#                                                            <div class="form-group">#}
+                                            {##}
+                                            {#                                                                <input type="text" class="form-control" disabled#}
+                                            {#                                                                       value="{{ userprofile.course3name }}">#}
+                                            {##}
+                                            {#                                                            </div>#}
+                                            {##}
+                                            {#                                                        </div>#}
+                                            {#                                                        <div class="col-4">#}
+                                            {#                                                            <div class="form-group">#}
+                                            {##}
+                                            {#                                                                <div class="input-group">#}
+                                            {#                                                                    <input type="file" class="file-upload"#}
+                                            {#                                                                           id="doccourse3file"#}
+                                            {#                                                                           name="doccourse3file">#}
+                                            {#                                                                    <input type="hidden" id="doccourse3url"#}
+                                            {#                                                                           name="doccourse3url">#}
+                                            {#                                                                </div>#}
+                                            {#                                                            </div>#}
+                                            {#                                                        </div>#}
+                                            {#                                                        <div class="col-2">#}
+                                            {#                                                            <div class="form-group">#}
+                                            {##}
+                                            {#                                                                <div class="input-group">#}
+                                            {##}
+                                            {#                                                                    <button type="button" class="btn btn-info"#}
+                                            {#                                                                            onclick="uploadimage('doccourse3file','{{ currentuser.phone }}-doccourse3','doccourse3url','doccourse3view')">#}
+                                            {#                                                                        Upload#}
+                                            {#                                                                    </button>#}
+                                            {#                                                                </div>#}
+                                            {#                                                            </div>#}
+                                            {#                                                        </div>#}
+                                            {##}
+                                            {#                                                        <div class="col-2">#}
+                                            {#                                                            <div class="form-group mt-2">#}
+                                            {#                                                                <a class="text-muted" id="doccourse3view"#}
+                                            {#                                                                   name="doccourse3view" href="#">View#}
+                                            {#                                                                    Document</a>#}
+                                            {#                                                            </div>#}
+                                            {#                                                        </div>#}
+                                            {#                                                    </div>#}
+                                            {#                                                </div>#}
+                                            {##}
+                                            {##}
+                                            {#                                            </div>#}
 
                                             <div class="row">
                                                 <div class="col-12">
@@ -1125,7 +1125,7 @@
     document.getElementById("docincomeurl").value = "{{userprofile.docincomeurl}}";
     document.getElementById("doccourse1url").value = "{{userprofile.doccourse1url}}";
     document.getElementById("doccourse2url").value = "{{userprofile.doccourse2url}}";
-    document.getElementById("doccourse3url").value = "{{userprofile.doccourse3url}}";
+    {#document.getElementById("doccourse3url").value = "{{userprofile.doccourse3url}}";#}
     document.getElementById("docpassbookurl").value = "{{userprofile.docpassbookurl}}";
 
     {% if userprofile.docphotoidurl %}
@@ -1168,11 +1168,11 @@
         document.getElementById("doccourse2view").setAttribute('target', '_blank');
         document.getElementById("doccourse2view").className = "text-info";
     {% endif %}
-    {% if userprofile.doccourse3url %}
-        document.getElementById("doccourse3view").href = "{{ userprofile.doccourse3url }}";
-        document.getElementById("doccourse3view").setAttribute('target', '_blank');
-        document.getElementById("doccourse3view").className = "text-info";
-    {% endif %}
+    {#    {% if userprofile.doccourse3url %}#}
+    {#        document.getElementById("doccourse3view").href = "{{ userprofile.doccourse3url }}";#}
+    {#        document.getElementById("doccourse3view").setAttribute('target', '_blank');#}
+    {#        document.getElementById("doccourse3view").className = "text-info";#}
+    {#    {% endif %}#}
     {% if userprofile.docpassbookurl %}
         document.getElementById("docpassbookview").href = "{{ userprofile.docpassbookurl }}";
         document.getElementById("docpassbookview").setAttribute('target', '_blank');
@@ -1267,14 +1267,16 @@
                 text: 'Please upload marksheet',
             });
             return false;
-        } else if (doccourse3url.value === "") {
-            Swal.fire({
-                icon: "error",
-                title: '{{ userprofile.course3name }} marksheet not uploaded',
-                text: 'Please upload marksheet',
-            });
-            return false;
-        } else if (docadmissionname.selectedIndex === 0) {
+        }
+            {#else if (doccourse3url.value === "") {#}
+            {#    Swal.fire({#}
+            {#        icon: "error",#}
+            {#        title: '{{ userprofile.course3name }} marksheet not uploaded',#}
+            {#        text: 'Please upload marksheet',#}
+            {#    });#}
+            {#    return false;#}
+            {# } #}
+        else if (docadmissionname.selectedIndex === 0) {
             Swal.fire({
                 icon: "error",
                 title: 'Admission Proof not selected',

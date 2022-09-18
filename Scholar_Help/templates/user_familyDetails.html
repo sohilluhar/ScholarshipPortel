@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="fatheralive">Is Father Alive?</label>
                                                         <select class="form-control" name="fatheralive"
@@ -103,7 +103,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="fathername">Father Name</label>
                                                         <input type="text" name="fathername" class="form-control"
@@ -112,7 +112,7 @@
                                                                placeholder="Enter father's name">
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="father_occupation">Fathers Occupation</label>
                                                         <input type="text" name="father_occupation" class="form-control"
@@ -122,18 +122,19 @@
                                                                placeholder="Enter father's occupation">
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-3" hidden>
                                                     <div class="form-group">
                                                         <label for="father_income">Fathers Monthly Income</label>
                                                         <input type="number" name="father_income" class="form-control"
-                                                               value="{{ userprofile.fatherincome }}"
+                                                               value="0"
+                                                               hidden
                                                                id="father_income"
                                                                placeholder="Enter father's monthly income">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="motheralive">Is Mother Alive?</label>
                                                         <select class="form-control" name="motheralive"
@@ -144,7 +145,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="mothername">Mother Name</label>
                                                         <input type="text" name="mothername" class="form-control"
@@ -153,7 +154,7 @@
                                                                id="mothername" placeholder="Enter mother's name">
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="mother_occupation">Mothers Occupation</label>
                                                         <input type="text" name="mother_occupation" class="form-control"
@@ -163,16 +164,55 @@
                                                                placeholder="Enter mother's occupation">
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-3" hidden>
                                                     <div class="form-group">
                                                         <label for="mother_income">Mothers Monthly Income</label>
                                                         <input type="number" name="mother_income" class="form-control"
                                                                id="mother_income"
-
-                                                               value="{{ userprofile.motherincome }}"
+                                                               value="0"
+                                                               hidden
                                                                placeholder="Enter mother's monthly income">
                                                     </div>
                                                 </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="totalfamilymember">Total Family Member</label>
+                                                        <input type="number" name="totalfamilymember"
+                                                               class="form-control"
+
+                                                               value="{{ userprofile.totalfamilymember }}"
+                                                               id="totalfamilymember"
+                                                               placeholder="Enter Total Number of Family Member"
+                                                               required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="totalearningmember">Total Earning Member</label>
+                                                        <input type="number" name="totalearningmember"
+                                                               class="form-control"
+
+                                                               value="{{ userprofile.totalearningmember }}"
+                                                               id="totalearningmember"
+                                                               placeholder="Enter Total Number of  Earning Member"
+                                                               required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="family_income">Family Monthly Income</label>
+                                                        <input type="number" name="family_income" class="form-control"
+
+                                                               value="{{ userprofile.family_income }}"
+                                                               id="family_income"
+                                                               placeholder="Enter Family Monthly Income" required>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
 
@@ -259,6 +299,10 @@
         var mother_occupation = form.mother_occupation.value;
         var mother_income = form.mother_income.value;
 
+        var totalfamilymember = form.totalfamilymember.value;
+        var totalearningmember = form.totalearningmember.value;
+        var family_income = form.family_income.value;
+
 
         if (address.length < 20) {
             Swal.fire({
@@ -288,6 +332,7 @@
         }
 
         var letters = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
+        var numbers = /^[0-9]*$/;
         if (!father_name.match(letters)) {
             Swal.fire({
                 icon: "error",
@@ -323,6 +368,32 @@
             });
             return false;
         }
+
+        if (!totalfamilymember.match(numbers)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Family Member',
+                text: 'Enter numbers only',
+            });
+            return false;
+        }
+        if (!totalearningmember.match(numbers)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Earning Member',
+                text: 'Enter numbers only',
+            });
+            return false;
+        }
+        if (!family_income.match(numbers)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid Family Income',
+                text: 'Enter numbers only',
+            });
+            return false;
+        }
+
         if (!mother_occupation.match(letters)) {
             Swal.fire({
                 icon: "error",

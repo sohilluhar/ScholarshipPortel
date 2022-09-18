@@ -62,7 +62,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-3">
                                                     <div class="form-group">
                                                         <label for="collegename"><span class="text-danger">*</span>
                                                             College Name</label>
@@ -73,7 +73,19 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="collegeheadname"><span class="text-danger">*</span>
+                                                            Principal/Director/Head of College Name</label>
+                                                        <input type="text" name="collegeheadname" class="form-control"
+                                                               id="collegeheadname"
+                                                               value="{{ userprofile.collegeheadname }}"
+                                                               placeholder="Principal/Director/Head of College Name"
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-5">
                                                     <div class="form-group">
                                                         <label><span class="text-danger">*</span> College
                                                             Address</label>
@@ -86,7 +98,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="form-group">
                                                         <label for="coursename"><span class="text-danger">*</span>
                                                             Current Course Name</label>
@@ -96,9 +108,84 @@
                                                         >
                                                     </div>
                                                 </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="courseduration"><span class="text-danger">*</span>
+                                                            Duration of Course</label>
+                                                        <input type="number" name="courseduration" class="form-control"
+                                                               id="courseduration"
+                                                               value="{{ userprofile.courseduration }}"
+                                                               placeholder="Enter course duration eg: 4" required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="courseacademicyear"><span
+                                                                class="text-danger">*</span>
+                                                            Academic Year</label>
+                                                        <input type="number" name="courseacademicyear"
+                                                               class="form-control"
+                                                               id="courseacademicyear"
+                                                               value="{{ userprofile.courseacademicyear }}"
+                                                               placeholder="Enter Academic Year: 2022"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-6">
                                                     <div class="form-group">
-                                                        <label for="coursename"><span class="text-danger">*</span> Total
+                                                        <label for="lastcoursename"><span
+                                                                class="text-danger">*</span>
+                                                            Last Class attended</label>
+                                                        <input type="text" name="lastcoursename"
+                                                               class="form-control"
+                                                               id="lastcoursename"
+                                                               value="{{ userprofile.lastcoursename }}"
+                                                               placeholder="Enter  Last Class attended eg: SSC/HSC/Any Other"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="lastcourseacademicyear"><span
+                                                                class="text-danger">*</span>
+                                                            Last Class Academic Year</label>
+                                                        <input type="number" name="lastcourseacademicyear"
+                                                               class="form-control"
+                                                               id="courseacademicyear"
+                                                               value="{{ userprofile.lastcourseacademicyear }}"
+                                                               placeholder="Enter Last Class Academic Yea: 2021"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="card card-primary card-outline">
+                                        <div class="card-header">
+                                            <h5 class="m-0">Fees Deatils</h5>
+
+                                            <p class="text-muted mt-1">Note: Please enter the "Fee" details and not
+                                                fee
+                                                like development/Library/Laboratory etcs</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="coursefees"><span class="text-danger">*</span>
+                                                            Total
                                                             Fees</label>
                                                         <input type="number" name="coursefees" class="form-control"
                                                                id="coursefees" value="{{ userprofile.coursefees }}"
@@ -107,9 +194,35 @@
                                                         >
                                                     </div>
                                                 </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="coursefeespaid"><span
+                                                                class="text-danger">*</span>
+                                                            Fees Paid</label>
+                                                        <input type="number" name="coursefeespaid" class="form-control"
+                                                               id="coursefeespaid"
+                                                               value="{{ userprofile.coursefeespaid }}"
+                                                               placeholder="Enter  total fees paid"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="coursefeesrequired"><span
+                                                                class="text-danger">*</span> Total
+                                                            Fees Required</label>
+                                                        <input type="number" name="coursefeesrequired"
+                                                               class="form-control"
+                                                               id="coursefeesrequired"
+                                                               value="{{ userprofile.coursefeesrequired }}"
+                                                               placeholder="Enter  total fees Required"
+                                                               required
+                                                        >
+                                                    </div>
+                                                </div>
+
                                             </div>
-
-
                                         </div>
                                     </div>
 
@@ -117,49 +230,86 @@
                                         <div class="card-header">
                                             <h5 class="m-0">Past Education</h5>
 
-                                            <p class="text-muted mt-1">Enter SSC,HSC/Diploma,previous year if in school
-                                                enter previous three year details</p>
+                                            <p class="text-muted mt-1">Enter SSC,HSC/Diploma details</p>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
 
-                                                <div class="col-4">
+                                                <div class="col-2">
                                                     <div class="form-group">
                                                         <label for="course1name"><span class="text-danger">*</span>
                                                             Course</label>
                                                         <input type="text" name="course1name" class="form-control"
 
-                                                               value="{{ userprofile.course1name }}" id="course1name"
+                                                               value="SSC" id="course1name" disabled
                                                                placeholder="Enter course name ">
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="form-group">
-                                                        <label for="course1year"><span class="text-danger">*</span> Year
-                                                            of Study</label>
-                                                        <input type="number" name="course1year" class="form-control"
+                                                        <label for="course1board"><span class="text-danger">*</span>
+                                                            College/School Name</label>
+                                                        <input type="text" name="course1board" class="form-control"
+                                                               required
+                                                               value="{{ userprofile.course1board }}" id="course1board"
+                                                               placeholder="Enter College/School name ">
+                                                    </div>
+                                                </div>
 
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="course1medium"><span class="text-danger">*</span>
+                                                            Medium</label>
+                                                        <input type="text" name="course1medium" class="form-control"
+                                                               required
+                                                               value="{{ userprofile.course1medium }}"
+                                                               id="course1medium"
+                                                               placeholder="Enter Medium ">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="course1marks"><span class="text-danger">*</span>
+                                                            Marks Obtained</label>
+                                                        <input type="text" name="course1marks" class="form-control"
+                                                               required
+                                                               value="{{ userprofile.course1marks }}"
+                                                               id="course1marks"
+                                                               placeholder="Enter Marks ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+                                                        <label for="course1markstotal"><span
+                                                                class="text-danger">*</span>
+                                                            Marks Out of</label>
+                                                        <input type="text" name="course1markstotal" class="form-control"
+                                                               required
+                                                               value="{{ userprofile.course1markstotal }}"
+                                                               id="course1markstotal"
+                                                               placeholder="Enter Total Marks ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-1">
+                                                    <div class="form-group">
+                                                        <label for="course1year"><span class="text-danger">*</span> Year
+                                                        </label>
+                                                        <input type="number" name="course1year" class="form-control"
+                                                               required
                                                                value="{{ userprofile.course1year }}" id="course1year"
                                                                placeholder="Enter year">
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <label for="course1board"><span class="text-danger">*</span>
-                                                            Board/University</label>
-                                                        <input type="text" name="course1board" class="form-control"
 
-                                                               value="{{ userprofile.course1board }}" id="course1board"
-                                                               placeholder="Enter university or board name ">
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
+                                                <div class="col-1">
                                                     <div class="form-group">
                                                         <label for="course1per"><span class="text-danger">*</span>
-                                                            Percentage</label>
+                                                            Per. (%)</label>
                                                         <input type="text" name="course1per" class="form-control"
-
+                                                               required
                                                                value="{{ userprofile.course1per }}" id="course1per"
                                                                placeholder="Enter percentage ">
                                                     </div>
@@ -169,75 +319,74 @@
                                             </div>
                                             <div class="row">
 
-                                                <div class="col-4">
+                                                <div class="col-2">
                                                     <div class="form-group">
-                                                        <input type="text" name="course2name" class="form-control"
 
+                                                        <input type="text" name="course2name" class="form-control"
+                                                               required
                                                                value="{{ userprofile.course2name }}" id="course2name"
-                                                               placeholder="Enter course name ">
+                                                               placeholder="HSC or Diploma">
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="form-group">
-                                                        <input type="number" name="course2year" class="form-control"
 
+                                                        <input type="text" name="course2board" class="form-control"
+                                                               required
+                                                               value="{{ userprofile.course2board }}" id="course2board"
+                                                               placeholder="Enter College/School name ">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-2">
+                                                    <div class="form-group">
+
+                                                        <input type="text" name="course2medium" class="form-control"
+                                                               required
+                                                               value="{{ userprofile.course2medium }}"
+                                                               id="course2medium"
+                                                               placeholder="Enter Medium ">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-2">
+                                                    <div class="form-group">
+
+                                                        <input type="text" name="course2marks" class="form-control"
+                                                               required
+                                                               value="{{ userprofile.course2marks }}"
+                                                               id="course2marks"
+                                                               placeholder="Enter Marks ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <div class="form-group">
+
+                                                        <input type="text" name="course2markstotal" class="form-control"
+                                                               required
+                                                               value="{{ userprofile.course2markstotal }}"
+                                                               id="course2markstotal"
+                                                               placeholder="Enter Total Marks ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-1">
+                                                    <div class="form-group">
+
+                                                        <input type="number" name="course2year" class="form-control"
+                                                               required
                                                                value="{{ userprofile.course2year }}" id="course2year"
                                                                placeholder="Enter year">
                                                     </div>
                                                 </div>
 
-                                                <div class="col-4">
+
+                                                <div class="col-1">
                                                     <div class="form-group">
 
-                                                        <input type="text" name="course2board" class="form-control"
-
-                                                               value="{{ userprofile.course2board }}" id="course2board"
-                                                               placeholder="Enter university or board name ">
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div class="form-group">
                                                         <input type="text" name="course2per" class="form-control"
-
+                                                               required
                                                                value="{{ userprofile.course2per }}" id="course2per"
-                                                               placeholder="Enter percentage ">
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                            <div class="row">
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <input type="text" name="course3name" class="form-control"
-
-                                                               value="{{ userprofile.course3name }}" id="course3name"
-                                                               placeholder="Enter course name ">
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div class="form-group">
-                                                        <input type="number" name="course3year" class="form-control"
-
-                                                               value="{{ userprofile.course3year }}" id="course3year"
-                                                               placeholder="Enter year">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-4">
-                                                    <div class="form-group">
-                                                        <input type="text" name="course3board" class="form-control"
-
-                                                               value="{{ userprofile.course3board }}" id="course3board"
-                                                               placeholder="Enter university or board name ">
-                                                    </div>
-                                                </div>
-                                                <div class="col-2">
-                                                    <div class="form-group">
-                                                        <input type="text" name="course3per" class="form-control"
-
-                                                               value="{{ userprofile.course3per }}" id="course3per"
                                                                placeholder="Enter percentage ">
                                                     </div>
                                                 </div>
@@ -334,6 +483,7 @@
         }
 
         var collegename = form.collegename.value;
+        var collegeheadname = form.collegeheadname.value;
         var collegeaddress = form.collegeaddress.value;
 
 
@@ -356,6 +506,14 @@
         var per = /^\d{1,2}\.\d{1,2}$|^\d{1,3}$/;
         var letters = /^[a-z.A-Z-,]+(\s{0,1}[a-z.A-Z-, ])*$/;
         if (!collegename.match(letters)) {
+            Swal.fire({
+                icon: "error",
+                title: 'Invalid College Name',
+                text: 'Enter characters only',
+            });
+            return false;
+        }
+        if (!collegeheadname.match(letters)) {
             Swal.fire({
                 icon: "error",
                 title: 'Invalid College Name',

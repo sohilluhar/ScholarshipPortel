@@ -97,7 +97,7 @@
             </div>
 
             <div class="col-3">
-                <p> Parent Status : <span class="txt_cap txt_un">General</span></p>
+                <p> Parent Status : <span class="txt_cap txt_un">{{ userprofile.parent_status }}</span></p>
             </div>
 
         </div>
@@ -129,16 +129,16 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-6">
-                <p> Reference Given By: <span class="txt_cap txt_un">Sohil Luhar</span>
-                </p>
-            </div>
-
-            <div class="col-6">
-                <p> Contact Number : <span class="txt_cap txt_un">9833771892</span></p>
-            </div>
-        </div>
+        {#        <div class="row">#}
+        {#            <div class="col-6">#}
+        {#                <p> Reference Given By: <span class="txt_cap txt_un">Sohil Luhar</span>#}
+        {#                </p>#}
+        {#            </div>#}
+        {##}
+        {#            <div class="col-6">#}
+        {#                <p> Contact Number : <span class="txt_cap txt_un">9833771892</span></p>#}
+        {#            </div>#}
+        {#        </div>#}
 
     </div>
     <div class="col-2">
@@ -156,14 +156,15 @@
         <p><b> 2. </b><span class="txt_b_u_upper">family particular</span></p>
     </div>
     <div class="col-3">
-        <p> Total Family Members: <span class="txt_cap txt_un">6</span></p>
+        <p> Total Family Members: <span class="txt_cap txt_un">{{ userprofile.totalfamilymember }}</span></p>
     </div>
     <div class="col-3">
-        <p> Earning Members: <span class="txt_cap txt_un">2</span></p>
+        <p> Earning Members: <span class="txt_cap txt_un">{{ userprofile.totalearningmember }}</span></p>
     </div>
     <div class="col-6">
-        <p> Monthly Income : <span class="txt_cap txt_un">20000</span> &nbsp;&nbsp;&nbsp; (in Words): <span
-                class="txt_cap txt_un">Twenty Thousand</span>
+        <p> Monthly Income : <span class="txt_cap txt_un">{{ userprofile.family_income }}</span>
+            {#            &nbsp;&nbsp;&nbsp; (in Words): <span#}
+            {#                class="txt_cap txt_un">Twenty Thousand</span>#}
         </p>
     </div>
 
@@ -256,9 +257,9 @@
             <tr>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1name }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1board }}</td>
-                <td class="mt-0 py-0 txt_cap all_border">english</td>
-                <td class="mt-0 py-0 txt_cap all_border">449</td>
-                <td class="mt-0 py-0 txt_cap all_border">500</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1medium }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1marks }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1markstotal }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1year }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course1per }}</td>
 
@@ -266,21 +267,13 @@
             <tr>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2name }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2board }}</td>
-                <td class="mt-0 py-0 txt_cap all_border">english</td>
-                <td class="mt-0 py-0 txt_cap all_border">449</td>
-                <td class="mt-0 py-0 txt_cap all_border">500</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2medium }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2marks }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2markstotal }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2year }}</td>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course2per }}</td>
             </tr>
-            <tr>
-                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course3name }}</td>
-                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course3board }}</td>
-                <td class="mt-0 py-0 txt_cap all_border">english</td>
-                <td class="mt-0 py-0 txt_cap all_border">449</td>
-                <td class="mt-0 py-0 txt_cap all_border">500</td>
-                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course3year }}</td>
-                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.course3per }}</td>
-            </tr>
+
 
             </tbody>
         </table>
@@ -296,17 +289,17 @@
         <p>Name of Course <span class="txt_cap txt_un">{{ userprofile.coursename }}</span></p>
     </div>
     <div class="col-3">
-        <p>Duration of Course <span class="txt_cap txt_un">3</span></p>
+        <p>Duration of Course <span class="txt_cap txt_un">{{ userprofile.courseduration }}</span></p>
     </div>
     <div class="col-3">
-        <p>Academic Year <span class="txt_cap txt_un">2021-22</span></p>
+        <p>Academic Year <span class="txt_cap txt_un">{{ userprofile.courseacademicyear }}</span></p>
     </div>
 
     <div class="col-6">
-        <p>Last Class Attended <span class="txt_cap txt_un">Sy Btech</span></p>
+        <p>Last Class Attended <span class="txt_cap txt_un">{{ userprofile.lastcoursename }}</span></p>
     </div>
     <div class="col-3">
-        <p>Academic Year <span class="txt_cap txt_un">2021-22</span></p>
+        <p>Academic Year <span class="txt_cap txt_un">{{ userprofile.lastcourseacademicyear }}</span></p>
     </div>
 
 </div>
@@ -320,7 +313,8 @@
         <p>Name of the Institute <span class="txt_cap txt_un">{{ userprofile.collegename }}</span></p>
     </div>
     <div class="col-6">
-        <p>Name of the Principal/Director/Head Institute <span class="txt_cap txt_un">Subha patil</span></p>
+        <p>Name of the Principal/Director/Head Institute <span
+                class="txt_cap txt_un">{{ userprofile.collegeheadname }}</span></p>
 
     </div>
     <div class="col-12">
@@ -348,8 +342,8 @@
             <tbody>
             <tr>
                 <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.coursefees }}</td>
-                <td class="mt-0 py-0 txt_cap all_border">20000</td>
-                <td class="mt-0 py-0 txt_cap all_border">100000</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.coursefeespaid }}</td>
+                <td class="mt-0 py-0 txt_cap all_border">{{ userprofile.coursefeesrequired }}</td>
 
             </tr>
             </tbody>
